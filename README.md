@@ -1,10 +1,28 @@
-# Group YY - {Short snappy Title of your project}
-
-- Your title can change over time.
+# Group 11_Movie_Mavericks - {Movie Recommendation System}
 
 ## Describe your topic/interest in about 150-200 words
 
-{Add your stuff here}
+- Who is it for:
+- What will it do:
+- What type of data will it store:
+- What will users be able to do with this data:
+- What is some additional functionality you can add/remove based on time constraints:
+
+## Requirements:  
+### Minimal Requirements:
+-
+-
+-
+
+### Standard Requirements:
+-
+-
+-
+
+### Stretch Requirements:
+-
+-
+-
 
 ## Team Members
 
