@@ -20,8 +20,8 @@
 -
 
 ### Stretch Requirements:
-- As a user, I want to be able to create an account and store my data so that I don't have to worry about losing my preferences.
--
+- As a user, I want to be able to create an account so that I don't have to worry about losing my preferences.
+- As a user, I want to be able to create a watchlist/basket connected to my account.
 -
 
 ## Team Members
