@@ -2,16 +2,16 @@
 
 ## Describe your topic/interest in about 150-200 words
 
-- Who is it for:
-- What will it do:
-- What type of data will it store:
-- What will users be able to do with this data:
-- What is some additional functionality you can add/remove based on time constraints:
+- Who is it for: Any movie enthusiast, no age restrictions.
+- What will it do: It will recommend 5 (subject to change) movies based on the inputs provided by the user.
+- What type of data will it store: Dataset or API
+- What will users be able to do with this data: Users will be able to select and set their preferences from a form and based on that selected data, get movies recommended to them.
+- What is some additional functionality you can add/remove based on time constraints: Add functionality for TV shows as well and create a Content Recommendation System instead of a Movie Recommendation System.
 
 ## Requirements:  
 ### Minimal Requirements:
--
--
+- As a user, I want to be able to see at most 5 movie recommendations so that I can choose one of them to watch.
+- 
 -
 
 ### Standard Requirements:
@@ -20,7 +20,7 @@
 -
 
 ### Stretch Requirements:
--
+- As a user, I want to be able to create an account and store my data so that I don't have to worry about losing my preferences.
 -
 -
 
