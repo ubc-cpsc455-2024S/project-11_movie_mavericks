@@ -32,9 +32,8 @@
 
 ## Images
 
-{You should use this area to add a screenshot of your app or website }
+![20240521_184458](https://github.com/ubc-cpsc455-2024S/project-11_movie_mavericks/assets/65598707/9ad5c817-1708-44f0-b4f6-9487cc8644ae)
 
-<img src ="images/test.png" width="100px">
 
 ## References
 
