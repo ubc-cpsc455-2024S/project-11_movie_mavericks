@@ -25,7 +25,7 @@
 
 ## Team Members
 
-- Person 1: one sentence about you!
+- Adwait Kulkarni: I run marathons!
 - Person 2: one sentence about you!
 - Person 3: one sentence about you!
 - Person 4: one sentence about you!
