@@ -10,8 +10,8 @@
 
 ## Requirements:  
 ### Minimal Requirements:
+- As a user, I want to be able to navigate to the website and open it on any browser of my choice.
 - As a user, I want to be able to be able to see the option to select my preferences so that I can send my inputs to the system.
-- 
 -
 
 ### Standard Requirements:
