@@ -33,9 +33,10 @@
 ## Images
 
 ![20240521_184458](https://github.com/ubc-cpsc455-2024S/project-11_movie_mavericks/assets/65598707/9ad5c817-1708-44f0-b4f6-9487cc8644ae)
-
+![20240521_185058](https://github.com/ubc-cpsc455-2024S/project-11_movie_mavericks/assets/65598707/596fe799-ded0-4124-8d34-0c732aaeb443)
 
 ## References
+
 
 {Add your stuff here}
 
