@@ -26,7 +26,7 @@
 ## Team Members
 
 - Adwait Kulkarni: I run marathons!
-- Person 2: one sentence about you!
+- Dominic Lo: I play the piano and Switch!
 - Person 3: one sentence about you!
 - Person 4: one sentence about you!
 
