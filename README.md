@@ -16,7 +16,7 @@
 
 ### Standard Requirements:
 - As a user, I want to be able to see at most 5 movie recommendations so that I can choose one of them to watch.
--
+- As a user, I want to be able to download my preferences using a Torrent link so that I can view them whenever I want locally.
 -
 
 ### Stretch Requirements:
