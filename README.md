@@ -11,8 +11,8 @@
 ## Requirements:  
 ### Minimal Requirements:
 - As a user, I want to be able to navigate to the website and open it on any browser of my choice.
-- As a user, I want to be able to be able to see the option to select my preferences so that I can send my inputs to the system.
--
+- As a user, I want to be able to be able to see the options on the form so that I can send my inputs to the system.
+- As a user, I want to be able to edit/remove my previously submitted preferences.
 
 ### Standard Requirements:
 - As a user, I want to be able to see at most 5 movie recommendations so that I can choose one of them to watch.
