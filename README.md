@@ -16,8 +16,8 @@
 
 ### Standard Requirements:
 - As a user, I want to be able to see at most 5 movie recommendations so that I can choose one of them to watch.
+- As a user, I want to be able to see some high-level info about the recommended movies, such as poster, synopsis.
 - As a user, I want to be able to download all my movies using a Torrent link so that I can view them whenever I want locally.
--
 
 ### Stretch Requirements:
 - As a user, I want to be able to create an account so that I don't have to worry about losing my preferences.
