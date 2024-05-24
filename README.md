@@ -27,7 +27,7 @@
 
 - Adwait Kulkarni: I run marathons!
 - Dominic Lo: I play the piano and Switch!
-- Person 3: one sentence about you!
+- Patrick Liang: I like good weather!
 - Person 4: one sentence about you!
 
 ## Images
