@@ -1,10 +1,23 @@
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Layout from "./components/Layout";
+import Home from "./components/Home";
+import About from "./components/About";
+import FeelingLucky from "./components/FeelingLucky";
+import Login from "./components/Login";
 
 function App() {
   return (
-    <>
-      <h1>Movie Recommendation System</h1>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="feeling-lucky" element={<FeelingLucky />} />
+          <Route path="login" element={<Login />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
