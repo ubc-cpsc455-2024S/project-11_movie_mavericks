@@ -20,12 +20,14 @@ export default function Form() {
       </div>
       <form id="form" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label>Please enter your prefered language:</label>
+          <label>Please enter your preferred language:</label>
           <select
             placeholder="Choose a Language..."
             {...register("language", { required: true })}
           >
             <option value="">Select Preferred Language</option>
+            <option value="all">All</option>
+            <option value="EN">English</option>
             <option value="AF">Afrikaans</option>
             <option value="SQ">Albanian</option>
             <option value="AR">Arabic</option>
@@ -40,7 +42,6 @@ export default function Form() {
             <option value="CS">Czech</option>
             <option value="DA">Danish</option>
             <option value="NL">Dutch</option>
-            <option value="EN">English</option>
             <option value="ET">Estonian</option>
             <option value="FJ">Fiji</option>
             <option value="FI">Finnish</option>
@@ -103,12 +104,15 @@ export default function Form() {
         </div>
 
         <div>
-          <label>Please enter your prefered region:</label>
+          <label>Please enter your preferred region:</label>
           <select
             placeholder="Choose a Region..."
             {...register("region", { required: true })}
           >
             <option value="">Select Preferred Region</option>
+            <option value="All">All</option>
+            <option value="Canada">Canada</option>
+            <option value="United States">United States</option>
             <option value="Afghanistan">Afghanistan</option>
             <option value="Åland Islands">Åland Islands</option>
             <option value="Albania">Albania</option>
@@ -151,7 +155,6 @@ export default function Form() {
             <option value="Burundi">Burundi</option>
             <option value="Cambodia">Cambodia</option>
             <option value="Cameroon">Cameroon</option>
-            <option value="Canada">Canada</option>
             <option value="Cape Verde">Cape Verde</option>
             <option value="Cayman Islands">Cayman Islands</option>
             <option value="Central African Republic">
@@ -385,7 +388,6 @@ export default function Form() {
             <option value="Ukraine">Ukraine</option>
             <option value="United Arab Emirates">United Arab Emirates</option>
             <option value="United Kingdom">United Kingdom</option>
-            <option value="United States">United States</option>
             <option value="United States Minor Outlying Islands">
               United States Minor Outlying Islands
             </option>
@@ -411,6 +413,7 @@ export default function Form() {
           <label>Please select your favorite genre:</label>
           <select {...register("genre", { required: true })}>
             <option value="">Select Favorite Genre</option>
+            <option value="All">All</option>
             <option value="Action">Action</option>
             <option value="Adventure">Adventure</option>
             <option value="Animation">Animation</option>
@@ -458,14 +461,12 @@ export default function Form() {
         </div>
 
         <div>
-          <label>Do you wish to be displayed adult movies?</label>
-          <select {...register("Adult/Non-Adult", { required: true })}>
-            <option value="Yes" defaultValue={true}>
-              Yes
-            </option>
-            <option value="No">No</option>
-          </select>
-          {errors.adultNonAdult && <span>This field is required</span>}
+          <label>
+            Do you wish to be displayed adult movies? 
+            <input type="checkbox" 
+            style={{ width: "40px", height: "40px" }}
+            {...register("isAdult")} />
+          </label>
         </div>
 
         <button type="submit">Submit</button>
