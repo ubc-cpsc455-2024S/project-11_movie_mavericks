@@ -24,6 +24,7 @@ const StyledNavbar = styled(AppBar)(({ theme }) => ({
 const drawerWidth = 240;
 const navItems = [
   { label: "Home", path: "/" },
+  { label: "Recommendation", path: "/recommendation"},
   { label: "About", path: "/about" },
   { label: "I'm Feeling Lucky", path: "/feeling-lucky" },
   { label: "Login", path: "/login" },

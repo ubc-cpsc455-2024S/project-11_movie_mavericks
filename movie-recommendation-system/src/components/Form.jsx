@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { languages } from "../config/languages";
 import { regions } from "../config/regions";
 import { genres } from "../config/genre";
+import { useNavigate } from "react-router-dom";
 
 export default function Form() {
   const {
@@ -11,8 +12,11 @@ export default function Form() {
     formState: { errors },
     reset,
   } = useForm();
-  // const onSubmit = (data) => console.log(data);
-  const onSubmit = (data) => {
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    console.log(data)
+
     const currentYear = new Date().getFullYear();
     switch (data.dateRange) {
       case "last3years":
@@ -31,7 +35,18 @@ export default function Form() {
         break;
     }
 
-    console.log(data);
+    const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=2020-01-01&primary_release_date.lte=2023-01-01&sort_by=popularity.desc&with_genres=28&with_origin_country=US&with_original_language=en';
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4'
+      }
+    };
+    const response = await fetch(url, options);
+    const responseJson = await response.json();
+    console.log(responseJson);
+    navigate("/recommendation")
   };
   const clearFields = () => {
     reset();
