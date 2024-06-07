@@ -11,7 +11,28 @@ export default function Form() {
     formState: { errors },
     reset,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  // const onSubmit = (data) => console.log(data);
+  const onSubmit = (data) => {
+    const currentYear = new Date().getFullYear();
+    switch (data.dateRange) {
+      case "last3years":
+        data.startYear = `${currentYear - 3}-01-01`;
+        break;
+      case "last5years":
+        data.startYear = `${currentYear - 5}-01-01`;
+        break;
+      case "last10years":
+        data.startYear = `${currentYear - 10}-01-01`;
+        break;
+      case "nopreference":
+        data.startYear = "";
+        break;
+      default:
+        break;
+    }
+
+    console.log(data);
+  };
   const clearFields = () => {
     reset();
   };
@@ -53,23 +74,14 @@ export default function Form() {
         </div>
 
         <div>
-          <label>Enter your start year:</label>
-          <input
-            type="month"
-            placeholder="Start Year"
-            {...register("startYear", { required: true })}
-          />
-          {errors.startYear && <span>This field is required</span>}
-        </div>
-
-        <div>
-          <label>Enter your end year:</label>
-          <input
-            type="month"
-            placeholder="End Year"
-            {...register("endYear", { required: true })}
-          />
-          {errors.endYear && <span>This field is required</span>}
+          <label>Select date range:</label>
+          <select {...register("dateRange", { required: true })}>
+            <option value="nopreference">No Preference</option>
+            <option value="last3years">Last 3 Years</option>
+            <option value="last5years">Last 5 Years</option>
+            <option value="last10years">Last 10 Years</option>
+          </select>
+          {errors.dateRange && <span>This field is required</span>}
         </div>
 
         <div>
