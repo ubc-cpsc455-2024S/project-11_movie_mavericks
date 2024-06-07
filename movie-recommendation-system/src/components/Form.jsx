@@ -42,7 +42,7 @@ export default function Form() {
     const language = data["language"] != "all" ? "&with_original_language=" + data["language"] : ""
     const region = data["region"] != "all" ? "&with_origin_country=" + data["region"] : ""
     const genre = data["genre"] != "all" ? "&with_genres=" + data["genre"] : ""
-    const releaseAfter = "&primary_release_date.gte=" + "2022-01-01" // Placeholder
+    const releaseAfter = "&primary_release_date.gte=" + data["startYear"]
     const adult = "include_adult=" + data["isAdult"]
     const url = baseUrl + language + region + genre + releaseAfter + adult
     const options = {
