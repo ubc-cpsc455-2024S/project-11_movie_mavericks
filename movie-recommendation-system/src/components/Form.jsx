@@ -42,8 +42,8 @@ export default function Form() {
     const language = data["language"] != "all" ? "&with_original_language=" + data["language"] : ""
     const region = data["region"] != "all" ? "&with_origin_country=" + data["region"] : ""
     const genre = data["genre"] != "all" ? "&with_genres=" + data["genre"] : ""
-    const releaseAfter = "&primary_release_date.gte=" + data["startYear"]
-    const adult = "include_adult=" + data["isAdult"]
+    const releaseAfter = data["startYear"] != "" ? "&primary_release_date.gte=" + data["startYear"] : ""
+    const adult = "&include_adult=" + data["isAdult"]
     const url = baseUrl + language + region + genre + releaseAfter + adult
     const options = {
       method: 'GET',
@@ -52,6 +52,7 @@ export default function Form() {
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4'
       }
     };
+    console.log(url)
     const response = await fetch(url, options);
     const responseJson = await response.json();
     console.log(responseJson);
