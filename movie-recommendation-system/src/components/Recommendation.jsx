@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import Grid from '@mui/material/Grid';
 
 export default function Recommendation() {
     const recommendations = useSelector(state => state.recommendations)
@@ -9,13 +10,25 @@ export default function Recommendation() {
     return (
         <>
             <h1>Recommendations</h1>
-            {cards}
+            <Grid container spacing={2}>
+                {cards}
+            </Grid>
         </>
     )
 }
 
+// TODO
 function Card(props) {
+    const movie = props.movie
     return (
-        <h2>Placeholder {props.movie.id}</h2>
+        <Grid>
+            {/* <Item> */}
+                <h3>
+                    {movie.title}
+                    {movie.title != movie.original_title && "(" + movie.original_title + ")"}
+                </h3>
+                <img src={"https://image.tmdb.org/t/p/w500" + movie["poster_path"]}></img>
+            {/* </Item> */}
+        </Grid>
     )
 }

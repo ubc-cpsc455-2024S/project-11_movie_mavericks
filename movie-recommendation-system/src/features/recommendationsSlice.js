@@ -2,19 +2,15 @@ import { createSlice } from '@reduxjs/toolkit'
 
 export const recommendationsSlice = createSlice({
   name: 'recommendations',
-  initialState: [
-    {id: 1},
-    {id: 2},
-    {id: 3},
-  ],
+  initialState: [],
   reducers: {
-    add: (state, action) => {
+    addRecommendation: (state, action) => {
       state.push(action.payload)
     }
   }
 })
 
 // Action creators are generated for each case reducer function
-export const { add } = recommendationsSlice.actions
+export const { addRecommendation } = recommendationsSlice.actions
 
 export default recommendationsSlice.reducer

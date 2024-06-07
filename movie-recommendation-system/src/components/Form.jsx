@@ -4,6 +4,8 @@ import { languages } from "../config/languages";
 import { regions } from "../config/regions";
 import { genres } from "../config/genre";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addRecommendation } from "../features/recommendationsSlice";
 
 export default function Form() {
   const {
@@ -13,6 +15,7 @@ export default function Form() {
     reset,
   } = useForm();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
     console.log(data)
@@ -35,7 +38,13 @@ export default function Form() {
         break;
     }
 
-    const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=2020-01-01&primary_release_date.lte=2023-01-01&sort_by=popularity.desc&with_genres=28&with_origin_country=US&with_original_language=en';
+    const baseUrl = 'https://api.themoviedb.org/3/discover/movie?&sort_by=popularity.desc' // TODO: currently sort by popularity
+    const language = data["language"] != "all" ? "&with_original_language=" + data["language"] : ""
+    const region = data["region"] != "all" ? "&with_origin_country=" + data["region"] : ""
+    const genre = data["genre"] != "all" ? "&with_genres=" + data["genre"] : ""
+    const releaseAfter = "&primary_release_date.gte=" + "2022-01-01" // Placeholder
+    const adult = "include_adult=" + data["isAdult"]
+    const url = baseUrl + language + region + genre + releaseAfter + adult
     const options = {
       method: 'GET',
       headers: {
@@ -46,6 +55,10 @@ export default function Form() {
     const response = await fetch(url, options);
     const responseJson = await response.json();
     console.log(responseJson);
+    const numRecommendation = Math.min(5, responseJson["results"].length);
+    for (let i = 0; i < numRecommendation; i++) {
+      dispatch(addRecommendation(responseJson["results"][i]))
+    }
     navigate("/recommendation")
   };
   const clearFields = () => {
