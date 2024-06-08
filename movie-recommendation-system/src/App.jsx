@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import FeelingLucky from "./components/FeelingLucky";
 import Login from "./components/Login";
+import Recommendation from "./components/Recommendation"
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="recommendation" element={<Recommendation />} />
           <Route path="about" element={<About />} />
           <Route path="feeling-lucky" element={<FeelingLucky />} />
           <Route path="login" element={<Login />} />

@@ -3,6 +3,9 @@ import { useForm } from "react-hook-form";
 import { languages } from "../config/languages";
 import { regions } from "../config/regions";
 import { genres } from "../config/genre";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addRecommendation } from "../features/recommendationsSlice";
 
 export default function Form() {
   const {
@@ -11,8 +14,12 @@ export default function Form() {
     formState: { errors },
     reset,
   } = useForm();
-  // const onSubmit = (data) => console.log(data);
-  const onSubmit = (data) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onSubmit = async (data) => {
+    console.log(data)
+
     const currentYear = new Date().getFullYear();
     switch (data.dateRange) {
       case "last3years":
@@ -31,7 +38,29 @@ export default function Form() {
         break;
     }
 
-    console.log(data);
+    const baseUrl = 'https://api.themoviedb.org/3/discover/movie?&sort_by=popularity.desc' // TODO: currently sort by popularity
+    const language = data["language"] != "all" ? "&with_original_language=" + data["language"] : ""
+    const region = data["region"] != "all" ? "&with_origin_country=" + data["region"] : ""
+    const genre = data["genre"] != "all" ? "&with_genres=" + data["genre"] : ""
+    const releaseAfter = data["startYear"] != "" ? "&primary_release_date.gte=" + data["startYear"] : ""
+    const adult = "&include_adult=" + data["isAdult"]
+    const url = baseUrl + language + region + genre + releaseAfter + adult
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4'
+      }
+    };
+    console.log(url)
+    const response = await fetch(url, options);
+    const responseJson = await response.json();
+    console.log(responseJson);
+    const numRecommendation = Math.min(5, responseJson["results"].length);
+    for (let i = 0; i < numRecommendation; i++) {
+      dispatch(addRecommendation(responseJson["results"][i]))
+    }
+    navigate("/recommendation")
   };
   const clearFields = () => {
     reset();
