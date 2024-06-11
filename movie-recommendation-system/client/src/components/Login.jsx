@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
 
 const Login = () => {
   const {
@@ -8,7 +9,15 @@ const Login = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    console.log(data);
+    try {
+      const request = await axios.post("http://localhost:5000/users/login", data);
+      console.log(request);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   const clearFields = () => {
     reset();
   };
