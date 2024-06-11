@@ -12,7 +12,7 @@ const Login = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const request = await axios.post("http://localhost:5000/users/login", data);
+      const request = await axios.post("http://localhost:3000/users/login", data);
       console.log(request);
     } catch (error) {
       console.error(error);
