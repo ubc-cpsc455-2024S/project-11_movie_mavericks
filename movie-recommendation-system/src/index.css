@@ -1,0 +1,132 @@
+body {
+  background-color: #2a629a;
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  background-color: #2a629a;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: aqua;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: white;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+#form {
+  max-width: 650px;
+  margin: 50px auto;
+  background-color: #e4c59e;
+  padding: 20px;
+  border-radius: 40px;
+  text-align: center;
+}
+
+#form label {
+  display: inline-flex;
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 1em;
+}
+
+#form input {
+  border-radius: 5px;
+  font-size: 17px;
+  margin: 10px 5px 10px 5px;
+  width: 17em;
+}
+
+#form select {
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px 5px;
+  margin: 10px 10px 10px 10px;
+  width: 17em;
+}
+
+#form input[type="text"] {
+  font-size: 20px;
+  padding: 5px 5px;
+  margin: 10px 10px 10px 10px;
+  width: 17em;
+}
+
+#form button {
+  padding: 15px;
+  font-size: 1.5em;
+  background-color: #1d1d1d;
+  color: #ffefef;
+  border-radius: 55px;
+  cursor: pointer;
+  margin: 15px;
+}
+
+#luckyBtn {
+  padding: 15px;
+  font-size: 2.5em;
+  background-color: #1d1d1d;
+  color: #ffefef;
+  border-radius: 55px;
+  cursor: pointer;
+  margin: 15px;
+}
+
+#luckyBtn:hover {
+  color: aqua;
+  transform: scale(1.2);
+}
+
+#form button:hover {
+  background-color: #074173;
+  color: aqua;
+  transform: scale(1.2);
+}
+
+@media only screen and (max-width: 650px) {
+  #form {
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+  }
+}
