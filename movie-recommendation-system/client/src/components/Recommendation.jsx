@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { Button } from "@mui/material";
 
 export default function Recommendation() {
   const recommendations = useSelector((state) => state.recommendations);
@@ -30,7 +30,6 @@ function GridCard(props) {
   return (
     <Grid item xs={6} sm={3}>
       <Card sx={{ backgroundColor: "#37474F", color: "white" }}>
-        <CardActionArea>
           <CardMedia
             component="img"
             style={{ height: "300px", objectFit: "cover" }}
@@ -52,16 +51,15 @@ function GridCard(props) {
                 "(" + movie.original_title + ")"}
             </Typography>
             <Stack style={{padding: "5px"}}>
-              <button variant="outlined">Review</button>
+              <Button style={{padding: "5px", color: "white" }} variant="outlined">Review</Button>
             </Stack>
             <Stack style={{padding: "5px"}}>
-              <button variant="outlined">Add to watchlist</button>
+              <Button style={{padding: "5px", color: "white"}} variant="outlined">Add to watchlist</Button>
             </Stack>
             <Stack style={{padding: "5px"}}>
-              <button variant="outlined">Learn More</button>
+              <Button style={{padding: "5px", color: "white"}} variant="outlined">Learn More</Button>
             </Stack>
           </CardContent>
-        </CardActionArea>
       </Card>
     </Grid>
   );
