@@ -28,11 +28,11 @@ const Login = () => {
       </div>
       <form id="form" onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label>Email Address:</label>
+          <label>Username:</label>
           <input
-            type="email"
-            placeholder="email-address"
-            {...register("email", { required: true })}
+            type="text"
+            placeholder="username"
+            {...register("username", { required: true })}
           />
           {errors.email && <span>This field is required</span>}
         </div>
