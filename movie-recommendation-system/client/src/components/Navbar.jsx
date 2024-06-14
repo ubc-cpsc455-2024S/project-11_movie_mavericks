@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const StyledNavbar = styled(AppBar)(({ theme }) => ({
   backgroundColor: "black",
@@ -24,15 +25,17 @@ const StyledNavbar = styled(AppBar)(({ theme }) => ({
 const drawerWidth = 240;
 const navItems = [
   { label: "Home", path: "/" },
-  { label: "Recommendation", path: "/recommendation"},
+  { label: "Recommendation", path: "/recommendation" },
   { label: "About", path: "/about" },
   { label: "I'm Feeling Lucky", path: "/feeling-lucky" },
   { label: "Login", path: "/login" },
+  { label: "Account", path: "/account" },
 ];
 
 function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const loggedIn = useSelector((state) => state.user.loggedIn);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -41,7 +44,7 @@ function Navbar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h2" sx={{ my: 2, color: "yellow" }}>
-        Movie Recommendation System
+        MovieHub
       </Typography>
       <Divider />
       <List>
@@ -56,6 +59,17 @@ function Navbar(props) {
             </ListItemButton>
           </ListItem>
         ))}
+        {loggedIn && (
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{ textAlign: "center" }}
+              component={Link}
+              to="/account"
+            >
+              <ListItemText primary="Account" />
+            </ListItemButton>
+          </ListItem>
+        )}
       </List>
     </Box>
   );
@@ -83,10 +97,15 @@ function Navbar(props) {
               component="div"
               sx={{
                 flexGrow: 1,
-                display: { xs: "none", sm: "block", color: "yellow" },
+                display: {
+                  xs: "none",
+                  sm: "block",
+                  color: "yellow",
+                  fontSize: "2rem",
+                },
               }}
             >
-              Movie Recommendation System
+              MovieHub
             </Typography>
           </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
@@ -100,6 +119,11 @@ function Navbar(props) {
                 {item.label}
               </Button>
             ))}
+            {loggedIn && (
+              <Button sx={{ color: "yellow" }} component={Link} to="/account">
+                Account
+              </Button>
+            )}
           </Box>
         </Toolbar>
       </StyledNavbar>
@@ -132,10 +156,6 @@ function Navbar(props) {
 }
 
 Navbar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 

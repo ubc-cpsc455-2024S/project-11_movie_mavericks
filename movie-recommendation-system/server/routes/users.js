@@ -40,4 +40,50 @@ router.post("/login", async (req, res) => {
   }
 });
 
+/* PUT username and password */
+router.put("/:username", async (req, res) => {
+  const { username, password } = req.body;
+  const { username: newUsername } = req.params;
+
+  try {
+    let user = users.find((user) => user.username === newUsername);
+
+    if (user) {
+      const salt = await bcrypt.genSalt(10);
+      const pass = await bcrypt.hash(password, salt);
+
+      user.username = username;
+      user.password = pass;
+
+      res.send(user);
+    } else {
+      res.status(400).json({ msg: "User not found" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+/* DELETE user account */
+router.delete("/:username", async (req, res) => {
+  const { username } = req.params;
+
+  try {
+    const usernameToDelete = users.findIndex(
+      (user) => user.username === username
+    );
+
+    if (usernameToDelete !== -1) {
+      users.splice(userIndex, 1);
+      res.send("User deleted");
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;
