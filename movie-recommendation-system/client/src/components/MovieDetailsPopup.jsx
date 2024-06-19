@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   DialogTitle,
   DialogContent,
@@ -11,7 +12,7 @@ import {
   Rating,
 } from '@mui/material';
 
-const MovieDetailsPopup = ({ tmbd_movie_id, onClose }) => {
+const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   const [movieDetails, setMovieDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

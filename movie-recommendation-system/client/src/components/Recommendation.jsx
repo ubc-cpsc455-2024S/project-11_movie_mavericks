@@ -14,7 +14,7 @@ export default function Recommendation() {
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   const handleLearnMoreClick = (movie) => {
-    setSelectedMovie(movie);
+    setSelectedMovie(movie.id);
   };
 
   const handleClose = () => {
