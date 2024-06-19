@@ -33,7 +33,7 @@ export default function Recommendation() {
         {cards}
       </Grid>
       <Dialog open={!!selectedMovie} onClose={handleClose} maxWidth="md" fullWidth>
-        {selectedMovie && <MovieDetailsPopup movieData={selectedMovie} onClose={handleClose} />}
+        {selectedMovie && <MovieDetailsPopup tmdb_movie_id={selectedMovie} onClose={handleClose} />}
       </Dialog>
     </>
   );
