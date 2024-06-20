@@ -26,9 +26,12 @@ const userSlice = createSlice({
       const { username, password } = action.payload;
       state.username = username;
     },
+    addReview: (state, action) => {
+      state.reviews.unshift(action.payload);
+    }
   },
 });
 
-export const { login, logout, editUser } = userSlice.actions;
+export const { login, logout, editUser, addReview } = userSlice.actions;
 
 export default userSlice.reducer;

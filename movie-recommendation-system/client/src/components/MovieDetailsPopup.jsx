@@ -14,15 +14,27 @@ import {
   Button,
   Stack,
 } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { original } from '@reduxjs/toolkit';
+import { addReview } from '../features/userSlice';
 
 const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
+  const dispatch = useDispatch();
+
+  const loggedIn = useSelector(state => state.user.loggedIn);
+  const userID = useSelector(state => state.user.user?._id);
+  const username = useSelector(state => state.user.username);
+
   const [movieDetails, setMovieDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState('');
   const [commentSelected, setCommentSelected] = useState(false);
   const [commentButtonEnabled, setCommentButtonEnabled] = useState(false);
+
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -48,7 +60,20 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
       }
     };
 
+    const fetchMovieComments = async () => {
+      try {
+        const movieResponse = await axios.get(`http://localhost:3000/movies/${tmdb_movie_id}`)
+        const responses = movieResponse.data.reviews.map(reviewID => axios.get(`http://localhost:3000/reviews/${reviewID}`));
+        Promise.all(responses)
+          .then(values => values.map(value => value.data))
+          .then(data => setReviews(data));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     fetchMovieDetails();
+    fetchMovieComments();
   }, [tmdb_movie_id]);
 
   useEffect(() => {
@@ -76,7 +101,48 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   }
 
   const handleComment = async () => {
-    console.log(comment, rating);
+    if (!loggedIn) {
+      alert("Please login before comment");
+      return;
+    }
+
+    try {
+      const movieResponse = await axios.get(`http://localhost:3000/movies/${tmdb_movie_id}`)
+      const movieID = movieResponse.data._id;
+
+      const body = {
+        user_id: userID,
+        movie_id: movieID,
+        title: original_title,
+        rating: rating,
+        comment: comment
+      }
+
+      // Post comment
+      const reviewResponse = await axios.post("http://localhost:3000/reviews", body);
+      const review = reviewResponse.data;
+
+      // Save comment to movie
+      await axios.post("http://localhost:3000/movies/review", { movieID: movieID, reviewID: review._id });
+      const reviewWithUsername = {...review, username: username};
+      setReviews(prev => [reviewWithUsername].concat(prev));
+
+      // Save comment to user
+      await axios.post("http://localhost:3000/users/review", { userID: userID, reviewID: review._id });
+      dispatch(addReview(review._id));
+      
+      // Reset comment
+      handleResetComment();
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  const handleResetComment = () => {
+    setCommentSelected(false);
+    setComment('');
+    setRating(0);
   }
 
   const {
@@ -158,11 +224,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
             </Box>
             <Box>
               <Stack direction="row" spacing={2}>
-                <Button variant="outlined" onClick={() => {
-                  setCommentSelected(false);
-                  setComment('');
-                  setRating(0);
-                }}>Cancel</Button>
+                <Button variant="outlined" onClick={handleResetComment}>Cancel</Button>
                 <Button variant="outlined" onClick={handleComment}
                   disabled={!commentButtonEnabled}>Comment</Button>
               </Stack>
@@ -170,20 +232,19 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
           </Stack>
         }
 
-        {tmdb_movie_id.reviews && (
-          <>
-            <Typography variant="h6" mt={2}>
-              Reviews
-            </Typography>
-            <List>
-              {tmdb_movie_id.reviews.map((review, index) => (
-                <ListItem key={index}>
-                  <ListItemText primary={review} />
-                </ListItem>
-              ))}
-            </List>
-          </>
-        )}
+        <Typography variant="h6" mt={2}>
+          Reviews
+        </Typography>
+        <List>
+          {reviews.map((review, index) => (
+            <ListItem key={index}>
+              <ListItemText primary={review.username} secondary={review.comment} />
+
+              <Rating value={review.rating} size="small" readOnly />
+            </ListItem>
+          ))}
+        </List>
+
       </DialogContent>
     </>
   );

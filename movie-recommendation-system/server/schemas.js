@@ -63,6 +63,10 @@ const watchlistSchema = new mongoose.Schema({
       ref: "Movie",
       required: true
     },
+    title: {
+      type: String,
+      required: true
+    },
     rating: {
       type: Number,
       required: true

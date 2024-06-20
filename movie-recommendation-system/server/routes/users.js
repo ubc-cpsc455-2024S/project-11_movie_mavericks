@@ -24,6 +24,19 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
+/* GET username by user id */
+router.get("/:userID", async (req, res, next) => {
+  const userID = req.params.userID;
+
+  try {
+    const user = await User.findOne({ '_id': userID });
+    res.json(user.username)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+})
+
 /* POST user login */
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -103,5 +116,19 @@ router.delete("/:username", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+/* A user post a comment */
+router.post("/review", async (req, res, next) => {
+  try {
+    const { userID, reviewID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    // Reviews added in reverse chronological order
+    user.reviews.unshift(reviewID);
+    user.save().then(() => res.json(reviewID));
+} catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+}
+})
 
 module.exports = router;
