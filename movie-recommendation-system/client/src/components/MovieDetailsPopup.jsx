@@ -10,12 +10,19 @@ import {
   ListItem,
   ListItemText,
   Rating,
+  TextField,
+  Button,
+  Stack,
 } from '@mui/material';
 
 const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   const [movieDetails, setMovieDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+  const [commentSelected, setCommentSelected] = useState(false);
+  const [commentButtonEnabled, setCommentButtonEnabled] = useState(false);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -44,6 +51,14 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
     fetchMovieDetails();
   }, [tmdb_movie_id]);
 
+  useEffect(() => {
+    if (rating > 0 && comment !== '') {
+      setCommentButtonEnabled(true);
+    } else {
+      setCommentButtonEnabled(false);
+    }
+  }, [rating, comment])
+
   if (loading) {
     return (
       <Box display="flex" justifyContent="center">
@@ -58,6 +73,10 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
         <Typography>Error fetching movie details: {error.message}</Typography>
       </Box>
     );
+  }
+
+  const handleComment = async () => {
+    console.log(comment, rating);
   }
 
   const {
@@ -118,6 +137,39 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
         <Typography variant="body2">
           <strong>Production Companies:</strong> {production_companies.map((company) => company.name).join(', ')}
         </Typography>
+        <br></br>
+        <Typography variant="body1">
+          <strong>Comments</strong>
+        </Typography>
+        <TextField fullWidth id="standard-basic" label="Leave a comment" variant="standard" margin="normal"
+          autoComplete='off'
+          onClick={() => setCommentSelected(true)}
+          value={comment}
+          onChange={(event) => setComment(event.target.value)}
+        />
+        {commentSelected &&
+          <Stack direction="row" spacing={2}>
+            <Box flexGrow={1}>
+              <Rating
+                name="simple-controlled"
+                value={rating}
+                onChange={(event, newRating) => setRating(newRating)}
+              />
+            </Box>
+            <Box>
+              <Stack direction="row" spacing={2}>
+                <Button variant="outlined" onClick={() => {
+                  setCommentSelected(false);
+                  setComment('');
+                  setRating(0);
+                }}>Cancel</Button>
+                <Button variant="outlined" onClick={handleComment}
+                  disabled={!commentButtonEnabled}>Comment</Button>
+              </Stack>
+            </Box>
+          </Stack>
+        }
+
         {tmdb_movie_id.reviews && (
           <>
             <Typography variant="h6" mt={2}>

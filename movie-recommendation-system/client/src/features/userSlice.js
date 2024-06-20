@@ -3,9 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   loggedIn: false,
   user: null,
-  username: "username",
-  password: "password",
-  wishlists: [],
+  username: null,
+  watchlists: [],
   reviews: [],
 };
 
@@ -17,18 +16,15 @@ const userSlice = createSlice({
       state.loggedIn = true;
       state.user = action.payload;
       state.username = action.payload.username;
-      state.password = action.payload.password;
+      state.watchlists = action.payload.watchlists;
+      state.reviews = action.payload.reviews;
     },
     logout: (state) => {
-      state.loggedIn = false;
-      state.user = null;
-      state.username = null;
-      state.password = null;
+      return initialState
     },
     editUser: (state, action) => {
       const { username, password } = action.payload;
       state.username = username;
-      state.password = password;
     },
   },
 });

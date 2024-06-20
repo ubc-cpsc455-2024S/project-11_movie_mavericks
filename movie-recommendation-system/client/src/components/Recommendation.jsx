@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, Dialog } from "@mui/material";
+import { Button, CardActionArea, Dialog } from "@mui/material";
 import MovieDetailsPopup from "./MovieDetailsPopup";
 
 export default function Recommendation() {
@@ -20,7 +20,7 @@ export default function Recommendation() {
   const handleClose = () => {
     setSelectedMovie(null);
   };
-  
+
   const cards = recommendations.map((movie) => (
     <GridCard key={movie.id} movie={movie} onLearnMoreClick={() => handleLearnMoreClick(movie)}
     />
@@ -44,6 +44,7 @@ function GridCard(props) {
   return (
     <Grid item xs={6} sm={3}>
       <Card sx={{ backgroundColor: "#37474F", color: "white" }}>
+        <CardActionArea onClick={onLearnMoreClick}>
           <CardMedia
             component="img"
             style={{ height: "300px", objectFit: "cover" }}
@@ -64,16 +65,8 @@ function GridCard(props) {
               {movie.title != movie.original_title &&
                 "(" + movie.original_title + ")"}
             </Typography>
-            <Stack style={{padding: "5px"}}>
-              <Button style={{padding: "5px", color: "white" }} variant="outlined">Review</Button>
-            </Stack>
-            <Stack style={{padding: "5px"}}>
-              <Button style={{padding: "5px", color: "white"}} variant="outlined">Add to watchlist</Button>
-            </Stack>
-            <Stack style={{padding: "5px"}}>
-              <Button style={{ padding: "5px", color: "white" }} variant="outlined" onClick={onLearnMoreClick}>Learn More</Button>
-            </Stack>
           </CardContent>
+        </CardActionArea>
       </Card>
     </Grid>
   );
