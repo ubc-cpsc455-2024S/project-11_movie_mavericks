@@ -81,7 +81,7 @@ const UserInfo = () => {
             variant="contained"
             sx={{ marginBottom: 2 }}
             component={Link}
-            to="/account/logout"
+            to="/login"
             onClick={() => dispatch(logout())}
           >
             Log Out
@@ -105,7 +105,7 @@ const UserInfo = () => {
             variant="h5"
             gutterBottom
           >
-            My Account
+            Hello there {username}
           </Typography>
           {location.pathname === "/account" && <Account />}
           <Outlet />

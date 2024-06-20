@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -26,6 +28,7 @@ const Login = () => {
 
       // Login successful
       dispatch(login(response.data));
+      navigate("/account");
 
     } catch (error) {
       // Invalid credentials
