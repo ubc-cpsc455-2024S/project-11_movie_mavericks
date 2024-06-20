@@ -34,8 +34,8 @@ router.post("/", async (req, res, next) => {
     }
 });
 
-/* Post a review to a movie */
-router.post("/review", async (req, res, next) => {
+/* Save review to a movie */
+router.patch("/review", async (req, res, next) => {
     try {
         const { movieID, reviewID } = req.body;
         const movie = await Movie.findOne({ _id: movieID });

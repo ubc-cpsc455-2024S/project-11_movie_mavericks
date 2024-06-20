@@ -117,8 +117,8 @@ router.delete("/:username", async (req, res) => {
   }
 });
 
-/* A user post a comment */
-router.post("/review", async (req, res, next) => {
+/* Save comment to a user */
+router.patch("/review", async (req, res, next) => {
   try {
     const { userID, reviewID } = req.body;
     const user = await User.findOne({ _id: userID });

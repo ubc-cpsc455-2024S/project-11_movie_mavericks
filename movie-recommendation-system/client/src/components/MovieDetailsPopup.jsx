@@ -80,7 +80,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
         }
       }
     }
-    
+
     if (movieDetails) {
       fetchMovieComments();
     }
@@ -134,12 +134,12 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
       const review = reviewResponse.data;
 
       // Save comment to movie
-      await axios.post("http://localhost:3000/movies/review", { movieID: movieID, reviewID: review._id });
+      await axios.patch("http://localhost:3000/movies/review", { movieID: movieID, reviewID: review._id });
       const reviewWithUsername = { ...review, username: username };
       setReviews(prev => [reviewWithUsername].concat(prev));
 
       // Save comment to user
-      await axios.post("http://localhost:3000/users/review", { userID: userID, reviewID: review._id });
+      await axios.patch("http://localhost:3000/users/review", { userID: userID, reviewID: review._id });
       dispatch(addReview(review._id));
 
       // Reset comment
