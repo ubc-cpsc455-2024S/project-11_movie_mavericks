@@ -28,8 +28,8 @@ const navItems = [
   { label: "Recommendation", path: "/recommendation" },
   { label: "About", path: "/about" },
   { label: "I'm Feeling Lucky", path: "/feeling-lucky" },
-  { label: "Login", path: "/login" },
-  { label: "Account", path: "/account" },
+  // { label: "Login", path: "/login" },
+  // { label: "Account", path: "/account" },
 ];
 
 function Navbar(props) {
@@ -59,6 +59,19 @@ function Navbar(props) {
             </ListItemButton>
           </ListItem>
         ))}
+        {/* Login */}
+        {!loggedIn && (
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{ textAlign: "center" }}
+              component={Link}
+              to="/login"
+            >
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {/* Account */}
         {loggedIn && (
           <ListItem disablePadding>
             <ListItemButton
@@ -119,6 +132,13 @@ function Navbar(props) {
                 {item.label}
               </Button>
             ))}
+            {/* Login */}
+            {!loggedIn && (
+              <Button sx={{ color: "yellow" }} component={Link} to="/login">
+                Login
+              </Button>
+            )}
+            {/* Account */}
             {loggedIn && (
               <Button sx={{ color: "yellow" }} component={Link} to="/account">
                 Account

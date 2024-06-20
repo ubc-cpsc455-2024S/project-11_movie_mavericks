@@ -2,33 +2,20 @@ var express = require("express");
 var router = express.Router();
 var bcrypt = require("bcrypt");
 var mongoose = require("mongoose");
+var {User, Movie, Watchlist, Review} = require("../schemas");
 
 const uri = "mongodb+srv://moviehub:cs455@moviehub.vekjlyg.mongodb.net/?retryWrites=true&w=majority&appName=MovieHub";
 
 function connect() {
   try {
-      mongoose.connect(uri);
-      console.log("Successful connection to MongoDB");
+    mongoose.connect(uri);
+    console.log("Successful connection to MongoDB");
   } catch (error) {
-      console.log(error);
+    console.log(error);
   }
 }
 
 connect();
-
-const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-})
-
-const User = mongoose.model('User', userSchema);
 
 let users = [];
 
@@ -37,30 +24,47 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
+/* GET username by user id */
+router.get("/:userID", async (req, res, next) => {
+  const userID = req.params.userID;
+
+  try {
+    const user = await User.findOne({ '_id': userID });
+    res.json(user.username)
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 /* POST user login */
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({'username': username});
+    const user = await User.findOne({ 'username': username });
 
     if (user) {
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         return res.status(400).json({ msg: "Invalid Credentials" });
       }
-      res.send("Login successful"); 
+      var userObj = user.toObject();
+      delete userObj.password;
+      res.json(userObj);
     } else {
       const salt = await bcrypt.genSalt(10);
       const pass = await bcrypt.hash(password, salt);
-    
+
       const newUser = new User({
         username: username,
-        password: pass
+        password: pass,
+        watchlists: [],
+        reviews: []
       });
 
       newUser.save();
-      res.send(`Registration successful for ${username}`);  
+      res.send(`Registration successful for ${username}`);
     }
   } catch (err) {
     console.error(err.message);
@@ -74,7 +78,7 @@ router.put("/:username", async (req, res) => {
   const { username: oldUsername } = req.params;
 
   try {
-    const user = await User.findOne({'username': oldUsername});
+    const user = await User.findOne({ 'username': oldUsername });
 
     if (user) {
       const salt = await bcrypt.genSalt(10);
@@ -100,7 +104,7 @@ router.delete("/:username", async (req, res) => {
   const { username } = req.params;
 
   try {
-    const usernameToDelete = await User.deleteOne({'username': username});
+    const usernameToDelete = await User.deleteOne({ 'username': username });
 
     if (usernameToDelete.deletedCount === 1) {
       res.send("User deleted successfully");
@@ -111,6 +115,20 @@ router.delete("/:username", async (req, res) => {
     console.error(err.message);
     res.status(500).send("Server error");
   }
+});
+
+/* Save comment to a user */
+router.patch("/review", async (req, res, next) => {
+  try {
+    const { userID, reviewID } = req.body;
+    const user = await User.findOne({ _id: userID });
+    // Reviews added in reverse chronological order
+    user.reviews.unshift(reviewID);
+    user.save().then(() => res.json(reviewID));
+} catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+}
 });
 
 module.exports = router;

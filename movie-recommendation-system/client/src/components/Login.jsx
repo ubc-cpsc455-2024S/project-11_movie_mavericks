@@ -1,26 +1,46 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "../features/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
+
   const onSubmit = async (data) => {
-    console.log(data);
     try {
-      const request = await axios.post("http://localhost:3000/users/login", data);
-      console.log(request);
+      const response = await axios.post("http://localhost:3000/users/login", data);
+
+      // Registration successful
+      if (typeof response.data === 'string') {
+        alert(response.data);
+        return;
+      }
+
+      // Login successful
+      dispatch(login(response.data));
+      navigate("/account");
+
     } catch (error) {
-      console.error(error);
+      // Invalid credentials
+      console.log(error.response.data.msg);
+      alert(error.response.data.msg);
     }
   };
+
   const clearFields = () => {
     reset();
   };
+
   return (
     <>
       <div>

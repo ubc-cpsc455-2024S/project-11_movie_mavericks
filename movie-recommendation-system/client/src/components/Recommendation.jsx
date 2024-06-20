@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -6,13 +6,24 @@ import Stack from "@mui/material/Stack";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button } from "@mui/material";
+import { Button, CardActionArea, Dialog } from "@mui/material";
+import MovieDetailsPopup from "./MovieDetailsPopup";
 
 export default function Recommendation() {
   const recommendations = useSelector((state) => state.recommendations);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
+  const handleLearnMoreClick = (movie) => {
+    setSelectedMovie(movie.id);
+  };
+
+  const handleClose = () => {
+    setSelectedMovie(null);
+  };
 
   const cards = recommendations.map((movie) => (
-    <GridCard key={movie.id} movie={movie} />
+    <GridCard key={movie.id} movie={movie} onLearnMoreClick={() => handleLearnMoreClick(movie)}
+    />
   ));
 
   return (
@@ -21,15 +32,19 @@ export default function Recommendation() {
       <Grid container spacing={3}>
         {cards}
       </Grid>
+      <Dialog open={!!selectedMovie} onClose={handleClose} maxWidth="md" fullWidth>
+        {selectedMovie && <MovieDetailsPopup tmdb_movie_id={selectedMovie} onClose={handleClose} />}
+      </Dialog>
     </>
   );
 }
 
 function GridCard(props) {
-  const movie = props.movie;
+  const { movie, onLearnMoreClick } = props;
   return (
     <Grid item xs={6} sm={3}>
       <Card sx={{ backgroundColor: "#37474F", color: "white" }}>
+        <CardActionArea onClick={onLearnMoreClick}>
           <CardMedia
             component="img"
             style={{ height: "300px", objectFit: "cover" }}
@@ -50,16 +65,8 @@ function GridCard(props) {
               {movie.title != movie.original_title &&
                 "(" + movie.original_title + ")"}
             </Typography>
-            <Stack style={{padding: "5px"}}>
-              <Button style={{padding: "5px", color: "white" }} variant="outlined">Review</Button>
-            </Stack>
-            <Stack style={{padding: "5px"}}>
-              <Button style={{padding: "5px", color: "white"}} variant="outlined">Add to watchlist</Button>
-            </Stack>
-            <Stack style={{padding: "5px"}}>
-              <Button style={{padding: "5px", color: "white"}} variant="outlined">Learn More</Button>
-            </Stack>
           </CardContent>
+        </CardActionArea>
       </Card>
     </Grid>
   );

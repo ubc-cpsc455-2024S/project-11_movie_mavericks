@@ -56,7 +56,7 @@ export default function Form() {
     const response = await fetch(url, options);
     const responseJson = await response.json();
     console.log(responseJson);
-    const numRecommendation = Math.min(5, responseJson["results"].length);
+    const numRecommendation = Math.min(8, responseJson["results"].length);
     for (let i = 0; i < numRecommendation; i++) {
       dispatch(addRecommendation(responseJson["results"][i]))
     }
