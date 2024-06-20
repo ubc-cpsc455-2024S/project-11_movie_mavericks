@@ -35,7 +35,7 @@ router.get("/:userID", async (req, res, next) => {
     console.error(err.message);
     res.status(500).send("Server error");
   }
-})
+});
 
 /* POST user login */
 router.post("/login", async (req, res) => {
@@ -129,6 +129,6 @@ router.post("/review", async (req, res, next) => {
     console.error(err.message);
     res.status(500).send("Server error");
 }
-})
+});
 
 module.exports = router;

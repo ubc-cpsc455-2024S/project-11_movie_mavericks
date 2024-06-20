@@ -60,21 +60,32 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
       }
     };
 
+    fetchMovieDetails();
+  }, [tmdb_movie_id]);
+
+  useEffect(() => {
     const fetchMovieComments = async () => {
+      let movieResponse;
       try {
-        const movieResponse = await axios.get(`http://localhost:3000/movies/${tmdb_movie_id}`)
+        movieResponse = await axios.get(`http://localhost:3000/movies/${tmdb_movie_id}`);
         const responses = movieResponse.data.reviews.map(reviewID => axios.get(`http://localhost:3000/reviews/${reviewID}`));
         Promise.all(responses)
           .then(values => values.map(value => value.data))
           .then(data => setReviews(data));
       } catch (error) {
-        console.log(error);
+        try {
+          movieResponse = await axios.post("http://localhost:3000/movies", { tmdb_movie_id: tmdb_movie_id, title: movieDetails.original_title });
+        } catch (postError) {
+          console.error(postError);
+        }
       }
     }
+    
+    if (movieDetails) {
+      fetchMovieComments();
+    }
 
-    fetchMovieDetails();
-    fetchMovieComments();
-  }, [tmdb_movie_id]);
+  }, [movieDetails])
 
   useEffect(() => {
     if (rating > 0 && comment !== '') {
@@ -124,13 +135,13 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
 
       // Save comment to movie
       await axios.post("http://localhost:3000/movies/review", { movieID: movieID, reviewID: review._id });
-      const reviewWithUsername = {...review, username: username};
+      const reviewWithUsername = { ...review, username: username };
       setReviews(prev => [reviewWithUsername].concat(prev));
 
       // Save comment to user
       await axios.post("http://localhost:3000/users/review", { userID: userID, reviewID: review._id });
       dispatch(addReview(review._id));
-      
+
       // Reset comment
       handleResetComment();
 

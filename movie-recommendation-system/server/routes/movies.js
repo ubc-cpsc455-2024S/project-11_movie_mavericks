@@ -7,12 +7,32 @@ router.get("/:tmdbID", async (req, res, next) => {
     const tmdbID = req.params.tmdbID;
     try {
         const movie = await Movie.findOne({ tmdb_movie_id: tmdbID });
-        res.json(movie);
+        if (movie) {
+            res.json(movie);
+        } else {
+            res.status(404).json(`${tmdbID} not in our database`);
+        }
+
     } catch (err) {
         console.error(err.message);
         res.status(500).send("Server error");
     }
-})
+});
+
+router.post("/", async (req, res, next) => {
+    try {
+        const { tmdb_movie_id, title } = req.body;
+        const newMovie = new Movie({
+            tmdb_movie_id: tmdb_movie_id,
+            title: title,
+            reviews: []
+        });
+        newMovie.save().then(movie => res.json(movie));
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Server error");
+    }
+});
 
 /* Post a review to a movie */
 router.post("/review", async (req, res, next) => {
@@ -26,6 +46,6 @@ router.post("/review", async (req, res, next) => {
         console.error(err.message);
         res.status(500).send("Server error");
     }
-})
+});
 
 module.exports = router;
