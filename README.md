@@ -13,15 +13,17 @@
 - As a user, I want to be able to navigate to the website and open it on any browser of my choice.
 - As a user, I want to be able to be able to see the options on the form so that I can send my inputs to the system.
 - As a user, I want to be able to edit/remove my previously submitted preferences.
+- As a user, I want to be able to create a watchlist/basket connected to my account.
 
 ### Standard Requirements:
 - As a user, I want to be able to see at most 5 movie recommendations so that I can choose one of them to watch.
 - As a user, I want to be able to see some high-level info about the recommended movies, such as poster, synopsis.
 - As a user, I want to be able to download all my movies using a Torrent link so that I can view them whenever I want locally.
+- As a user, I want to be able to add/edit/delete items from my watchlist.
 
 ### Stretch Requirements:
 - As a user, I want to be able to create an account so that I don't have to worry about losing my preferences.
-- As a user, I want to be able to create a watchlist/basket connected to my account.
+- As a user, I want to be able to create multiple watchlists instead of having to deal with the same watchlist every time.
 
 ## Team Members
 
@@ -39,6 +41,3 @@
 
 
 {Add your stuff here}
-
-
-
