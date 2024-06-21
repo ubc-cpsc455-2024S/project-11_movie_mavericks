@@ -1,4 +1,4 @@
-# Group 11_Movie_Mavericks - {Movie Recommendation System}
+# Group 11_Movie_Mavericks - {MovieHub}
 
 ## Describe your topic/interest in about 150-200 words
 
