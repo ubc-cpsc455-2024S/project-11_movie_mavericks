@@ -17,6 +17,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { original } from '@reduxjs/toolkit';
 import { addReview } from '../features/userSlice';
+import YoutubeEmbed from './YoutubeEmbed';
 
 const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   const username = useSelector(state => state.user.username);
 
   const [movieDetails, setMovieDetails] = useState(null);
+  const [videoID, setVideoID] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -50,9 +52,20 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
         }
       };
 
+      const videoOptions = {
+        method: 'GET',
+        url: `https://api.themoviedb.org/3/movie/${tmdb_movie_id}/videos?language=en-US`,
+        headers: {
+          accept: 'application/json',
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4'
+        }
+      };
+
       try {
         const response = await axios.request(options);
         setMovieDetails(response.data);
+        const videos = await axios.request(videoOptions);
+        setVideoID(videos.data.results.find(v => v.type === "Trailer").key)
       } catch (err) {
         setError(err);
       } finally {
@@ -61,7 +74,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
     };
 
     fetchMovieDetails();
-  }, [tmdb_movie_id]);
+  }, []);
 
   useEffect(() => {
     const fetchMovieComments = async () => {
@@ -174,7 +187,8 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
     <>
       <DialogTitle>{original_title}</DialogTitle>
       <DialogContent dividers>
-        {poster_path && (
+        {videoID && <YoutubeEmbed videoID={videoID} title={original_title}/>}
+        {!videoID && poster_path && (
           <Box display="flex" justifyContent="center">
             <img
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
@@ -243,9 +257,6 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
           </Stack>
         }
 
-        <Typography variant="h6" mt={2}>
-          Reviews
-        </Typography>
         <List>
           {reviews.map((review, index) => (
             <ListItem key={index}>
