@@ -8,6 +8,8 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, Dialog } from "@mui/material";
 import MovieDetailsPopup from "./MovieDetailsPopup";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Recommendation() {
   const recommendations = useSelector((state) => state.recommendations);
@@ -22,7 +24,10 @@ export default function Recommendation() {
   };
 
   const cards = recommendations.map((movie) => (
-    <GridCard key={movie.id} movie={movie} onLearnMoreClick={() => handleLearnMoreClick(movie)}
+    <GridCard
+      key={movie.id}
+      movie={movie}
+      onLearnMoreClick={() => handleLearnMoreClick(movie)}
     />
   ));
 
@@ -32,8 +37,18 @@ export default function Recommendation() {
       <Grid container spacing={3}>
         {cards}
       </Grid>
-      <Dialog open={!!selectedMovie} onClose={handleClose} maxWidth="md" fullWidth>
-        {selectedMovie && <MovieDetailsPopup tmdb_movie_id={selectedMovie} onClose={handleClose} />}
+      <Dialog
+        open={!!selectedMovie}
+        onClose={handleClose}
+        maxWidth="md"
+        fullWidth
+      >
+        {selectedMovie && (
+          <MovieDetailsPopup
+            tmdb_movie_id={selectedMovie}
+            onClose={handleClose}
+          />
+        )}
       </Dialog>
     </>
   );
@@ -41,6 +56,18 @@ export default function Recommendation() {
 
 function GridCard(props) {
   const { movie, onLearnMoreClick } = props;
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+
+  const navigate = useNavigate();
+
+  const addToWatchlist = (movie) => {
+    if (loggedIn) {
+      console.log(movie);
+    } else {
+      alert("Please log in to add movies to your watchlist.");
+      navigate("/login");
+    }
+  };
   return (
     <Grid item xs={6} sm={3}>
       <Card sx={{ backgroundColor: "#37474F", color: "white" }}>
@@ -66,6 +93,14 @@ function GridCard(props) {
                 "(" + movie.original_title + ")"}
             </Typography>
           </CardContent>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={() => addToWatchlist(movie)}
+          >
+            Add to Watchlist
+          </Button>
         </CardActionArea>
       </Card>
     </Grid>
