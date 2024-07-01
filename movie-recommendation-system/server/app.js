@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var reviewsRouter = require("./routes/reviews");
 var moviesRouter = require("./routes/movies");
+var watchlistRouter = require("./routes/watchlists");
 
 var app = express();
 
@@ -22,5 +23,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/reviews", reviewsRouter);
 app.use("/movies", moviesRouter);
+app.use("/watchlists", watchlistRouter);
 
 module.exports = app;
