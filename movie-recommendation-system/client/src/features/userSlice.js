@@ -20,7 +20,7 @@ const userSlice = createSlice({
       state.reviews = action.payload.reviews;
     },
     logout: (state) => {
-      return initialState
+      return initialState;
     },
     editUser: (state, action) => {
       const { username, password } = action.payload;
@@ -28,10 +28,54 @@ const userSlice = createSlice({
     },
     addReview: (state, action) => {
       state.reviews.unshift(action.payload);
-    }
+    },
+    addWatchlist: (state, action) => {
+      state.watchlists.push(action.payload);
+    },
+    updateWatchlist: (state, action) => {
+      const index = state.watchlists.findIndex(
+        (watchlist) => watchlist._id === action.payload._id
+      );
+      if (index !== -1) {
+        state.watchlists[index] = action.payload;
+      }
+    },
+    deleteWatchlist: (state, action) => {
+      state.watchlists = state.watchlists.filter(
+        (watchlist) => watchlist._id !== action.payload
+      );
+    },
+    addMovieToWatchlist: (state, action) => {
+      const { watchlistID, movieID } = action.payload;
+      const watchlist = state.watchlists.find(
+        (watchlist) => watchlist._id === watchlistID
+      );
+      if (watchlist) {
+        watchlist.movies.push(movieID);
+      }
+    },
+    removeMovieFromWatchlist: (state, action) => {
+      const { watchlistID, movieID } = action.payload;
+      const watchlist = state.watchlists.find(
+        (watchlist) => watchlist._id === watchlistID
+      );
+      if (watchlist) {
+        watchlist.movies = watchlist.movies.filter((id) => id !== movieID);
+      }
+    },
   },
 });
 
-export const { login, logout, editUser, addReview } = userSlice.actions;
+export const {
+  login,
+  logout,
+  editUser,
+  addReview,
+  addWatchlist,
+  updateWatchlist,
+  deleteWatchlist,
+  addMovieToWatchlist,
+  removeMovieFromWatchlist,
+} = userSlice.actions;
 
 export default userSlice.reducer;

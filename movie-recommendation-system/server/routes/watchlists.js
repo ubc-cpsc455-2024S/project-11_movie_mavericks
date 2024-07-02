@@ -87,12 +87,14 @@ router.put("/:watchlistID", async (req, res) => {
 /* POST add movie to watchlist */
 router.post("/:watchlistID/movies", async (req, res) => {
   const watchlistID = req.params.watchlistID;
-  const { movie_id } = req.body;
+  const { movieID } = req.body;
+
+  console.log(watchlistID, movieID);
   try {
     const watchlist = await Watchlist.findOne({ _id: watchlistID });
 
     if (watchlist) {
-      watchlist.movies.push(movie_id);
+      watchlist.movies.push(movieID);
       await watchlist.save();
       res.json(watchlist);
     } else {
