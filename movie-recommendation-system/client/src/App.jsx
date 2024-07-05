@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import Recommendation from "./components/Recommendation";
 import UserInfo from "./components/UserInfo";
 import Reviews from "./components/Reviews";
+import Wishlists from "./components/Wishlists";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route path="feeling-lucky" element={<FeelingLucky />} />
           <Route path="login" element={<Login />} />
           <Route path="account" element={<UserInfo />}>
-            <Route path="wishlists" element={<div>Wishlists</div>} />
+            <Route path="wishlists" element={<Wishlists />} />
             <Route path="reviews" element={<Reviews />} />
             <Route path="logout" element={<div>Log Out</div>} />
           </Route>

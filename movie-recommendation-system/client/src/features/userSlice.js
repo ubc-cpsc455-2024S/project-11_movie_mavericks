@@ -19,11 +19,11 @@ const userSlice = createSlice({
       state.watchlists = action.payload.watchlists;
       state.reviews = action.payload.reviews;
     },
-    logout: (state) => {
+    logout: () => {
       return initialState;
     },
     editUser: (state, action) => {
-      const { username, password } = action.payload;
+      const { username } = action.payload;
       state.username = username;
     },
     addReview: (state, action) => {
@@ -46,12 +46,13 @@ const userSlice = createSlice({
       );
     },
     addMovieToWatchlist: (state, action) => {
-      const { watchlistID, movieID } = action.payload;
+      const { watchlist_id, movie_id } = action.payload;
+
       const watchlist = state.watchlists.find(
-        (watchlist) => watchlist._id === watchlistID
+        (watchlist) => watchlist._id === watchlist_id
       );
       if (watchlist) {
-        watchlist.movies.push(movieID);
+        watchlist.movies.push(movie_id);
       }
     },
     removeMovieFromWatchlist: (state, action) => {

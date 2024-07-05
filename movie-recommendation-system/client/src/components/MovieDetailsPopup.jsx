@@ -40,6 +40,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
+      console.log(tmdb_movie_id);
       const options = {
         method: 'GET',
         url: `https://api.themoviedb.org/3/movie/${tmdb_movie_id}`,

@@ -20,7 +20,7 @@ import {
   DialogActions,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { addWatchlist } from "../features/userSlice";
+import { addWatchlist, addMovieToWatchlist } from "../features/userSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Recommendation() {
@@ -69,54 +69,51 @@ export default function Recommendation() {
     }
   };
 
-  const handleWatchlistSubmit = () => {
+  const handleWatchlistSubmit = async () => {
     if (selectedWatchlist) {
-      // axios
-      //   .post(`http://localhost:3000/watchlists/${selectedWatchlist}/movies`, {
-      //     movieID: selectedMovie,
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
-      //     setShowWatchlistDialog(false);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
-      console.log("Watchlist selected:", selectedWatchlist);
-    } else if (newWatchlistName) {
-      // axios
-      //   .post("http://localhost:3000/watchlists", {
-      //     userID,
-      //     name: newWatchlistName,
-      //   })
-      //   .then((response) => {
-      //     const newWatchlist = response.data;
-      //     return axios.post(
-      //       `http://localhost:3000/watchlists/${newWatchlist._id}/movies`,
-      //       {
-      //         movieID: selectedMovie.id,
-      //       }
-      //     );
-      //   })
-      //   .then((response) => {
-      //     console.log(response.data);
-      //     setShowWatchlistDialog(false);
-      //   })
-      //   .catch((error) => {
-      //     console.error(error);
-      //   });
-
-      console.log("New watchlist name:", newWatchlistName);
+      const options = {
+        method: "GET",
+        url: `https://api.themoviedb.org/3/movie/${selectedMovie}`,
+        params: {
+          language: "en-US",
+        },
+        headers: {
+          accept: "application/json",
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4",
+        },
+      };
+      try {
+        const response = await axios.request(options);
+        const movieDetails = {
+          userID: userID,
+          watchlist_id: selectedWatchlist,
+          movie_id: response.data.id,
+          movie_title: response.data.original_title,
+        };
+        dispatch(addWatchlist(movieDetails));
+        dispatch(addMovieToWatchlist(movieDetails));
+        await axios.post(
+          `http://localhost:3000/watchlists/${selectedWatchlist}/movies`,
+          {
+            movieID: response.data.id,
+          }
+        );
+      } catch (error) {
+        console.error(error);
+      }
     }
+
+    setShowWatchlistDialog(false);
   };
 
   const renderWatchlistSelect = () => {
     if (!watchlists) {
-      console.log("No watchlists found");
+      //console.log("No watchlists found");
       return null;
     }
     if (watchlists.length === 0) {
-      console.log("Watchlist is empty");
+      //console.log("Watchlist is empty");
       return (
         <TextField
           margin="dense"
@@ -182,6 +179,7 @@ export default function Recommendation() {
         <DialogActions>
           <Button onClick={() => setShowWatchlistDialog(false)}>Cancel</Button>
           <Button onClick={handleWatchlistSubmit}>Add</Button>
+          <Button>Create new Watchlist</Button>
         </DialogActions>
       </Dialog>
     </>
