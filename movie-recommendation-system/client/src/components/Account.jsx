@@ -41,7 +41,15 @@ const Account = () => {
   };
 
   return (
-    <Paper elevation={4}>
+    <Paper
+      elevation={4}
+      sx={{
+        padding: "50px 30px",
+        marginBottom: 2,
+        backgroundColor: "#F9D689",
+        borderRadius: 10,
+      }}
+    >
       <Box sx={{ flexGrow: 1, paddingLeft: 3, paddingTop: 4 }}>
         <Outlet />
         <Grid container spacing={2}>
@@ -53,6 +61,13 @@ const Account = () => {
                   onChange={(e) => setUsername(e.target.value)}
                   fullWidth
                   variant="outlined"
+                  sx={{
+                    marginBottom: 2,
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "black",
+                    borderRadius: 35,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>

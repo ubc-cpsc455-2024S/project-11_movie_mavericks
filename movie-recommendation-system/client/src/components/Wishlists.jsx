@@ -4,6 +4,7 @@ import axios from "axios";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeMovieFromWatchlist } from "../features/userSlice";
+import ShareIcon from "@mui/icons-material/Share";
 
 export default function Watchlists() {
   const [watchlists, setWatchlists] = useState([]);
@@ -67,12 +68,45 @@ export default function Watchlists() {
     }
   };
 
+  const handleShare = async (platform, movie) => {
+    const text = encodeURIComponent(
+      "Check out this cool movie I just watched! It's called: " + movie.title
+    );
+    if (platform === "twitter") {
+      window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
+    } else if (platform === "facebook") {
+      window.open(
+        `https://www.facebook.com/sharer/sharer.php?u=${text}`,
+        "_blank"
+      );
+    } else if (platform === "linkedin") {
+      window.open(
+        `https://www.linkedin.com/shareArticle?mini=true&title=${text}`,
+        "_blank"
+      );
+    }
+  };
+
   return (
     <div>
       {watchlists.map((watchlist) => (
-        <Card key={watchlist._id} sx={{ marginBottom: 2 }}>
+        <Card
+          key={watchlist._id}
+          sx={{ marginBottom: 2, backgroundColor: "#F9D689", borderRadius: 10 }}
+        >
           <CardContent>
-            <Typography variant="h5">{watchlist.name}</Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                marginBottom: 1,
+                marginTop: 1,
+                marginLeft: 1,
+                marginRight: 1,
+                fontWeight: "bold",
+              }}
+            >
+              {watchlist.name}
+            </Typography>
             {watchlist.movies.map((movie) => (
               <div
                 key={movie.id}
@@ -83,7 +117,43 @@ export default function Watchlists() {
                   marginBottom: 1,
                 }}
               >
-                <Typography variant="body1" style={{ marginRight: 50 }}>{movie.title}</Typography>
+                <Typography
+                  variant="body1"
+                  style={{
+                    marginRight: 50,
+                    marginLeft: 5,
+                    fontWeight: "bold",
+                    color: "black",
+                    fontSize: 20,
+                    textAlign: "left",
+                    textDecoration: "underline",
+                    textDecorationColor: "black",
+                    textDecorationStyle: "solid",
+                    textDecorationThickness: "5px",
+                    textDecorationSkip: "none",
+                    textDecorationSkipInk: "none",
+                  }}
+                >
+                  {movie.title}
+                </Typography>
+                <Button
+                  onClick={() => handleShare("twitter", movie)}
+                  sx={{ mr: 1, fontWeight: "bold", fontSize: 15 }}
+                >
+                  <ShareIcon /> Twitter
+                </Button>
+                <Button
+                  onClick={() => handleShare("facebook", movie)}
+                  sx={{ mr: 1, fontWeight: "bold", fontSize: 15 }}
+                >
+                  <ShareIcon /> Facebook
+                </Button>
+                <Button
+                  onClick={() => handleShare("linkedin", movie)}
+                  sx={{ mr: 1, fontWeight: "bold", fontSize: 15 }}
+                >
+                  <ShareIcon /> LinkedIn
+                </Button>
                 <Button
                   variant="contained"
                   color="error"
@@ -93,6 +163,7 @@ export default function Watchlists() {
                     width: 100,
                     marginBottom: 15,
                     marginTop: 15,
+                    borderRadius: 20,
                   }}
                   onClick={() => handleRemoveMovie(watchlist._id, movie.id)}
                 >

@@ -105,7 +105,7 @@ const UserInfo = () => {
             variant="h5"
             gutterBottom
           >
-            Hello there {username}
+            Hello there {username}!
           </Typography>
           {location.pathname === "/account" && <Account />}
           <Outlet />

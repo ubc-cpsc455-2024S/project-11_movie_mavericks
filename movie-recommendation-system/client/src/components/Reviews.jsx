@@ -1,4 +1,12 @@
-import { Box, List, ListItem, ListItemText, Paper, Rating, Typography } from "@mui/material";
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Rating,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -9,24 +17,48 @@ const Reviews = () => {
 
   useEffect(() => {
     const getReviews = async () => {
-      const responses = reviewIDs.map(reviewID => axios.get(`http://localhost:3000/reviews/${reviewID}`));
-      Promise.all(responses).then(values => values.map(value => value.data)).then(data => setReviews(data));
-    }
+      const responses = reviewIDs.map((reviewID) =>
+        axios.get(`http://localhost:3000/reviews/${reviewID}`)
+      );
+      Promise.all(responses)
+        .then((values) => values.map((value) => value.data))
+        .then((data) => setReviews(data));
+    };
     getReviews();
   }, [reviewIDs]);
 
   return (
     <div>
-      <Paper elevation={3} sx={{ padding: "50px 30px" }}>
+      <Paper
+        elevation={3}
+        sx={{
+          padding: "50px 30px",
+          marginBottom: 2,
+          backgroundColor: "#F9D689",
+          borderRadius: 10,
+        }}
+      >
         <Typography variant="h5" gutterBottom>
           My Reviews
         </Typography>
         <List>
           {reviews.map((item, index) => (
-            <ListItem key={index} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <ListItem
+              key={index}
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
               <ListItemText primary={item.title} secondary={item.comment} />
               <Box sx={{ flexGrow: 1 }} />
-              <Rating value={item.rating} size="small" readOnly sx={{ ml: 2 }} />
+              <Rating
+                value={item.rating}
+                size="small"
+                readOnly
+                sx={{ ml: 2 }}
+              />
             </ListItem>
           ))}
         </List>
