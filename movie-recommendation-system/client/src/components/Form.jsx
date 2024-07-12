@@ -43,8 +43,7 @@ export default function Form() {
     const region = data["region"] != "all" ? "&with_origin_country=" + data["region"] : ""
     const genre = data["genre"] != "all" ? "&with_genres=" + data["genre"] : ""
     const releaseAfter = data["startYear"] != "" ? "&primary_release_date.gte=" + data["startYear"] : ""
-    const adult = "&include_adult=" + data["isAdult"]
-    const url = baseUrl + language + region + genre + releaseAfter + adult
+    const url = baseUrl + language + region + genre + releaseAfter 
     const options = {
       method: 'GET',
       headers: {
@@ -111,15 +110,6 @@ export default function Form() {
             <option value="last10years">Last 10 Years</option>
           </select>
           {errors.dateRange && <span>This field is required</span>}
-        </div>
-
-        <div>
-          <label>
-            Do you wish to be displayed adult movies? 
-            <input type="checkbox" 
-            style={{ width: "40px", height: "40px" }}
-            {...register("isAdult")} />
-          </label>
         </div>
 
         <button type="submit">Submit</button>

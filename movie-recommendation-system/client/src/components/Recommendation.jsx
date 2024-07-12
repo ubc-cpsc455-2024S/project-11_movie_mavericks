@@ -30,6 +30,7 @@ export default function Recommendation() {
   const [selectedWatchlist, setSelectedWatchlist] = useState("");
   const [newWatchlistName, setNewWatchlistName] = useState("");
   const [showWatchlistDialog, setShowWatchlistDialog] = useState(false);
+  const [watchlistsCreatedCount, setWatchlistCreatedCount] = useState(0);
   const loggedIn = useSelector((state) => state.user.loggedIn);
   const userID = useSelector((state) => state.user.user?._id);
 
@@ -49,7 +50,7 @@ export default function Recommendation() {
           console.error(error);
         });
     }
-  }, [loggedIn, userID]);
+  }, [loggedIn, userID, watchlistsCreatedCount]);
 
   const handleLearnMoreClick = (movie) => {
     setSelectedMovie(movie.id);
@@ -68,6 +69,20 @@ export default function Recommendation() {
       navigate("/login");
     }
   };
+
+  const handleCreateNewWatchlist = async () => {
+    try {
+      await axios.post('http://localhost:3000/watchlists', {
+        user_id: userID,
+        name: newWatchlistName
+      });
+    } catch (error) {
+      console.log('Error creating the watchlist ', error);
+    } finally {
+      setNewWatchlistName('');
+    }
+    setWatchlistCreatedCount(watchlistsCreatedCount + 1);
+  }
 
   const handleWatchlistSubmit = async () => {
     if (selectedWatchlist) {
@@ -171,17 +186,29 @@ export default function Recommendation() {
         )}
       </Dialog>
       <Dialog
-        open={showWatchlistDialog}
-        onClose={() => setShowWatchlistDialog(false)}
-      >
-        <DialogTitle>Add to Watchlist</DialogTitle>
-        <DialogContent>{renderWatchlistSelect()}</DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowWatchlistDialog(false)}>Cancel</Button>
-          <Button onClick={handleWatchlistSubmit}>Add</Button>
-          <Button>Create new Watchlist</Button>
-        </DialogActions>
-      </Dialog>
+      open={showWatchlistDialog}
+      onClose={() => setShowWatchlistDialog(false)}
+    >
+      <DialogTitle>Add to Watchlist</DialogTitle>
+      <DialogContent>
+        {renderWatchlistSelect()}
+         {watchlists.length > 0 && <TextField
+          autoFocus
+          margin="dense"
+          label="Create new Watchlist"
+          type="text"
+          fullWidth
+          variant="standard"
+          value={newWatchlistName}
+          onChange={(e) => setNewWatchlistName(e.target.value)}
+        />}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setShowWatchlistDialog(false)}>Cancel</Button>
+        <Button onClick={handleWatchlistSubmit}>Add</Button>
+        <Button onClick={handleCreateNewWatchlist}>Create new Watchlist</Button>
+      </DialogActions>
+    </Dialog>
     </>
   );
 }
