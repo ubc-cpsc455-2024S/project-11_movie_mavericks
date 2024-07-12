@@ -87,6 +87,17 @@ export default function Watchlists() {
     }
   };
 
+  const handleDelete = async (watchlistID) => {
+    try {
+      await axios.delete(`http://localhost:3000/watchlists/${watchlistID}`);
+      setWatchlists(
+        watchlists.filter((watchlist) => watchlist._id !== watchlistID)
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
       {watchlists.map((watchlist) => (
@@ -172,6 +183,20 @@ export default function Watchlists() {
               </div>
             ))}
           </CardContent>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => handleDelete(watchlist._id)}
+            sx={{
+              marginBottom: 3,
+              padding: 1,
+              fontSize: 15,
+              fontWeight: "bold",
+              borderRadius: 20,
+            }}
+          >
+            Delete Watchlist
+          </Button>
         </Card>
       ))}
     </div>
