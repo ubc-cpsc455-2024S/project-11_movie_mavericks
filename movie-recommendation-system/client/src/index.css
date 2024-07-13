@@ -176,6 +176,7 @@ button:focus-visible {
 }
 
 .watchlist-button {
+  color: white;
   position: absolute;
   width: 80%;
   left: 20px;
