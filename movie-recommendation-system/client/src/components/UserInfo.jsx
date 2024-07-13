@@ -38,7 +38,7 @@ const UserInfo = () => {
 
   const navItems = [
     { label: "My Account", path: "/account" },
-    { label: "My Wishlists", path: "/account/wishlists" },
+    { label: "My Watchlists", path: "/account/wishlists" },
     { label: "My reviews", path: "/account/reviews" },
   ];
 

@@ -5,7 +5,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, Dialog } from "@mui/material";
+import { Button, CardActionArea, Dialog, IconButton } from "@mui/material";
 import MovieDetailsPopup from "./MovieDetailsPopup";
 import axios from "axios";
 import { useEffect } from "react";
@@ -158,7 +158,7 @@ export default function Recommendation() {
   };
 
   const cards = recommendations.map((movie) => (
-    <GridCard
+    <Poster
       key={movie.id}
       movie={movie}
       onLearnMoreClick={() => handleLearnMoreClick(movie)}
@@ -168,10 +168,12 @@ export default function Recommendation() {
 
   return (
     <>
-      <h1>Recommendations</h1>
-      <Grid container spacing={3}>
-        {cards}
-      </Grid>
+      <h1 style={{ color: "white" }}>Recommendations</h1>
+      <div className="row">
+        <div className="row-posters">
+          {cards}
+        </div>
+      </div>
       <Dialog
         open={!!selectedMovie}
         onClose={handleClose}
@@ -186,71 +188,39 @@ export default function Recommendation() {
         )}
       </Dialog>
       <Dialog
-      open={showWatchlistDialog}
-      onClose={() => setShowWatchlistDialog(false)}
-    >
-      <DialogTitle>Add to Watchlist</DialogTitle>
-      <DialogContent>
-        {renderWatchlistSelect()}
-         {watchlists.length > 0 && <TextField
-          autoFocus
-          margin="dense"
-          label="Create new Watchlist"
-          type="text"
-          fullWidth
-          variant="standard"
-          value={newWatchlistName}
-          onChange={(e) => setNewWatchlistName(e.target.value)}
-        />}
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={() => setShowWatchlistDialog(false)}>Cancel</Button>
-        <Button onClick={handleWatchlistSubmit}>Add</Button>
-        <Button onClick={handleCreateNewWatchlist}>Create new Watchlist</Button>
-      </DialogActions>
-    </Dialog>
+        open={showWatchlistDialog}
+        onClose={() => setShowWatchlistDialog(false)}
+      >
+        <DialogTitle>Add to Watchlist</DialogTitle>
+        <DialogContent>
+          {renderWatchlistSelect()}
+          {watchlists.length > 0 && <TextField
+            autoFocus
+            margin="dense"
+            label="Create new Watchlist"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={newWatchlistName}
+            onChange={(e) => setNewWatchlistName(e.target.value)}
+          />}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowWatchlistDialog(false)}>Cancel</Button>
+          <Button onClick={handleWatchlistSubmit}>Add</Button>
+          <Button onClick={handleCreateNewWatchlist}>Create new Watchlist</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
 
-function GridCard(props) {
+function Poster(props) {
   const { movie, onLearnMoreClick, onAddToWatchlist } = props;
-
   return (
-    <Grid item xs={6} sm={3}>
-      <Card sx={{ backgroundColor: "#37474F", color: "white" }}>
-        <CardActionArea onClick={onLearnMoreClick}>
-          <CardMedia
-            component="img"
-            style={{ height: "300px", objectFit: "cover" }}
-            image={"https://image.tmdb.org/t/p/w500" + movie["poster_path"]}
-            alt={movie.title}
-          />
-          <CardContent
-            style={{
-              height: "100px",
-              alignContent: "center",
-              overflowY: "auto",
-            }}
-          >
-            <Typography variant="h5" component="div">
-              {movie.title}
-            </Typography>
-            <Typography gutterBottom>
-              {movie.title != movie.original_title &&
-                "(" + movie.original_title + ")"}
-            </Typography>
-          </CardContent>
-          <Button
-            variant="contained"
-            fullWidth
-            sx={{ mt: 2 }}
-            onClick={onAddToWatchlist}
-          >
-            Add to Watchlist
-          </Button>
-        </CardActionArea>
-      </Card>
-    </Grid>
-  );
+    <div className="row-poster-container">
+      <img className="row-poster" src={"https://image.tmdb.org/t/p/w500" + movie["poster_path"]} onClick={onLearnMoreClick} />
+      <button className="watchlist-button" onClick={onAddToWatchlist}>Add to watchlist</button>
+    </div>
+  )
 }
