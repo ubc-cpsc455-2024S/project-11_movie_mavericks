@@ -275,7 +275,7 @@ export default function Form() {
 						variant="contained"
 						disabled={!isValid || isSubmitting}
 						style={{
-							backgroundColor: isValid ? "#37B7C3" : "#37B7C3",
+							backgroundColor: isValid ? "#37B7C3" : "#292929",
 							color: isValid ? "black" : "white",
 							//borderRadius: "8px",
 							textTransform: "none",
