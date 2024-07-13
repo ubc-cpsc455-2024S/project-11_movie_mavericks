@@ -47,6 +47,7 @@ const FeelingLucky = () => {
         onClick={fetchRandomMovie}
         variant="contained"
         color="primary"
+        sx={{ border: "5px solid skyblue" }}
       >
         I'm Feeling Lucky!
       </Button>
