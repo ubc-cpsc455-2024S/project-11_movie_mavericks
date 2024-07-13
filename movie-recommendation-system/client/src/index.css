@@ -1,5 +1,5 @@
 body {
-  /* background-color: #2a629a; */
+  background-color: #1b1b1b;
   margin: 0;
   display: flex;
   place-items: center;
@@ -13,7 +13,7 @@ body {
   font-weight: 400;
 
   color-scheme: light dark;
-  /* background-color: #2a629a; */
+  background-color: #1b1b1b;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -55,8 +55,8 @@ button:focus-visible {
 }
 
 #form {
-  max-width: 650px;
-  margin: 50px auto;
+  max-width: 400px;
+  /* margin: 50px auto; */
   background-color: #e4c59e;
   padding: 20px;
   border-radius: 40px;
@@ -145,4 +145,50 @@ button:focus-visible {
   width: 100%;
   position: absolute;
   border:none;
+}
+
+.row {
+  /* margin-left: 20px; */
+  color: white;
+}
+
+.row-posters {
+  display: flex;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  padding: 0px;
+}
+
+.row-posters::-webkit-scrollbar {
+  display: none;
+}
+
+.row-poster-container {
+  position: relative;
+}
+
+.row-poster {
+  object-fit: contain;
+  /* width: 100%; */
+  max-height: 350px;
+  margin-right: 20px;
+  transition: transform 450ms;
+}
+
+.watchlist-button {
+  position: absolute;
+  width: 80%;
+  left: 20px;
+  top: 300px;
+  text-align: center;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.row-poster-container:hover .watchlist-button {
+  opacity: 0.8;
+}
+
+.row-poster-container:hover .row-poster {
+  transform: scale(1.08)
 }
