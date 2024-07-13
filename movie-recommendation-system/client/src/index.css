@@ -1,5 +1,5 @@
 body {
-  background-color: #2a629a;
+  /* background-color: #2a629a; */
   margin: 0;
   display: flex;
   place-items: center;
@@ -13,7 +13,7 @@ body {
   font-weight: 400;
 
   color-scheme: light dark;
-  background-color: #2a629a;
+  /* background-color: #2a629a; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -63,12 +63,12 @@ button:focus-visible {
   text-align: center;
 }
 
-#form label {
+/* #form label {
   display: inline-flex;
   font-weight: bold;
   font-size: 1.5em;
   padding: 1em;
-}
+} */
 
 #form input {
   border-radius: 5px;

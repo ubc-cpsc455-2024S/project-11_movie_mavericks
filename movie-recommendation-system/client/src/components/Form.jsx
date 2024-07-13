@@ -1,11 +1,24 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { languages } from "../config/languages";
 import { regions } from "../config/regions";
 import { genres } from "../config/genre";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addRecommendation } from "../features/recommendationsSlice";
+import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import Chip from '@mui/material/Chip';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+	PaperProps: {
+		style: {
+			maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+			width: 250,
+		},
+	},
+};
 
 export default function Form() {
 	const {
@@ -13,10 +26,22 @@ export default function Form() {
 		handleSubmit,
 		formState: { errors, isValid },
 		reset,
+		control,
 	} = useForm({ mode: "onChange" }); // Enable onChange mode to check validity dynamically
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [isSubmitting, setIsSubmitting] = useState(false); // State to track form submission
+	const [formGenres, setFormGenres] = useState([]);
+
+	const handleGenreChange = (event) => {
+		const {
+			target: { value },
+		} = event;
+		setFormGenres(
+			// On autofill we get a stringified value.
+			typeof value === 'string' ? value.split(',') : value,
+		);
+	};
 
 	const onSubmit = async (data) => {
 		setIsSubmitting(true); // Set submitting state to true
@@ -48,8 +73,10 @@ export default function Form() {
 				: "";
 		const region =
 			data["region"] !== "all" ? "&with_origin_country=" + data["region"] : "";
-		const genre =
-			data["genre"] !== "all" ? "&with_genres=" + data["genre"] : "";
+
+		const genresCombined = formGenres.join("|")
+    	const genre = 
+			genresCombined !== "all" ? "&with_genres=" + genresCombined : ""
 		const releaseAfter =
 			data["startYear"] !== ""
 				? "&primary_release_date.gte=" + data["startYear"]
@@ -76,6 +103,7 @@ export default function Form() {
 	};
 	const clearFields = () => {
 		reset();
+		setFormGenres([]);
 	};
 
 	return (
@@ -98,7 +126,7 @@ export default function Form() {
 					borderRadius: "8px",
 				}}
 			>
-				<div style={{ marginBottom: "20px" }}>
+				{/* <div style={{ marginBottom: "20px" }}>
 					<label style={{ color: "white" }}></label>
 					<select
 						defaultValue=""
@@ -127,9 +155,30 @@ export default function Form() {
 					{errors.language && (
 						<span style={{ color: "red" }}>This field is required</span>
 					)}
-				</div>
+				</div> */}
 
-				<div style={{ marginBottom: "20px" }}>
+				<FormControl fullWidth variant="standard" required margin="normal">
+					<InputLabel id="form-language" style={{ color: "white" }}>Language</InputLabel>
+					<Controller
+						render={
+							({ field }) =>
+								<Select
+									{...field}
+									labelId="form-language"
+									MenuProps={MenuProps}
+									style={{ color: "white" }}
+								>
+									<MenuItem value="all">All</MenuItem>
+									{languages.map(lang => <MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]}>{lang["english_name"]}</MenuItem>)}
+								</Select>
+						}
+						control={control}
+						name="language"
+						defaultValue=''
+					/>
+				</FormControl>
+
+				{/* <div style={{ marginBottom: "20px" }}>
 					<label style={{ color: "white" }}></label>
 					<select
 						defaultValue=""
@@ -158,9 +207,30 @@ export default function Form() {
 					{errors.region && (
 						<span style={{ color: "red" }}>This field is required</span>
 					)}
-				</div>
+				</div> */}
 
-				<div style={{ marginBottom: "20px" }}>
+				<FormControl fullWidth variant="standard" required margin="normal">
+					<InputLabel id="form-region" style={{ color: "white" }}>Region</InputLabel>
+					<Controller
+						render={
+							({ field }) =>
+								<Select
+									{...field}
+									labelId="form-region"
+									MenuProps={MenuProps}
+									style={{ color: "white" }}
+								>
+									<MenuItem value="all">All</MenuItem>
+									{regions.map(region => <MenuItem key={region["iso_3166_1"]} value={region["iso_3166_1"]}>{region["english_name"]}</MenuItem>)}
+								</Select>
+						}
+						control={control}
+						name="region"
+						defaultValue=''
+					/>
+				</FormControl>
+
+				{/* <div style={{ marginBottom: "20px" }}>
 					<label style={{ color: "white" }}> </label>
 					<select
 						defaultValue=""
@@ -189,9 +259,43 @@ export default function Form() {
 					{errors.genre && (
 						<span style={{ color: "red" }}>This field is required</span>
 					)}
-				</div>
+				</div> */}
 
-				<div style={{ marginBottom: "20px" }}>
+				<FormControl fullWidth variant="standard" required margin="normal">
+					<InputLabel id="form-genre" style={{ color: "white" }}>Genre</InputLabel>
+					<Controller
+						render={
+							({ field }) =>
+								<Select {...field}
+									labelId="form-genre"
+									multiple
+									value={formGenres}
+									onChange={handleGenreChange}
+									renderValue={(selected) => (
+										<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+											{selected.map((value) => (
+												<Chip
+													key={value}
+													label={value === "all" ? "All" : genres.filter(genre => genre.id === value)[0].name}
+													style={{ color: "white", backgroundColor: "#292929" }}
+												/>
+											))}
+										</Box>
+									)}
+									MenuProps={MenuProps}
+									style={{ color: "white" }}
+								>
+									<MenuItem value="all">All</MenuItem>
+									{genres.map(genre => <MenuItem key={genre["id"]} value={genre["id"]}>{genre["name"]}</MenuItem>)}
+								</Select>
+						}
+						control={control}
+						name="genre"
+						defaultValue=''
+					/>
+				</FormControl>
+
+				{/* <div style={{ marginBottom: "20px" }}>
 					<label style={{ color: "white" }}></label>
 					<select
 						{...register("dateRange", { required: true })}
@@ -214,7 +318,29 @@ export default function Form() {
 					{errors.dateRange && (
 						<span style={{ color: "red" }}>This field is required</span>
 					)}
-				</div>
+				</div> */}
+
+				<FormControl fullWidth variant="standard" required margin="normal">
+					<InputLabel id="form-release" style={{ color: "white" }}>Release</InputLabel>
+					<Controller
+						render={
+							({ field }) =>
+								<Select
+									{...field}
+									labelId="form-release"
+									style={{ color: "white" }}
+								>
+									<MenuItem value="nopreference">No Preference</MenuItem>
+									<MenuItem value="last3years">Last 3 Years</MenuItem>
+									<MenuItem value="last5years">Last 5 Years</MenuItem>
+									<MenuItem value="last10years">Last 10 Years</MenuItem>
+								</Select>
+						}
+						control={control}
+						name="dateRange"
+						defaultValue=''
+					/>
+				</FormControl>
 
 				<div style={{ display: "flex", justifyContent: "space-between" }}>
 					<button
