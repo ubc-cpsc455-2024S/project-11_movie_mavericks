@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addRecommendation } from "../features/recommendationsSlice";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import Chip from '@mui/material/Chip';
+import Chip from "@mui/material/Chip";
+import Button from "@mui/material/Button";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -39,12 +40,12 @@ export default function Form() {
 		} = event;
 		setFormGenres(
 			// On autofill we get a stringified value.
-			typeof value === 'string' ? value.split(',') : value,
+			typeof value === "string" ? value.split(",") : value
 		);
 	};
 
 	const onSubmit = async (data) => {
-		setIsSubmitting(true); // Set submitting state to true
+		setIsSubmitting(true);
 		console.log(data);
 
 		const currentYear = new Date().getFullYear();
@@ -74,9 +75,9 @@ export default function Form() {
 		const region =
 			data["region"] !== "all" ? "&with_origin_country=" + data["region"] : "";
 
-		const genresCombined = formGenres.join("|")
-    	const genre = 
-			genresCombined !== "all" ? "&with_genres=" + genresCombined : ""
+		const genresCombined = formGenres.join("|");
+		const genre =
+			genresCombined !== "all" ? "&with_genres=" + genresCombined : "";
 		const releaseAfter =
 			data["startYear"] !== ""
 				? "&primary_release_date.gte=" + data["startYear"]
@@ -126,251 +127,164 @@ export default function Form() {
 					borderRadius: "8px",
 				}}
 			>
-				{/* <div style={{ marginBottom: "20px" }}>
-					<label style={{ color: "white" }}></label>
-					<select
-						defaultValue=""
-						{...register("language", { required: true })}
-						style={{
-							backgroundColor: "#292929",
-							borderRadius: "8px",
-							color: "white",
-							padding: "8px",
-							width: "calc(100% - 16px)",
-							margin: "auto",
-							display: "block",
-							marginBottom: "10px",
-						}}
-					>
-						<option disabled value="">
-							Language *
-						</option>
-						<option value="all">All</option>
-						{languages.map((lang) => (
-							<option key={lang["iso_639_1"]} value={lang["iso_639_1"]}>
-								{lang["english_name"]}
-							</option>
-						))}
-					</select>
-					{errors.language && (
-						<span style={{ color: "red" }}>This field is required</span>
-					)}
-				</div> */}
-
 				<FormControl fullWidth variant="standard" required margin="normal">
-					<InputLabel id="form-language" style={{ color: "white" }}>Language</InputLabel>
+					<InputLabel id="form-language" style={{ color: "white" }}>
+						Language
+					</InputLabel>
 					<Controller
-						render={
-							({ field }) =>
-								<Select
-									{...field}
-									labelId="form-language"
-									MenuProps={MenuProps}
-									style={{ color: "white" }}
-								>
-									<MenuItem value="all">All</MenuItem>
-									{languages.map(lang => <MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]}>{lang["english_name"]}</MenuItem>)}
-								</Select>
-						}
+						render={({ field }) => (
+							<Select
+								{...field}
+								labelId="form-language"
+								MenuProps={MenuProps}
+								style={{ color: "white" }}
+							>
+								<MenuItem value="all">All</MenuItem>
+								{languages.map((lang) => (
+									<MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]}>
+										{lang["english_name"]}
+									</MenuItem>
+								))}
+							</Select>
+						)}
 						control={control}
 						name="language"
-						defaultValue=''
+						defaultValue=""
 					/>
 				</FormControl>
 
-				{/* <div style={{ marginBottom: "20px" }}>
-					<label style={{ color: "white" }}></label>
-					<select
-						defaultValue=""
-						{...register("region", { required: true })}
-						style={{
-							backgroundColor: "#292929",
-							borderRadius: "8px",
-							color: "white",
-							padding: "8px",
-							width: "calc(100% - 16px)",
-							margin: "auto",
-							display: "block",
-							marginBottom: "10px",
-						}}
-					>
-						<option disabled value="">
-							Region *
-						</option>
-						<option value="all">All</option>
-						{regions.map((region) => (
-							<option key={region["iso_3166_1"]} value={region["iso_3166_1"]}>
-								{region["english_name"]}
-							</option>
-						))}
-					</select>
-					{errors.region && (
-						<span style={{ color: "red" }}>This field is required</span>
-					)}
-				</div> */}
-
 				<FormControl fullWidth variant="standard" required margin="normal">
-					<InputLabel id="form-region" style={{ color: "white" }}>Region</InputLabel>
+					<InputLabel id="form-region" style={{ color: "white" }}>
+						Region
+					</InputLabel>
 					<Controller
-						render={
-							({ field }) =>
-								<Select
-									{...field}
-									labelId="form-region"
-									MenuProps={MenuProps}
-									style={{ color: "white" }}
-								>
-									<MenuItem value="all">All</MenuItem>
-									{regions.map(region => <MenuItem key={region["iso_3166_1"]} value={region["iso_3166_1"]}>{region["english_name"]}</MenuItem>)}
-								</Select>
-						}
+						render={({ field }) => (
+							<Select
+								{...field}
+								labelId="form-region"
+								MenuProps={MenuProps}
+								style={{ color: "white" }}
+							>
+								<MenuItem value="all">All</MenuItem>
+								{regions.map((region) => (
+									<MenuItem
+										key={region["iso_3166_1"]}
+										value={region["iso_3166_1"]}
+									>
+										{region["english_name"]}
+									</MenuItem>
+								))}
+							</Select>
+						)}
 						control={control}
 						name="region"
-						defaultValue=''
+						defaultValue=""
 					/>
 				</FormControl>
 
-				{/* <div style={{ marginBottom: "20px" }}>
-					<label style={{ color: "white" }}> </label>
-					<select
-						defaultValue=""
-						{...register("genre", { required: true })}
-						style={{
-							backgroundColor: "#292929",
-							borderRadius: "8px",
-							color: "white",
-							padding: "8px",
-							width: "calc(100% - 16px)",
-							margin: "auto",
-							display: "block",
-							marginBottom: "10px",
-						}}
-					>
-						<option disabled value="">
-							Genre *
-						</option>
-						<option value="all">All</option>
-						{genres.map((genre) => (
-							<option key={genre["id"]} value={genre["id"]}>
-								{genre["name"]}
-							</option>
-						))}
-					</select>
-					{errors.genre && (
-						<span style={{ color: "red" }}>This field is required</span>
-					)}
-				</div> */}
-
 				<FormControl fullWidth variant="standard" required margin="normal">
-					<InputLabel id="form-genre" style={{ color: "white" }}>Genre</InputLabel>
+					<InputLabel id="form-genre" style={{ color: "white" }}>
+						Genre
+					</InputLabel>
 					<Controller
-						render={
-							({ field }) =>
-								<Select {...field}
-									labelId="form-genre"
-									multiple
-									value={formGenres}
-									onChange={handleGenreChange}
-									renderValue={(selected) => (
-										<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-											{selected.map((value) => (
-												<Chip
-													key={value}
-													label={value === "all" ? "All" : genres.filter(genre => genre.id === value)[0].name}
-													style={{ color: "white", backgroundColor: "#292929" }}
-												/>
-											))}
-										</Box>
-									)}
-									MenuProps={MenuProps}
-									style={{ color: "white" }}
-								>
-									<MenuItem value="all">All</MenuItem>
-									{genres.map(genre => <MenuItem key={genre["id"]} value={genre["id"]}>{genre["name"]}</MenuItem>)}
-								</Select>
-						}
+						render={({ field }) => (
+							<Select
+								{...field}
+								labelId="form-genre"
+								multiple
+								value={formGenres}
+								onChange={handleGenreChange}
+								renderValue={(selected) => (
+									<Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+										{selected.map((value) => (
+											<Chip
+												key={value}
+												label={
+													value === "all"
+														? "All"
+														: genres.filter((genre) => genre.id === value)[0]
+																.name
+												}
+												style={{ color: "white", backgroundColor: "#292929" }}
+											/>
+										))}
+									</Box>
+								)}
+								MenuProps={MenuProps}
+								style={{ color: "white" }}
+							>
+								<MenuItem value="all">All</MenuItem>
+								{genres.map((genre) => (
+									<MenuItem key={genre["id"]} value={genre["id"]}>
+										{genre["name"]}
+									</MenuItem>
+								))}
+							</Select>
+						)}
 						control={control}
 						name="genre"
-						defaultValue=''
+						defaultValue=""
 					/>
 				</FormControl>
-
-				{/* <div style={{ marginBottom: "20px" }}>
-					<label style={{ color: "white" }}></label>
-					<select
-						{...register("dateRange", { required: true })}
-						style={{
-							backgroundColor: "#292929",
-							borderRadius: "8px",
-							color: "white",
-							padding: "8px",
-							width: "calc(100% - 16px)",
-							margin: "auto",
-							display: "block",
-							marginBottom: "10px",
-						}}
-					>
-						<option value="nopreference">Date Preference *</option>
-						<option value="last3years">Last 3 Years</option>
-						<option value="last5years">Last 5 Years</option>
-						<option value="last10years">Last 10 Years</option>
-					</select>
-					{errors.dateRange && (
-						<span style={{ color: "red" }}>This field is required</span>
-					)}
-				</div> */}
 
 				<FormControl fullWidth variant="standard" required margin="normal">
-					<InputLabel id="form-release" style={{ color: "white" }}>Release</InputLabel>
+					<InputLabel id="form-release" style={{ color: "white" }}>
+						Release
+					</InputLabel>
 					<Controller
-						render={
-							({ field }) =>
-								<Select
-									{...field}
-									labelId="form-release"
-									style={{ color: "white" }}
-								>
-									<MenuItem value="nopreference">No Preference</MenuItem>
-									<MenuItem value="last3years">Last 3 Years</MenuItem>
-									<MenuItem value="last5years">Last 5 Years</MenuItem>
-									<MenuItem value="last10years">Last 10 Years</MenuItem>
-								</Select>
-						}
+						render={({ field }) => (
+							<Select
+								{...field}
+								labelId="form-release"
+								style={{ color: "white" }}
+							>
+								<MenuItem value="nopreference">No Preference</MenuItem>
+								<MenuItem value="last3years">Last 3 Years</MenuItem>
+								<MenuItem value="last5years">Last 5 Years</MenuItem>
+								<MenuItem value="last10years">Last 10 Years</MenuItem>
+							</Select>
+						)}
 						control={control}
 						name="dateRange"
-						defaultValue=''
+						defaultValue=""
 					/>
 				</FormControl>
 
-				<div style={{ display: "flex", justifyContent: "space-between" }}>
-					<button
-						type="button"
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "space-between",
+						paddingTop: "20px",
+					}}
+				>
+					<Button
+						variant="contained"
 						onClick={clearFields}
 						style={{
 							backgroundColor: "#292929",
-							border: "1px solid white",
-							borderRadius: "8px",
 							color: "white",
-							padding: "8px 16px",
-							cursor: "pointer",
+							//borderRadius: "8px",
+							textTransform: "none",
+							border: "1px solid white",
 						}}
 					>
 						Clear Fields
-					</button>
-					<button
+					</Button>
+					<Button
 						type="submit"
-						style={{
-							backgroundColor: isValid ? "#ffa31a" : "#292929",
-							border: "1px solid white",
-							borderRadius: "8px",
-							color: isValid ? "black" : "white",
-							padding: "8px 16px",
-							cursor: "pointer",
-						}}
+						variant="contained"
 						disabled={!isValid || isSubmitting}
+						style={{
+							backgroundColor: isValid ? "#37B7C3" : "#37B7C3",
+							color: isValid ? "black" : "white",
+							//borderRadius: "8px",
+							textTransform: "none",
+							//border: "1px solid white",
+							marginLeft: "10px",
+						}}
 					>
 						{isSubmitting ? "Submitting..." : "Submit"}
-					</button>
+					</Button>
 				</div>
 			</form>
 		</div>

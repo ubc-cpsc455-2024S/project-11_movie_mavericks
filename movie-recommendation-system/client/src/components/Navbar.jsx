@@ -76,7 +76,7 @@ function Navbar(props) {
 						sx={{
 							fontWeight: "bold",
 							color: "black",
-							backgroundColor: "#ffa31a",
+							backgroundColor: "#37B7C3",
 							borderRadius: "4px",
 							px: 0.5,
 							ml: 0.5,
@@ -169,7 +169,7 @@ function Navbar(props) {
 									sx={{
 										fontWeight: "bold",
 										color: "black",
-										backgroundColor: "#ffa31a",
+										backgroundColor: "#37B7C3",
 										borderRadius: "4px",
 										px: 0.5,
 										ml: 0.5,

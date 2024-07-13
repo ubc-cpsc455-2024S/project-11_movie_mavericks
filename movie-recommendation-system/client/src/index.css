@@ -92,7 +92,7 @@ button:focus-visible {
   width: 17em;
 }
 
-#form button {
+/* #form button {
   padding: 15px;
   font-size: 1.5em;
   background-color: #1d1d1d;
@@ -100,7 +100,7 @@ button:focus-visible {
   border-radius: 55px;
   cursor: pointer;
   margin: 15px;
-}
+} */
 
 #luckyBtn {
   padding: 15px;
@@ -117,11 +117,11 @@ button:focus-visible {
   transform: scale(1.2);
 }
 
-#form button:hover {
+/* #form button:hover {
   background-color: #074173;
   color: aqua;
   transform: scale(1.2);
-}
+} */
 
 @media only screen and (max-width: 650px) {
   #form {
