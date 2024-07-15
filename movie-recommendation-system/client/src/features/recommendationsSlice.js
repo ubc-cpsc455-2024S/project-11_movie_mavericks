@@ -5,7 +5,9 @@ export const recommendationsSlice = createSlice({
   initialState: [],
   reducers: {
     addRecommendation: (state, action) => {
-      state.push(action.payload)
+      if (!state.find(rec => rec.id === action.payload.id)) {
+        state.push(action.payload);
+      }
     }
   }
 })
