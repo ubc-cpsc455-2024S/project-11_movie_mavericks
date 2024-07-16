@@ -15,9 +15,9 @@ import {
   Stack,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { original } from '@reduxjs/toolkit';
 import { addReview } from '../features/userSlice';
 import YoutubeEmbed from './YoutubeEmbed';
+import Streaming from './Streaming';
 
 const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   const dispatch = useDispatch();
@@ -37,6 +37,9 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   const [commentButtonEnabled, setCommentButtonEnabled] = useState(false);
 
   const [reviews, setReviews] = useState([]);
+
+  const [streamingDialog, setStreamingDialog] = useState(false);
+  const [streamingResponse, setStreamingResponse] = useState(null);
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -66,7 +69,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
         const response = await axios.request(options);
         setMovieDetails(response.data);
         const videos = await axios.request(videoOptions);
-        setVideoID(videos.data.results.find(v => v.type === "Trailer").key)
+        setVideoID(videos.data.results.find(v => v.type === "Trailer")?.key)
       } catch (err) {
         setError(err);
       } finally {
@@ -76,6 +79,35 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
 
     fetchMovieDetails();
   }, []);
+
+  // Fetch streaming data
+  useEffect(() => {
+    const fetchStreamingDetails = async () => {
+
+      const options = {
+        method: 'GET',
+        url: `https://streaming-availability.p.rapidapi.com/shows/movie/${tmdb_movie_id}`,
+        headers: {
+          'x-rapidapi-key': 'afe4c1128dmshbe3663ec81e3482p11ec64jsn15981010aa3f',
+          'x-rapidapi-host': 'streaming-availability.p.rapidapi.com'
+        }
+      };
+      
+      try {
+        const response = await axios.request(options);
+        console.log(response.data)
+        // New movies can be fetched but have no streaming yet
+        if (Object.keys(response.data.streamingOptions).length !== 0) {
+          setStreamingResponse(response.data);
+        }
+      } catch (err) {
+        // Not considered as error, simply log it
+        console.log(err.message);
+      }
+    }
+
+    fetchStreamingDetails();
+  }, [])
 
   useEffect(() => {
     const fetchMovieComments = async () => {
@@ -186,9 +218,14 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
 
   return (
     <>
-      <DialogTitle>{original_title}</DialogTitle>
+      <DialogTitle>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          {original_title}
+          {streamingResponse && <Button onClick={() => setStreamingDialog(true)} variant='outlined'>Stream now</Button>}
+        </Box>
+      </DialogTitle>
       <DialogContent dividers>
-        {videoID && <YoutubeEmbed videoID={videoID} title={original_title}/>}
+        {videoID && <YoutubeEmbed videoID={videoID} title={original_title} />}
         {!videoID && poster_path && (
           <Box display="flex" justifyContent="center">
             <img
@@ -267,8 +304,8 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
             </ListItem>
           ))}
         </List>
-
       </DialogContent>
+      {streamingResponse && <Streaming open={streamingDialog} onClose={() => setStreamingDialog(false)} response={streamingResponse} />}
     </>
   );
 };
