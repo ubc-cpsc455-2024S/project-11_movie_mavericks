@@ -17,7 +17,7 @@ export default function Streaming({ open, onClose, response }) {
         if (Object.keys(response.streamingOptions).find(countryCode => countryCode === "ca")) {
             return "ca";
         } else {
-            return Object.keys(response.streamingOptions)[0];
+            return Object.keys(response.streamingOptions).sort()[0];
         }
     });
 
