@@ -141,7 +141,7 @@ export default function Form() {
 							>
 								<MenuItem value="all">All</MenuItem>
 								{languages.map((lang) => (
-									<MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]}>
+									<MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]} >
 										{lang["english_name"]}
 									</MenuItem>
 								))}
@@ -203,7 +203,7 @@ export default function Form() {
 													value === "all"
 														? "All"
 														: genres.filter((genre) => genre.id === value)[0]
-																.name
+															.name
 												}
 												style={{ color: "white", backgroundColor: "#292929" }}
 											/>
@@ -213,9 +213,9 @@ export default function Form() {
 								MenuProps={MenuProps}
 								style={{ color: "white" }}
 							>
-								<MenuItem value="all">All</MenuItem>
+								<MenuItem value="all" disabled={formGenres.length > 0 && formGenres[0] !== "all"}>All</MenuItem>
 								{genres.map((genre) => (
-									<MenuItem key={genre["id"]} value={genre["id"]}>
+									<MenuItem key={genre["id"]} value={genre["id"]} disabled={formGenres[0] === "all"}>
 										{genre["name"]}
 									</MenuItem>
 								))}
