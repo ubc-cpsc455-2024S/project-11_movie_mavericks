@@ -56,19 +56,11 @@ button:focus-visible {
 
 #form {
   max-width: 400px;
-  /* margin: 50px auto; */
   background-color: #e4c59e;
   padding: 20px;
   border-radius: 40px;
   text-align: center;
 }
-
-/* #form label {
-  display: inline-flex;
-  font-weight: bold;
-  font-size: 1.5em;
-  padding: 1em;
-} */
 
 #form input {
   border-radius: 5px;
@@ -92,16 +84,6 @@ button:focus-visible {
   width: 17em;
 }
 
-/* #form button {
-  padding: 15px;
-  font-size: 1.5em;
-  background-color: #1d1d1d;
-  color: #ffefef;
-  border-radius: 55px;
-  cursor: pointer;
-  margin: 15px;
-} */
-
 #luckyBtn {
   padding: 15px;
   font-size: 2.5em;
@@ -116,12 +98,6 @@ button:focus-visible {
   color: aqua;
   transform: scale(1.2);
 }
-
-/* #form button:hover {
-  background-color: #074173;
-  color: aqua;
-  transform: scale(1.2);
-} */
 
 @media only screen and (max-width: 650px) {
   #form {
@@ -144,11 +120,10 @@ button:focus-visible {
   height: 100%;
   width: 100%;
   position: absolute;
-  border:none;
+  border: none;
 }
 
 .row {
-  /* margin-left: 20px; */
   color: white;
 }
 
@@ -169,7 +144,6 @@ button:focus-visible {
 
 .row-poster {
   object-fit: contain;
-  /* width: 100%; */
   max-height: 350px;
   margin-right: 20px;
   transition: transform 450ms;
@@ -183,7 +157,7 @@ button:focus-visible {
   top: 300px;
   text-align: center;
   opacity: 0;
-  transition: opacity .35s ease;
+  transition: opacity 0.35s ease;
 }
 
 .row-poster-container:hover .watchlist-button {
@@ -191,5 +165,5 @@ button:focus-visible {
 }
 
 .row-poster-container:hover .row-poster {
-  transform: scale(1.08)
+  transform: scale(1.08);
 }

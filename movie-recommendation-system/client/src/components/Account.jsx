@@ -20,7 +20,6 @@ const Account = () => {
   const dispatch = useDispatch();
 
   const applyChanges = async (e) => {
-    console.log("Changes applied");
     if (!username || !password) {
       alert("Please enter values for all fields");
       return;

@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, Dialog, IconButton } from "@mui/material";
+import { Button, Dialog } from "@mui/material";
 import MovieDetailsPopup from "./MovieDetailsPopup";
 import axios from "axios";
 import { useEffect } from "react";
@@ -44,7 +39,6 @@ export default function Recommendation() {
         .get(`http://localhost:3000/watchlists/${userID}`)
         .then((response) => {
           setWatchlists(response.data);
-          console.log(response.data);
         })
         .catch((error) => {
           console.error(error);
@@ -72,17 +66,17 @@ export default function Recommendation() {
 
   const handleCreateNewWatchlist = async () => {
     try {
-      await axios.post('http://localhost:3000/watchlists', {
+      await axios.post("http://localhost:3000/watchlists", {
         user_id: userID,
-        name: newWatchlistName
+        name: newWatchlistName,
       });
     } catch (error) {
-      console.log('Error creating the watchlist ', error);
+      console.error(error);
     } finally {
-      setNewWatchlistName('');
+      setNewWatchlistName("");
     }
     setWatchlistCreatedCount(watchlistsCreatedCount + 1);
-  }
+  };
 
   const handleWatchlistSubmit = async () => {
     if (selectedWatchlist) {
@@ -94,8 +88,7 @@ export default function Recommendation() {
         },
         headers: {
           accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4",
+          Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
         },
       };
       try {
@@ -124,11 +117,9 @@ export default function Recommendation() {
 
   const renderWatchlistSelect = () => {
     if (!watchlists) {
-      //console.log("No watchlists found");
       return null;
     }
     if (watchlists.length === 0) {
-      //console.log("Watchlist is empty");
       return (
         <TextField
           margin="dense"
@@ -170,9 +161,7 @@ export default function Recommendation() {
     <>
       <h1 style={{ color: "white" }}>Recommendations</h1>
       <div className="row">
-        <div className="row-posters">
-          {cards}
-        </div>
+        <div className="row-posters">{cards}</div>
       </div>
       <Dialog
         open={!!selectedMovie}
@@ -194,21 +183,25 @@ export default function Recommendation() {
         <DialogTitle>Add to Watchlist</DialogTitle>
         <DialogContent>
           {renderWatchlistSelect()}
-          {watchlists.length > 0 && <TextField
-            autoFocus
-            margin="dense"
-            label="Create new Watchlist"
-            type="text"
-            fullWidth
-            variant="standard"
-            value={newWatchlistName}
-            onChange={(e) => setNewWatchlistName(e.target.value)}
-          />}
+          {watchlists.length > 0 && (
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Create new Watchlist"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={newWatchlistName}
+              onChange={(e) => setNewWatchlistName(e.target.value)}
+            />
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShowWatchlistDialog(false)}>Cancel</Button>
           <Button onClick={handleWatchlistSubmit}>Add</Button>
-          <Button onClick={handleCreateNewWatchlist}>Create new Watchlist</Button>
+          <Button onClick={handleCreateNewWatchlist}>
+            Create new Watchlist
+          </Button>
         </DialogActions>
       </Dialog>
     </>
@@ -219,8 +212,14 @@ function Poster(props) {
   const { movie, onLearnMoreClick, onAddToWatchlist } = props;
   return (
     <div className="row-poster-container">
-      <img className="row-poster" src={"https://image.tmdb.org/t/p/w500" + movie["poster_path"]} onClick={onLearnMoreClick} />
-      <button className="watchlist-button" onClick={onAddToWatchlist}>Add to watchlist</button>
+      <img
+        className="row-poster"
+        src={"https://image.tmdb.org/t/p/w500" + movie["poster_path"]}
+        onClick={onLearnMoreClick}
+      />
+      <button className="watchlist-button" onClick={onAddToWatchlist}>
+        Add to watchlist
+      </button>
     </div>
-  )
+  );
 }

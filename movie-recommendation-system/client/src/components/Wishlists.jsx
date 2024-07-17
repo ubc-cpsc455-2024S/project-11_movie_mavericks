@@ -27,8 +27,7 @@ export default function Watchlists() {
                     params: { language: "en-US" },
                     headers: {
                       accept: "application/json",
-                      Authorization:
-                        "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4",
+                      Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
                     },
                   }
                 );

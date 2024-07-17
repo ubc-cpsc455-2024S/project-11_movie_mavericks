@@ -25,9 +25,6 @@ export default function Streaming({ open, onClose, response }) {
         setCountry(event.target.value);
     }
 
-    // Sometimes the same service provider may have multiple entries due to different quality, price etc. for the same movie
-    // We just show the first entry for each service provider for simplicity
-    // The providers array is re-initialized to empty whenever the user change the country
     const providers = []
     const filterProvider = (streaming) => {
         const provider = streaming.service.id;

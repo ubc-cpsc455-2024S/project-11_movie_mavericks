@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   DialogTitle,
   DialogContent,
@@ -13,18 +13,18 @@ import {
   TextField,
   Button,
   Stack,
-} from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { addReview } from '../features/userSlice';
-import YoutubeEmbed from './YoutubeEmbed';
-import Streaming from './Streaming';
+} from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { addReview } from "../features/userSlice";
+import YoutubeEmbed from "./YoutubeEmbed";
+import Streaming from "./Streaming";
 
-const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
+const MovieDetailsPopup = ({ tmdb_movie_id }) => {
   const dispatch = useDispatch();
 
-  const loggedIn = useSelector(state => state.user.loggedIn);
-  const userID = useSelector(state => state.user.user?._id);
-  const username = useSelector(state => state.user.username);
+  const loggedIn = useSelector((state) => state.user.loggedIn);
+  const userID = useSelector((state) => state.user.user?._id);
+  const username = useSelector((state) => state.user.username);
 
   const [movieDetails, setMovieDetails] = useState(null);
   const [videoID, setVideoID] = useState(null);
@@ -32,7 +32,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
   const [error, setError] = useState(null);
 
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
   const [commentSelected, setCommentSelected] = useState(false);
   const [commentButtonEnabled, setCommentButtonEnabled] = useState(false);
 
@@ -43,33 +43,32 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
-      console.log(tmdb_movie_id);
       const options = {
-        method: 'GET',
+        method: "GET",
         url: `https://api.themoviedb.org/3/movie/${tmdb_movie_id}`,
         params: {
-          language: 'en-US'
+          language: "en-US",
         },
         headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4'
-        }
+          accept: "application/json",
+          Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
+        },
       };
 
       const videoOptions = {
-        method: 'GET',
+        method: "GET",
         url: `https://api.themoviedb.org/3/movie/${tmdb_movie_id}/videos?language=en-US`,
         headers: {
-          accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YzFmZDAwNzJjNzUwNWIyZDRkMDYwMTMwYjJlN2QxNSIsInN1YiI6IjY2NTY3NGM4NDQzMTEyYzc1OTUxMjI1NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.uhn4peiHp_lezXQfUV5z10QcDfXBdWQkrrcH9qT48S4'
-        }
+          accept: "application/json",
+          Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
+        },
       };
 
       try {
         const response = await axios.request(options);
         setMovieDetails(response.data);
         const videos = await axios.request(videoOptions);
-        setVideoID(videos.data.results.find(v => v.type === "Trailer")?.key)
+        setVideoID(videos.data.results.find((v) => v.type === "Trailer")?.key);
       } catch (err) {
         setError(err);
       } finally {
@@ -80,66 +79,67 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
     fetchMovieDetails();
   }, []);
 
-  // Fetch streaming data
   useEffect(() => {
     const fetchStreamingDetails = async () => {
-
       const options = {
-        method: 'GET',
+        method: "GET",
         url: `https://streaming-availability.p.rapidapi.com/shows/movie/${tmdb_movie_id}`,
         headers: {
-          'x-rapidapi-key': 'afe4c1128dmshbe3663ec81e3482p11ec64jsn15981010aa3f',
-          'x-rapidapi-host': 'streaming-availability.p.rapidapi.com'
-        }
+          "x-rapidapi-key": import.meta.env.VITE_RAPID_API_KEY,
+          "x-rapidapi-host": import.meta.env.VITE_RAPID_API_HOST,
+        },
       };
-      
+
       try {
         const response = await axios.request(options);
-        console.log(response.data)
-        // New movies can be fetched but have no streaming yet
         if (Object.keys(response.data.streamingOptions).length !== 0) {
           setStreamingResponse(response.data);
         }
       } catch (err) {
-        // Not considered as error, simply log it
-        console.log(err.message);
+        console.error(err);
       }
-    }
+    };
 
     fetchStreamingDetails();
-  }, [])
+  }, []);
 
   useEffect(() => {
     const fetchMovieComments = async () => {
       let movieResponse;
       try {
-        movieResponse = await axios.get(`http://localhost:3000/movies/${tmdb_movie_id}`);
-        const responses = movieResponse.data.reviews.map(reviewID => axios.get(`http://localhost:3000/reviews/${reviewID}`));
+        movieResponse = await axios.get(
+          `http://localhost:3000/movies/${tmdb_movie_id}`
+        );
+        const responses = movieResponse.data.reviews.map((reviewID) =>
+          axios.get(`http://localhost:3000/reviews/${reviewID}`)
+        );
         Promise.all(responses)
-          .then(values => values.map(value => value.data))
-          .then(data => setReviews(data));
+          .then((values) => values.map((value) => value.data))
+          .then((data) => setReviews(data));
       } catch (error) {
         try {
-          movieResponse = await axios.post("http://localhost:3000/movies", { tmdb_movie_id: tmdb_movie_id, title: movieDetails.original_title });
+          movieResponse = await axios.post("http://localhost:3000/movies", {
+            tmdb_movie_id: tmdb_movie_id,
+            title: movieDetails.original_title,
+          });
         } catch (postError) {
           console.error(postError);
         }
       }
-    }
+    };
 
     if (movieDetails) {
       fetchMovieComments();
     }
-
-  }, [movieDetails])
+  }, [movieDetails]);
 
   useEffect(() => {
-    if (rating > 0 && comment !== '') {
+    if (rating > 0 && comment !== "") {
       setCommentButtonEnabled(true);
     } else {
       setCommentButtonEnabled(false);
     }
-  }, [rating, comment])
+  }, [rating, comment]);
 
   if (loading) {
     return (
@@ -164,7 +164,9 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
     }
 
     try {
-      const movieResponse = await axios.get(`http://localhost:3000/movies/${tmdb_movie_id}`)
+      const movieResponse = await axios.get(
+        `http://localhost:3000/movies/${tmdb_movie_id}`
+      );
       const movieID = movieResponse.data._id;
 
       const body = {
@@ -172,35 +174,39 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
         movie_id: movieID,
         title: original_title,
         rating: rating,
-        comment: comment
-      }
+        comment: comment,
+      };
 
-      // Post comment
-      const reviewResponse = await axios.post("http://localhost:3000/reviews", body);
+      const reviewResponse = await axios.post(
+        "http://localhost:3000/reviews",
+        body
+      );
       const review = reviewResponse.data;
 
-      // Save comment to movie
-      await axios.patch("http://localhost:3000/movies/review", { movieID: movieID, reviewID: review._id });
+      await axios.patch("http://localhost:3000/movies/review", {
+        movieID: movieID,
+        reviewID: review._id,
+      });
       const reviewWithUsername = { ...review, username: username };
-      setReviews(prev => [reviewWithUsername].concat(prev));
+      setReviews((prev) => [reviewWithUsername].concat(prev));
 
-      // Save comment to user
-      await axios.patch("http://localhost:3000/users/review", { userID: userID, reviewID: review._id });
+      await axios.patch("http://localhost:3000/users/review", {
+        userID: userID,
+        reviewID: review._id,
+      });
       dispatch(addReview(review._id));
 
-      // Reset comment
       handleResetComment();
-
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   const handleResetComment = () => {
     setCommentSelected(false);
-    setComment('');
+    setComment("");
     setRating(0);
-  }
+  };
 
   const {
     original_title,
@@ -213,7 +219,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
     revenue,
     adult,
     genres,
-    production_companies
+    production_companies,
   } = movieDetails;
 
   return (
@@ -221,7 +227,11 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           {original_title}
-          {streamingResponse && <Button onClick={() => setStreamingDialog(true)} variant='outlined'>Stream now</Button>}
+          {streamingResponse && (
+            <Button onClick={() => setStreamingDialog(true)} variant="outlined">
+              Stream now
+            </Button>
+          )}
         </Box>
       </DialogTitle>
       <DialogContent dividers>
@@ -231,7 +241,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
             <img
               src={`https://image.tmdb.org/t/p/w500${poster_path}`}
               alt={original_title}
-              style={{ maxWidth: '100%', height: 'auto' }}
+              style={{ maxWidth: "100%", height: "auto" }}
             />
           </Box>
         )}
@@ -258,25 +268,32 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
           <strong>Revenue:</strong> ${revenue.toLocaleString()}
         </Typography>
         <Typography variant="body2">
-          <strong>Adult:</strong> {adult ? 'Yes' : 'No'}
+          <strong>Adult:</strong> {adult ? "Yes" : "No"}
         </Typography>
         <Typography variant="body2">
-          <strong>Genres:</strong> {genres.map((genre) => genre.name).join(', ')}
+          <strong>Genres:</strong>{" "}
+          {genres.map((genre) => genre.name).join(", ")}
         </Typography>
         <Typography variant="body2">
-          <strong>Production Companies:</strong> {production_companies.map((company) => company.name).join(', ')}
+          <strong>Production Companies:</strong>{" "}
+          {production_companies.map((company) => company.name).join(", ")}
         </Typography>
         <br></br>
         <Typography variant="body1">
           <strong>Comments</strong>
         </Typography>
-        <TextField fullWidth id="standard-basic" label="Leave a comment" variant="standard" margin="normal"
-          autoComplete='off'
+        <TextField
+          fullWidth
+          id="standard-basic"
+          label="Leave a comment"
+          variant="standard"
+          margin="normal"
+          autoComplete="off"
           onClick={() => setCommentSelected(true)}
           value={comment}
           onChange={(event) => setComment(event.target.value)}
         />
-        {commentSelected &&
+        {commentSelected && (
           <Stack direction="row" spacing={2}>
             <Box flexGrow={1}>
               <Rating
@@ -287,25 +304,41 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
             </Box>
             <Box>
               <Stack direction="row" spacing={2}>
-                <Button variant="outlined" onClick={handleResetComment}>Cancel</Button>
-                <Button variant="outlined" onClick={handleComment}
-                  disabled={!commentButtonEnabled}>Comment</Button>
+                <Button variant="outlined" onClick={handleResetComment}>
+                  Cancel
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={handleComment}
+                  disabled={!commentButtonEnabled}
+                >
+                  Comment
+                </Button>
               </Stack>
             </Box>
           </Stack>
-        }
+        )}
 
         <List>
           {reviews.map((review, index) => (
             <ListItem key={index}>
-              <ListItemText primary={review.username} secondary={review.comment} />
+              <ListItemText
+                primary={review.username}
+                secondary={review.comment}
+              />
 
               <Rating value={review.rating} size="small" readOnly />
             </ListItem>
           ))}
         </List>
       </DialogContent>
-      {streamingResponse && <Streaming open={streamingDialog} onClose={() => setStreamingDialog(false)} response={streamingResponse} />}
+      {streamingResponse && (
+        <Streaming
+          open={streamingDialog}
+          onClose={() => setStreamingDialog(false)}
+          response={streamingResponse}
+        />
+      )}
     </>
   );
 };
