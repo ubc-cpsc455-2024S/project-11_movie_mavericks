@@ -5,10 +5,11 @@ import { regions } from "../config/regions";
 import { genres } from "../config/genre";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addRecommendation } from "../features/recommendationsSlice";
+import { setRecommendation } from "../features/recommendationsSlice";
 import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
+import axios from "axios";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -69,31 +70,74 @@ export default function Form() {
         : "";
     const region =
       data["region"] !== "all" ? "&with_origin_country=" + data["region"] : "";
-
-    const genresCombined = formGenres.join("|");
-    const genre =
-      genresCombined !== "all" ? "&with_genres=" + genresCombined : "";
     const releaseAfter =
       data["startYear"] !== ""
         ? "&primary_release_date.gte=" + data["startYear"]
         : "";
-    const url = baseUrl + language + region + genre + releaseAfter;
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
-      },
-    };
-    const response = await fetch(url, options);
-    const responseJson = await response.json();
-    const numRecommendation = Math.min(20, responseJson["results"].length);
-    for (let i = 0; i < numRecommendation; i++) {
-      dispatch(addRecommendation(responseJson["results"][i]));
+
+    const urlNoGenre = baseUrl + language + region + releaseAfter;
+    const urls = formGenres[0] === "all"
+      ? [urlNoGenre]
+      : formGenres.map(genreID => urlNoGenre + "&with_genres=" + genreID);
+    if (formGenres.length > 1) {
+      urls.push(urlNoGenre + "&with_genres=" + formGenres.join(","))
     }
-    navigate("/recommendation");
-    setIsSubmitting(false);
+
+    try {
+      const responses = await Promise.all(urls.map(url => axios.request({
+        method: "GET",
+        url: url,
+        headers: {
+          accept: "application/json",
+          Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
+        },
+      })))
+
+      const movies = responses.map(response => response.data["results"]).flat();
+      const uniqueMovies = []
+      const movieIds = new Set()
+      movies.forEach(movie => {
+        if (!movieIds.has(movie.id)) {
+          movieIds.add(movie.id);
+          uniqueMovies.push(movie);
+        }
+      })
+
+      let grouped;
+      if (movies.length === 0) {
+        grouped = {};
+      } else if (formGenres[0] === "all") {
+        grouped = Object.groupBy(uniqueMovies, movie => movie.genre_ids[0]);
+      } else {
+        grouped = {}
+        const movieIdsInAllGenres = new Set();
+        if (formGenres.length > 1) {
+          const moviesInAllGenres = uniqueMovies.filter(movie => formGenres.every(genreID => movie.genre_ids.includes(genreID)));
+          if (moviesInAllGenres.length > 0) {
+            grouped["0"] = moviesInAllGenres;
+            moviesInAllGenres.forEach(movie => movieIdsInAllGenres.add(movie.id));
+          }
+        }
+        formGenres.forEach(genreID => { grouped[genreID.toString()] = [] });
+        uniqueMovies.forEach(movie => {
+          for (const genreID of formGenres) {
+            if (!movieIdsInAllGenres.has(movie.id) && movie.genre_ids.includes(genreID)) {
+              grouped[genreID.toString()].push(movie);
+              break;
+            }
+          }
+        });
+      }
+
+      dispatch(setRecommendation(grouped));
+      navigate("/recommendation");
+      setIsSubmitting(false);
+
+    } catch (err) {
+      console.error(err);
+    }
   };
+
   const clearFields = () => {
     reset();
     setFormGenres([]);
@@ -129,7 +173,7 @@ export default function Form() {
                 {...field}
                 labelId="form-language"
                 MenuProps={MenuProps}
-                style={{ color: "white" }}
+                style={{ color: "white", borderBottom: "1px solid white" }}
               >
                 <MenuItem value="all">All</MenuItem>
                 {languages.map((lang) => (
@@ -155,7 +199,7 @@ export default function Form() {
                 {...field}
                 labelId="form-region"
                 MenuProps={MenuProps}
-                style={{ color: "white" }}
+                style={{ color: "white", borderBottom: "1px solid white" }}
               >
                 <MenuItem value="all">All</MenuItem>
                 {regions.map((region) => (
@@ -195,7 +239,7 @@ export default function Form() {
                           value === "all"
                             ? "All"
                             : genres.filter((genre) => genre.id === value)[0]
-                                .name
+                              .name
                         }
                         style={{ color: "white", backgroundColor: "#292929" }}
                       />
@@ -203,7 +247,7 @@ export default function Form() {
                   </Box>
                 )}
                 MenuProps={MenuProps}
-                style={{ color: "white" }}
+                style={{ color: "white", borderBottom: "1px solid white" }}
               >
                 <MenuItem
                   value="all"
@@ -237,7 +281,7 @@ export default function Form() {
               <Select
                 {...field}
                 labelId="form-release"
-                style={{ color: "white" }}
+                style={{ color: "white", borderBottom: "1px solid white" }}
               >
                 <MenuItem value="nopreference">No Preference</MenuItem>
                 <MenuItem value="last3years">Last 3 Years</MenuItem>
