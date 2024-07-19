@@ -131,4 +131,4 @@
 - Workshop slides
 - Assignment concepts
 
-[Go to Top ↑](#Group%2011_Movie_Mavericks%20-%20{MovieHub})
+[Go to Top ↑](#Topic)
