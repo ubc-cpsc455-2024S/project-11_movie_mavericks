@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button, Dialog } from "@mui/material";
 import MovieDetailsPopup from "./MovieDetailsPopup";
+import { genres } from "../config/genre";
 import axios from "axios";
 import { useEffect } from "react";
 import {
@@ -148,21 +149,28 @@ export default function Recommendation() {
     );
   };
 
-  const cards = recommendations.map((movie) => (
-    <Poster
-      key={movie.id}
-      movie={movie}
-      onLearnMoreClick={() => handleLearnMoreClick(movie)}
-      onAddToWatchlist={() => handleAddToWatchlist(movie)}
-    />
-  ));
+  const entries = Object.entries(recommendations);
+  const sortedCategories = entries.length === 0
+    ? []
+    : entries[0][0] === "0"
+      ? [entries[0], ...entries.slice(1).sort((m1, m2) => m2[1].length - m1[1].length)]
+      : entries.sort((m1, m2) => m2[1].length - m1[1].length);
+  const categoryComponents = sortedCategories.length === 0
+    ? <h2 style={{ color: "white" }}>No result, please try again!</h2>
+    : sortedCategories.map(([genreID, movies]) =>
+      <Category
+        key={genreID}
+        genreID={genreID}
+        movies={movies}
+        handleLearnMoreClick={handleLearnMoreClick}
+        handleAddToWatchlist={handleAddToWatchlist}
+      />
+    );
 
   return (
     <>
       <h1 style={{ color: "white" }}>Recommendations</h1>
-      <div className="row">
-        <div className="row-posters">{cards}</div>
-      </div>
+      {categoryComponents}
       <Dialog
         open={!!selectedMovie}
         onClose={handleClose}
@@ -208,6 +216,28 @@ export default function Recommendation() {
   );
 }
 
+function Category(props) {
+  const { genreID, movies, handleLearnMoreClick, handleAddToWatchlist } = props;
+  return (
+    <>
+      <h2 style={{ color: "white" }}>
+        {Number(genreID) === 0 ? "Featured" : genres.find(({ id }) => id === Number(genreID))?.name ?? "Other"}
+      </h2>
+      <div className="row">
+        <div className="row-posters">
+          {movies.map(movie => (
+            <Poster
+              key={movie.id}
+              movie={movie}
+              onLearnMoreClick={() => handleLearnMoreClick(movie)}
+              onAddToWatchlist={() => handleAddToWatchlist(movie)}
+            />))}
+        </div>
+      </div>
+    </>
+  )
+}
+
 function Poster(props) {
   const { movie, onLearnMoreClick, onAddToWatchlist } = props;
   return (
@@ -215,6 +245,7 @@ function Poster(props) {
       <img
         className="row-poster"
         src={"https://image.tmdb.org/t/p/w500" + movie["poster_path"]}
+        alt={movie["original_title"]}
         onClick={onLearnMoreClick}
       />
       <button className="watchlist-button" onClick={onAddToWatchlist}>

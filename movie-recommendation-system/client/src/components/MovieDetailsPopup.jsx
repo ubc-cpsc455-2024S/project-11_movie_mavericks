@@ -334,6 +334,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id }) => {
       </DialogContent>
       {streamingResponse && (
         <Streaming
+          key={tmdb_movie_id}
           open={streamingDialog}
           onClose={() => setStreamingDialog(false)}
           response={streamingResponse}

@@ -2,16 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const recommendationsSlice = createSlice({
   name: "recommendations",
-  initialState: [],
+  initialState: {},
   reducers: {
-    addRecommendation: (state, action) => {
-      if (!state.find((rec) => rec.id === action.payload.id)) {
-        state.push(action.payload);
-      }
+    setRecommendation: (state, action) => {
+      return action.payload;
     },
   },
 });
 
-export const { addRecommendation } = recommendationsSlice.actions;
+export const { setRecommendation } = recommendationsSlice.actions;
 
 export default recommendationsSlice.reducer;

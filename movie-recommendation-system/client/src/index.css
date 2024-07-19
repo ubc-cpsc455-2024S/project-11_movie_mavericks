@@ -135,7 +135,16 @@ button:focus-visible {
 }
 
 .row-posters::-webkit-scrollbar {
-  display: none;
+  -webkit-appearance: none;
+}
+
+.row-posters::-webkit-scrollbar:horizontal {
+  height: 13px;
+}
+
+.row-posters::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  border: 1px solid grey;
 }
 
 .row-poster-container {
