@@ -6,7 +6,8 @@
 
 ## Table of Contents:  
 [Project Topic](#Topic)  
-[Project Requirements](#Requirements)
+[Project Requirements](#Requirements)  
+[Technologies](#Tech-Stack)
 
 ## Topic:
 
@@ -37,8 +38,11 @@
 
 <hr></hr>
 
-## Tech Stack and Implementation:  
-
+## Tech-Stack:  
+### Front-End:  
+- <strong>React.js:</strong> We used React.js to create our reusable components and user interface. The modular, component-based architecture allows for reusable code without the need for reinventing the wheel every time you want to create something new, making the development process efficient and the application as a whole, scalable. React's virtual DOM ensures that the entire page doesn't have to be re-rendered every time there is a small change in the state, creating faster loading times and seamless user experiences. Compared to other frameworks like Angular.js or Vue.js, React.js works really well with our choice of back-end technologies and also has a very large community support online, making debugging and bug fixes really easy and an ideal choice for the project.
+- <strong>Material-UI:</strong> For the user interface, we used Material-UI as the open-source React component library. This library provides ready-made components, designed for production, right out of the box and is credible as it uses Google's Material Design guidelines. Furthermore, Material-UI components are consistent, meaning that we could ensure the same styles in different functions, instead of having to worry about inconsistent styling. A big advantage of Material-UI components is that they are customizable, so you don't have to use the styles provided by default and have a lot of freedom when it comes to styling.
+- <strong>Redux Toolkit:</strong> We used Redux for state management. This allowed us to create a single source of truth for all the states in our project and helped us avoid prop drilling and the complicated use of hooks. With a state tree, we used pure reducer functions to dispatch actions during events which not only helped us during debugging but also while tracking a state across multiple components. Compared to other alternatives like MobX or Zustand, Redux has support for asynchronous operations as well which proved really useful during our API requests.
 
 ## Team Members
 
