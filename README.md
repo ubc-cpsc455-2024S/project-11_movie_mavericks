@@ -51,6 +51,13 @@
 ### Database:
 - <strong>MongoDB:</strong> We chose MongoDB as the NoSQL for this project due to its ability to create multiple flexible documents that allow easy storage and access of data, as well as support for fast and scalable access for different types of data. In our case, we had multiple schemas that we needed to store data for such as users, watchlists, movies, reviews, etc. and MongoDB allowed us to create separate clusters for each schema which was very useful. Compared to SQL databases like MySQL or PostgreSQL, MongoDB provides more flexibility for handling diverse data types and complicated relationships that relational databases find difficult to manage. We used Mongoose as our ODM as it easily integrates with Express.js and Node.js and does not require any boilerplate code except for the package installation.
 
+### API Integration:  
+- <strong>Axios:</strong> We used Axios as the promise-based HTTP client to make requests to both external, third-party APIs as well as to our backend servers. The simplicity and ease of use and the minimal setup helped in rapid and efficient development while also providing useful error handling and authentication facilities for asynchronous requests. The main benefit of Axios is that it allows for cleaner code by handling request and response parameter transformations in the promise itself without having to wait for the promise to be resolved or rejected. Compared to native HTTP clients like Fetch, Axios provides a more feature-rich and developer-friendly interface to work with.
+- <strong>TMDB API:</strong> We integrated the TMDb (The Movie Database) API to fetch detailed movie information, ensuring that our users have access to the latest and most accurate movie data. This API provides a variety of REST endpoints for fetching comprehensive movie details such as the revenue earned by the movie, the cast featured in it, the average rating it has got from users worldwide, etc., enhancing the app's functionality and user experience compared to other movie databases.
+
+### Security in authentication:  
+- <strong>BCrypt:</strong> We implemented secure authentication of passwords using BCrypt. BCrypt is designed to be computationally intensive, making it resistant to brute-force attacks. Its salt functionality adds an extra layer of security by ensuring that identical passwords have different hashes. Also using this module ensures that users can rest assured that the developers of the website don't have any knowledge of sensitive user information like their passwords as they are end-to-end encrypted.  Compared to simpler hashing algorithms like MD5 or SHA-1, BCrypt offers enhanced security suitable for modern applications.
+
 ## Team Members
 
 - Adwait Kulkarni: I run marathons!
