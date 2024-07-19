@@ -6,8 +6,16 @@
 
 ## Table of Contents:  
 [Project Topic](#Topic)  
+[Team Members](#Team%20Members)  
 [Project Requirements](#Requirements)  
-[Technologies](#Tech-Stack)
+[Technologies](#Tech-Stack)  
+[Above and Beyond Functionality](#Above-and-Beyond)  
+[Next Steps](#Next%20Steps)  
+[List of Contributions](#List%20of%20Contributions)  
+[Images](#Images)  
+[References](#References)
+
+<hr></hr>
 
 ## Topic:
 
@@ -16,6 +24,15 @@
 - What type of data will it store: We are using TMDB API to get the movie information in JSON format.  
 - What will users be able to do with this data: Users will be able to select and set their preferences from a form and based on that selected data, get movies recommended to them.
 - What is some additional functionality you can add/remove based on time constraints: Add functionality for TV shows as well and create a Content Recommendation System instead of a Movie Recommendation System.
+
+<hr></hr>
+
+## Team Members
+
+- Adwait Kulkarni: I run marathons!
+- Dominic Lo: I play the piano and Switch!
+- Patrick Liang: I like good weather!
+- Subhrodeep Ghose: I like to sleep!
 
 <hr></hr>
 
@@ -58,19 +75,56 @@
 ### Security in authentication:  
 - <strong>BCrypt:</strong> We implemented secure authentication of passwords using BCrypt. BCrypt is designed to be computationally intensive, making it resistant to brute-force attacks. Its salt functionality adds an extra layer of security by ensuring that identical passwords have different hashes. Also using this module ensures that users can rest assured that the developers of the website don't have any knowledge of sensitive user information like their passwords as they are end-to-end encrypted.  Compared to simpler hashing algorithms like MD5 or SHA-1, BCrypt offers enhanced security suitable for modern applications.
 
-## Team Members
+### Best Practices:  
+- <strong>Consistency and Clarity:</strong> We followed consistent coding standards and naming conventions to ensure readability and maintainability. ESLint and Prettier were used to enforce these standards.
+- <strong>Modular Design:</strong> The app was designed with a modular architecture, allowing for easy addition of new features and components. This modularity improves code reusability and simplifies testing. It is also remarkably easy to add new front-end routes as we used React-Router-DOM for route management.
 
-- Adwait Kulkarni: I run marathons!
-- Dominic Lo: I play the piano and Switch!
-- Patrick Liang: I like good weather!
-- Subhrodeep Ghose: I like to sleep!
+<hr></hr>  
+  
+## Above-and-Beyond:  
+- THIS NEEDS TO BE FILLED! 
+
+<hr></hr>  
+
+## Next Steps:  
+- Currently, the project only recommends movies to users, and all the features are curated according to this. In the future, we aim to add support for TV Shows and Blogs as well so that the project can be transformed from a Movie Recommendation System to a Content Exploration System.
+- We also plan to integrate machine-learning techniques to provide personalized movie recommendations based on user preferences, viewing history, and ratings. This would enable us to provide more unique feedback to users like what sentiment of movies they like and provide them with interactive displays to visualize their preferences.
+- We plan to include a push notification system where users can submit their email addresses and every time a piece of content is published, the user can get notified of this based on their preferences via email.
+- A really really stretch requirement we have is to add a voice recognition system that would allow for touchless user experiences and people can just sit back, talk to the website about what they want, and let the app do the work for them.
+
+<hr></hr>
+
+## List of Contributions:  
+- <strong>Adwait Kulkarni:</strong> I set up the project with Vite and React, integrated Material UI, and set up most of the initial components in addition to creating the preference form, the About page, the Feeling Lucky functionality, and the user login and authentication functionality. I created the Redux store for users and the Account page with account options like seeing your watchlists, comments, and reviews and the back-end routes to get a user, create a new user, delete a user, and edit an existing user. I developed the social media movie-sharing functionality and watchlist feature that allowed users to add movies to existing watchlists in the database which included user info page functionality to display all watchlist movies and the ability to delete individual movies from watchlists. Finally, I cleaned up the code by removing explanatory comments and logging statements, hid sensitive information like API keys and DB connection strings from client code, and wrote the README for the project.  
+- <strong>Dominic Lo:</strong>
+- <strong>Patrick Liang:</strong>
+- <strong>Subhrodeep Ghose:</strong>
+
+<hr></hr>
 
 ## Images
 
-![20240521_184458](https://github.com/ubc-cpsc455-2024S/project-11_movie_mavericks/assets/65598707/9ad5c817-1708-44f0-b4f6-9487cc8644ae)
-![20240521_185058](https://github.com/ubc-cpsc455-2024S/project-11_movie_mavericks/assets/65598707/596fe799-ded0-4124-8d34-0c732aaeb443)
+![image](https://github.com/user-attachments/assets/f93b8dc9-2408-4153-9d82-e1295fa5ecd3)  
+![image](https://github.com/user-attachments/assets/38177090-dc4f-4472-8c92-9ff0006f99d8)  
+![image](https://github.com/user-attachments/assets/f983e168-0864-4a46-8a24-72378786fc6a)  
+![image](https://github.com/user-attachments/assets/4018ab8c-bca6-4cca-a085-6376770e9fb1)  
+![image](https://github.com/user-attachments/assets/25aef078-d3c8-4454-b472-a4a505150150)  
+![image](https://github.com/user-attachments/assets/c8c9cee0-9814-484d-8fdd-ae769c524f85)  
+![image](https://github.com/user-attachments/assets/d9746b15-c4ec-444b-bdcf-92de3fcb7a5d)  
 
-## References
+<hr></hr>
 
-
-{Add your stuff here}
+## References:  
+- [Vite](https://vitejs.dev/guide/)
+- [Material UI](https://mui.com/)  
+- [Redux Toolkit](https://redux.js.org/)  
+- [Node.js](https://nodejs.org/docs/latest/api/)
+- [Express.js](https://expressjs.com/en/starter/installing.html)
+- [MongoDB](https://www.mongodb.com/docs/atlas/)
+- [Mongoose](https://mongoosejs.com/docs/)
+- [Axios](https://axios-http.com/docs/api_intro)
+- [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started)
+- [BCrypt](https://blog.logrocket.com/password-hashing-node-js-bcrypt/)
+- [OpenAI](https://platform.openai.com/docs/api-reference/introduction)
+- Workshop slides
+- Assignment concepts
