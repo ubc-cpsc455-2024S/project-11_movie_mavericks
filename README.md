@@ -1,31 +1,44 @@
 # Group 11_Movie_Mavericks - {MovieHub}
 
-## Discover your next favorite movie with our personalized recommendation website! Create and manage custom watchlists with ease, add your reviews and comments to movies to express your satisfaction or displeasure, and share your thoughts online with other people. Whether you are a casual viewer or a devoted cinephile, there's something in it for everyone and you will keep coming back to our website repeatedly, that's a guarantee!
+## Discover your next favorite movie with our personalized recommendation website! Create and manage custom watchlists with ease, add your reviews and comments to movies to express your satisfaction or displeasure, and share your thoughts online with other people. Whether you are a casual viewer or a devoted cinephile, there's something in it for everyone and you will keep coming back to our website repeatedly, that's a guarantee!  
 
-## Describe your topic/interest in about 150-200 words
+<hr></hr>
+
+## Table of Contents:  
+[Project Topic](#Topic)  
+[Project Requirements](#Requirements)
+
+## Topic:
 
 - Who is it for: Any movie enthusiast, no age restrictions.
-- What will it do: It will recommend 5 (subject to change) movies based on the inputs provided by the user.
-- What type of data will it store: Dataset or API
+- What will it do: It will recommend movies to users as per their preferences along with additional information about each movie such as the genre, release date, trailer, total revenue, etc.  
+- What type of data will it store: We are using TMDB API to get the movie information in JSON format.  
 - What will users be able to do with this data: Users will be able to select and set their preferences from a form and based on that selected data, get movies recommended to them.
 - What is some additional functionality you can add/remove based on time constraints: Add functionality for TV shows as well and create a Content Recommendation System instead of a Movie Recommendation System.
 
+<hr></hr>
+
 ## Requirements:  
 ### Minimal Requirements:
-- As a user, I want to be able to navigate to the website and open it on any browser of my choice.
-- As a user, I want to be able to be able to see the options on the form so that I can send my inputs to the system.
-- As a user, I want to be able to edit/remove my previously submitted preferences.
-- As a user, I want to be able to create a watchlist/basket connected to my account.
+- As a user, I want to be able to navigate to the website and open it on any browser of my choice. [✔️]
+- As a user, I want to be able to be able to see the options on the form so that I can send my inputs to the system. [✔️]
+- As a user, I want to be able to edit/remove my previously submitted preferences. [✔️] 
+- As a user, I want to be able to create a watchlist/basket connected to my account. [✔️]
 
 ### Standard Requirements:
-- As a user, I want to be able to see at most 5 movie recommendations so that I can choose one of them to watch.
-- As a user, I want to be able to see some high-level info about the recommended movies, such as poster, synopsis.
-- As a user, I want to be able to download all my movies using a Torrent link so that I can view them whenever I want locally.
-- As a user, I want to be able to add/edit/delete items from my watchlist.
+- As a user, I want to be able to see at least 5 movie recommendations so that I can choose one of them to watch. [✔️]
+- As a user, I want to be able to see some high-level info about the recommended movies, such as posters, and synopsis. [✔️]
+- As a user, I want to be able to download all my movies using a Torrent link so that I can view them whenever I want locally (converting this requirement to a streaming option). [✔️]
+- As a user, I want to be able to add/edit/delete items from my watchlist. [✔️]
 
 ### Stretch Requirements:
-- As a user, I want to be able to create an account so that I don't have to worry about losing my preferences.
-- As a user, I want to be able to create multiple watchlists instead of having to deal with the same watchlist every time.
+- As a user, I want to be able to create an account so that I don't have to worry about losing my preferences. [✔️]
+- As a user, I want to be able to create multiple watchlists instead of having to deal with the same watchlist every time. [✔️]
+
+<hr></hr>
+
+## Tech Stack and Implementation:  
+
 
 ## Team Members
 
