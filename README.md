@@ -17,6 +17,8 @@
 
 <hr></hr>
 
+[Jump to Bottom ↓](#References)  
+  
 ## Topic:
 
 - Who is it for: Any movie enthusiast, no age restrictions.
@@ -128,3 +130,5 @@
 - [OpenAI](https://platform.openai.com/docs/api-reference/introduction)
 - Workshop slides
 - Assignment concepts
+
+[Go to Top ↑](#Group%2011_Movie_Mavericks%20-%20{MovieHub})
