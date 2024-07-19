@@ -1,5 +1,7 @@
 # Group 11_Movie_Mavericks - {MovieHub}
 
+## Discover your next favorite movie with our personalized recommendation website! Create and manage custom watchlists with ease, add your reviews and comments to movies to express your satisfaction or displeasure, and share your thoughts online with other people. Whether you are a casual viewer or a devoted cinephile, there's something in it for everyone and you will keep coming back to our website repeatedly, that's a guarantee!
+
 ## Describe your topic/interest in about 150-200 words
 
 - Who is it for: Any movie enthusiast, no age restrictions.
