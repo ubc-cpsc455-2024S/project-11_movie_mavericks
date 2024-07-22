@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Box, Grid, TextField, Button } from "@mui/material";
+import { Paper, Box, Grid, TextField, Button, Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -57,6 +57,19 @@ const Account = () => {
 			>
 				<Box sx={{ flexGrow: 1, paddingLeft: 3, paddingTop: 4 }}>
 					<Outlet />
+					<Typography
+						variant="h5"
+						sx={{
+							marginBottom: 1,
+							marginTop: 1,
+							marginLeft: 1,
+							marginRight: 1,
+							fontWeight: "bold",
+							color: "white",
+						}}
+					>
+						Edit below to change your account details.
+					</Typography>
 					<Grid container spacing={2}>
 						<Grid item xs={12} md={8} sx={{ margin: "30px 50px" }}>
 							<Grid container spacing={2}>
