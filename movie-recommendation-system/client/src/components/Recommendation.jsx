@@ -18,7 +18,6 @@ import {
 import { useDispatch } from "react-redux";
 import { addWatchlist, addMovieToWatchlist } from "../features/userSlice";
 import { useNavigate } from "react-router-dom";
-import "./Recommendations.css";
 
 export default function Recommendation() {
 	const recommendations = useSelector((state) => state.recommendations);

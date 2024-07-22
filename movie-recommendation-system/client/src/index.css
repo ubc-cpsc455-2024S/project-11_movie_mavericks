@@ -132,19 +132,22 @@ button:focus-visible {
   overflow-y: hidden;
   overflow-x: scroll;
   padding: 0px;
+  scrollbar-color: white transparent;
+  scrollbar-width: thin;
 }
 
 .row-posters::-webkit-scrollbar {
-  -webkit-appearance: none;
+  height: 8px;
 }
 
-.row-posters::-webkit-scrollbar:horizontal {
-  height: 13px;
+.row-posters::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .row-posters::-webkit-scrollbar-thumb {
-  border-radius: 8px;
-  border: 1px solid grey;
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid transparent;
 }
 
 .row-poster-container {
