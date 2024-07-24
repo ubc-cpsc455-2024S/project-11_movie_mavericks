@@ -18,7 +18,7 @@ const Reviews = () => {
 	useEffect(() => {
 		const getReviews = async () => {
 			const responses = reviewIDs.map((reviewID) =>
-				axios.get(`http://localhost:3000/reviews/${reviewID}`)
+				axios.get(`https://project-11-movie-mavericks.onrender.com/reviews/${reviewID}`)
 			);
 			Promise.all(responses)
 				.then((values) => values.map((value) => value.data))

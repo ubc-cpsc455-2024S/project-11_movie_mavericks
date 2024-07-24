@@ -25,7 +25,7 @@ const Account = () => {
 		}
 		const user = { username: username, password: password };
 		try {
-			const url = `http://localhost:3000/users/${username}`;
+			const url = `https://project-11-movie-mavericks.onrender.com/users/${username}`;
 			const response = await axios.put(url, user);
 			dispatch(
 				editUser({
