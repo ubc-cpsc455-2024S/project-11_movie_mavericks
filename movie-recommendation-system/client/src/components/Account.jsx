@@ -42,7 +42,6 @@ const Account = () => {
 		<div
 			style={{
 				backgroundColor: "#1b1b1b",
-				minHeight: "100vh",
 				padding: "20px",
 			}}
 		>

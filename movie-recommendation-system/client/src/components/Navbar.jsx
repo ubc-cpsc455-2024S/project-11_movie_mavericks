@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 
 const StyledNavbar = styled(AppBar)(({ theme }) => ({
   backgroundColor: "#292929",
+  zIndex: theme.zIndex.drawer + 1
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
