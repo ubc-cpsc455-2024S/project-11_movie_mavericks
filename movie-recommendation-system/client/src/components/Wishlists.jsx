@@ -102,7 +102,17 @@ export default function Watchlists() {
 			{watchlists.map((watchlist) => (
 				<Card
 					key={watchlist._id}
-					sx={{ marginBottom: 2, backgroundColor: "#292929", borderRadius: 10 }}
+					sx={{
+						justifyContent: "top",
+						alignItems: "top",
+						minHeight: "80vh",
+						minWidth: "65vw",
+						padding: 2,
+
+						marginBottom: 2,
+						backgroundColor: "#292929",
+						borderRadius: 10,
+					}}
 				>
 					<CardContent>
 						<Typography
