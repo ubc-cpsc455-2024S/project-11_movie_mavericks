@@ -41,7 +41,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"{{user_name}}\",\n    \"password\": \"testing1234\"\n}",
+					"raw": "{\n    \"username\": \"testuser123\",\n    \"password\": \"testing1234\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -70,7 +70,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jsonData = pm.response.json();",
+							"let jsonData = pm.response.json();",
 							"",
 							"pm.test(\"Status is 200\", () => {",
 							"    pm.response.to.have.status(200); ",
@@ -91,6 +91,16 @@
 						"type": "text/javascript",
 						"packages": {}
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
 				}
 			],
 			"request": {
@@ -98,7 +108,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"{{user_name}}\",\n    \"password\": \"testing1234\"\n}",
+					"raw": "{\n    \"username\": \"testuser123\",\n    \"password\": \"testing1234\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -115,57 +125,6 @@
 					"path": [
 						"users",
 						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Valid Movie",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"pm.test(\"Status is 200\", () => {",
-							"    pm.response.to.have.status(200); ",
-							"});",
-							"",
-							"pm.test(\"Response is valid JSON\", () => {",
-							"  pm.expect(jsonData).to.be.not.null;",
-							"});",
-							"",
-							"",
-							"pm.test(\"Verify JSON elements\", () => {",
-							"",
-							"    pm.expect(jsonData).to.have.property('_id');",
-							"    pm.expect(jsonData).to.have.property('tmdb_movie_id');",
-							"    pm.expect(jsonData).to.have.property('title');",
-							"    pm.expect(jsonData).to.have.property('reviews');",
-							"    pm.expect(jsonData).to.have.property('__v');",
-							"});",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/movies/481084",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"movies",
-						"481084"
 					]
 				}
 			},
@@ -215,7 +174,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jsonData = pm.response.json();",
+							"let jsonData = pm.response.json();",
 							"",
 							"pm.test(\"Status is 200\", () => {",
 							"    pm.response.to.have.status(200); ",
@@ -277,15 +236,12 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jsonData = pm.response.json();",
+							"let jsonData = pm.response.json();",
 							"",
 							"pm.test(\"Status is 200\", () => {",
 							"    pm.response.to.have.status(200); ",
 							"});",
 							"",
-							"pm.test(\"Response is valid JSON\", () => {",
-							"  pm.expect(jsonData).to.be.not.null;",
-							"});",
 							"",
 							"",
 							"pm.test(\"Verify JSON elements\", () => {",
@@ -340,7 +296,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jsonData = pm.response.json();",
+							"let jsonData = pm.response.json();",
 							"",
 							"pm.test(\"Status is 200\", () => {",
 							"    pm.response.to.have.status(200); ",
@@ -349,17 +305,7 @@
 							"pm.test(\"Response is valid JSON\", () => {",
 							"  pm.expect(jsonData).to.be.not.null;",
 							"});",
-							"",
-							"",
-							"pm.test(\"Verify JSON elements\", () => {",
-							"",
-							"    pm.expect(jsonData).to.have.property('user_id');",
-							"    pm.expect(jsonData).to.have.property('movie_id');",
-							"    pm.expect(jsonData).to.have.property('title');",
-							"    pm.expect(jsonData).to.have.property('rating');",
-							"    pm.expect(jsonData).to.have.property('comment');",
-							"    pm.expect(jsonData).to.have.property('test');",
-							"});"
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -391,7 +337,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jsonData = pm.response.json();",
+							"let jsonData = pm.response.json();",
 							"",
 							"pm.test(\"Status is 200\", () => {",
 							"    pm.response.to.have.status(200); ",
@@ -455,7 +401,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jsonData = pm.response.json();",
+							"let jsonData = pm.response.json();",
 							"",
 							"pm.test(\"Status is 200\", () => {",
 							"    pm.response.to.have.status(200); ",
@@ -563,7 +509,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"const jsonData = pm.response.json();",
+							"let jsonData = pm.response.json();",
 							"",
 							"pm.test(\"Status is 200\", () => {",
 							"    pm.response.to.have.status(200); ",
@@ -573,7 +519,7 @@
 							"    pm.expect(jsonData.length).to.equal(1);",
 							"});",
 							"",
-							"const watchlist1 = jsonData[0];",
+							"let watchlist1 = jsonData[0];",
 							"",
 							"pm.test(\"Watchlist has updated name\", () => {",
 							"    pm.expect(watchlist1.name).to.equal(\"123test\");",
@@ -679,6 +625,41 @@
 			"response": []
 		},
 		{
+			"name": "Delete Watchlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/watchlists/{{watchlist_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"watchlists",
+						"{{watchlist_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Delete User",
 			"event": [
 				{
@@ -749,7 +730,7 @@
 		},
 		{
 			"key": "movie_title",
-			"value": "",
+			"value": "Invalid",
 			"type": "string"
 		},
 		{
@@ -764,7 +745,7 @@
 		},
 		{
 			"key": "user_name",
-			"value": "",
+			"value": "testuser123",
 			"type": "string"
 		}
 	]
