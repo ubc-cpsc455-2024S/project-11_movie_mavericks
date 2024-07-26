@@ -1,11 +1,11 @@
-# MovieHub
+# [MovieHub](https://project-11-movie-mavericks-1.onrender.com/)
 
 ## Discover your next favorite movie with our personalized recommendation website! Create and manage watchlists with ease, share your reviews to express your satisfaction or displeasure. Whether you are a casual viewer or a devoted cinephile, there's something in it for you.
 
 <hr></hr>
 
 ## Table of Contents:  
-[Project Topic](#Topic)  
+[Project URL](#Deployment)  
 [Team Members](#Team%20Members)  
 [Project Requirements](#Requirements)  
 [Technologies](#Tech-Stack)  
@@ -18,6 +18,15 @@
 [Jump to Bottom ↓](#References)
 
 <hr></hr>
+
+## Deployment:  
+- https://project-11-movie-mavericks-1.onrender.com/
+
+## Team Members:  
+- Adwait Kulkarni
+- Dominic Lo
+- Patrick Liang
+- Subhrodeep Ghose
 
 ## Requirements:  
 ### Minimal Requirements:
@@ -108,15 +117,16 @@
     - Created Github Actions to automatically run postman test suite and deploy on render on successful test suite run. 
 <hr></hr>
 
-## Images (to be updated to final UI)
+## Images:  
 
 ![image](https://github.com/user-attachments/assets/f93b8dc9-2408-4153-9d82-e1295fa5ecd3)  
 ![image](https://github.com/user-attachments/assets/38177090-dc4f-4472-8c92-9ff0006f99d8)  
 ![image](https://github.com/user-attachments/assets/f983e168-0864-4a46-8a24-72378786fc6a)  
 ![image](https://github.com/user-attachments/assets/4018ab8c-bca6-4cca-a085-6376770e9fb1)  
 ![image](https://github.com/user-attachments/assets/25aef078-d3c8-4454-b472-a4a505150150)  
-![image](https://github.com/user-attachments/assets/c8c9cee0-9814-484d-8fdd-ae769c524f85)  
-![image](https://github.com/user-attachments/assets/d9746b15-c4ec-444b-bdcf-92de3fcb7a5d)  
+![image](https://github.com/user-attachments/assets/52eea972-9c28-444c-a0e6-2b2ebcf5b567)  
+![image](https://github.com/user-attachments/assets/b8de168c-dc71-429c-980f-932c81cd8208)  
+
 
 <hr></hr>
 
