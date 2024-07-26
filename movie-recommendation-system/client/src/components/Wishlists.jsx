@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { Button, Card, CardContent, Typography, Dialog } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { removeMovieFromWatchlist } from "../features/userSlice";
-import ShareIcon from "@mui/icons-material/Share";
-import MovieDetailsPopup from "./MovieDetailsPopup"; // Import the MovieDetailsPopup component
+import {
+	TwitterShareButton,
+	FacebookShareButton,
+	TwitterIcon,
+	FacebookIcon,
+	LinkedinShareButton,
+	LinkedinIcon,
+} from "react-share";
+import MovieDetailsPopup from "./MovieDetailsPopup";
 
 export default function Watchlists() {
 	const [watchlists, setWatchlists] = useState([]);
-	const [selectedMovie, setSelectedMovie] = useState(null); // State for the selected movie
+	const [selectedMovie, setSelectedMovie] = useState(null);
 	const userID = useSelector((state) => state.user.user?._id);
 	const dispatch = useDispatch();
 
@@ -66,25 +72,6 @@ export default function Watchlists() {
 			);
 		} catch (error) {
 			console.error(error);
-		}
-	};
-
-	const handleShare = async (platform, movie) => {
-		const text = encodeURIComponent(
-			"Check out this cool movie I just watched! It's called: " + movie.title
-		);
-		if (platform === "twitter") {
-			window.open(`https://twitter.com/intent/tweet?text=${text}`, "_blank");
-		} else if (platform === "facebook") {
-			window.open(
-				`https://www.facebook.com/sharer/sharer.php?u=${text}`,
-				"_blank"
-			);
-		} else if (platform === "linkedin") {
-			window.open(
-				`https://www.linkedin.com/shareArticle?mini=true&title=${text}`,
-				"_blank"
-			);
 		}
 	};
 
@@ -147,60 +134,67 @@ export default function Watchlists() {
 									marginBottom: 1,
 								}}
 							>
-								<Typography
-									variant="body1"
-									className="hover-title"
-									style={{
-										marginRight: 50,
-										marginLeft: 5,
-										fontWeight: "bold",
-										fontSize: 20,
-										textAlign: "left",
-										textDecoration: "none",
-										textDecorationColor: "white",
-										textDecorationStyle: "solid",
-										textDecorationThickness: "5px",
-										textDecorationSkip: "none",
-										textDecorationSkipInk: "none",
-									}}
-									onClick={() => handleLearnMoreClick(movie)} // Assuming you have a function for handling clicks on the title
-								>
-									{movie.title}
-								</Typography>
-
-								<Button
-									onClick={() => handleShare("twitter", movie)}
-									sx={{ mr: 1, fontWeight: "bold", fontSize: 15 }}
-								>
-									<ShareIcon /> Twitter
-								</Button>
-								<Button
-									onClick={() => handleShare("facebook", movie)}
-									sx={{ mr: 1, fontWeight: "bold", fontSize: 15 }}
-								>
-									<ShareIcon /> Facebook
-								</Button>
-								<Button
-									onClick={() => handleShare("linkedin", movie)}
-									sx={{ mr: 1, fontWeight: "bold", fontSize: 15 }}
-								>
-									<ShareIcon /> LinkedIn
-								</Button>
-								<Button
-									variant="contained"
-									color="error"
-									size="small"
-									style={{
-										marginLeft: 50,
-										width: 100,
-										marginBottom: 15,
-										marginTop: 15,
-										borderRadius: 20,
-									}}
-									onClick={() => handleRemoveMovie(watchlist._id, movie.id)}
-								>
-									Remove
-								</Button>
+								<div style={{ flex: 1 }}>
+									<Typography
+										variant="body1"
+										className="hover-title"
+										style={{
+											marginRight: 50,
+											marginLeft: 5,
+											fontWeight: "bold",
+											fontSize: 20,
+											textAlign: "left",
+											textDecoration: "none",
+											textDecorationColor: "white",
+											textDecorationStyle: "solid",
+											textDecorationThickness: "5px",
+											textDecorationSkip: "none",
+											textDecorationSkipInk: "none",
+										}}
+										onClick={() => handleLearnMoreClick(movie)}
+									>
+										{movie.title}
+									</Typography>
+								</div>
+								<div style={{ display: "flex", alignItems: "center" }}>
+									<TwitterShareButton
+										url={`https://www.themoviedb.org/movie/${movie.id}`}
+										title={`Check out this movie: ${movie.title}`}
+										style={{ marginRight: 10 }}
+									>
+										<TwitterIcon size={32} round />
+									</TwitterShareButton>
+									<FacebookShareButton
+										url={`https://www.themoviedb.org/movie/${movie.id}`}
+										quote={`Check out this movie: ${movie.title}`}
+										style={{ marginRight: 10 }}
+									>
+										<FacebookIcon size={32} round />
+									</FacebookShareButton>
+									<LinkedinShareButton
+										url={`https://www.themoviedb.org/movie/${movie.id}`}
+										title={`Check out this movie: ${movie.title}`}
+										style={{ marginRight: 10 }}
+									>
+										{" "}
+										<LinkedinIcon size={32} round />
+									</LinkedinShareButton>
+									<Button
+										variant="contained"
+										color="error"
+										size="small"
+										style={{
+											width: 40,
+											height: 40,
+											borderRadius: 20,
+											padding: 0,
+											minWidth: 0,
+										}}
+										onClick={() => handleRemoveMovie(watchlist._id, movie.id)}
+									>
+										X
+									</Button>
+								</div>
 							</div>
 						))}
 					</CardContent>
