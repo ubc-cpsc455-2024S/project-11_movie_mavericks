@@ -7,130 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "Create User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let response = pm.response;",
-							"",
-							"pm.test(\"Status is 200\", () => {",
-							"    pm.response.to.have.status(200); ",
-							"});",
-							"",
-							"pm.test(\"Response is string\", () => {",
-							"    try {",
-							"        JSON.pasrse(response);",
-							"        pm.expect(true).to.equal(false);",
-							"    } catch(ex){",
-							"        pm.expect(true).to.equal(true);",
-							"    }",
-							"});",
-							"",
-							"",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"testuser123\",\n    \"password\": \"testing1234\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3000/users/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get User",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"let jsonData = pm.response.json();",
-							"",
-							"pm.test(\"Status is 200\", () => {",
-							"    pm.response.to.have.status(200); ",
-							"});",
-							"",
-							"",
-							"pm.test(\"Verify JSON elements\", () => {",
-							"",
-							"    pm.expect(jsonData).to.have.property('_id');",
-							"    pm.expect(jsonData).to.have.property('username');",
-							"    pm.expect(jsonData).to.have.property('watchlists');",
-							"    pm.expect(jsonData).to.have.property('reviews');",
-							"    pm.expect(jsonData).to.have.property('__v');",
-							"});",
-							"",
-							"pm.collectionVariables.set(\"user_id\", jsonData._id);"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"username\": \"testuser123\",\n    \"password\": \"testing1234\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:3000/users/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"users",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Invalid Movie",
 			"event": [
 				{
@@ -720,7 +596,7 @@
 	"variable": [
 		{
 			"key": "user_id",
-			"value": "",
+			"value": "66a312a56293d51267b6bb7b",
 			"type": "string"
 		},
 		{
