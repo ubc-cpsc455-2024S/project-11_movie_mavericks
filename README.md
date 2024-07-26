@@ -86,7 +86,11 @@
 <hr></hr>
 
 ## List of Contributions:  
-- <strong>Adwait Kulkarni:</strong> I set up the project with Vite and React, integrated Material UI, and set up most of the initial components in addition to creating the preference form, the About page, the Feeling Lucky functionality, and the user login and authentication functionality. I created the Redux store for users and the Account page with account options like seeing your watchlists, comments, and reviews and the back-end routes to get a user, create a new user, delete a user, and edit an existing user. I developed the social media movie-sharing functionality and watchlist feature that allowed users to add movies to existing watchlists in the database which included user info page functionality to display all watchlist movies and the ability to delete individual movies from watchlists. Finally, I cleaned up the code by removing explanatory comments and logging statements, hid sensitive information like API keys and DB connection strings from client code, and wrote the README for the project.  
+- <strong>Adwait Kulkarni:</strong>
+    - Set up the project with Vite and React, integrated Material UI, and set up most of the initial components in addition to creating the preference form, the About page, the Feeling Lucky functionality, and the user login and authentication functionality.
+    - Created the Redux store for users and the Account page with account options like seeing your watchlists, comments, and reviews and the back-end routes to get a user, create a new user, delete a user, and edit an existing user.
+    - Developed the social media movie-sharing functionality and watchlist feature that allowed users to add movies to existing watchlists in the database which included user info page functionality to display all watchlist movies and the ability to delete individual movies from watchlists.
+    - Cleaned up the code by removing explanatory comments and logging statements, hid sensitive information like API keys and DB connection strings from client code, and wrote the README for the project.  
 - <strong>Dominic Lo:</strong>
     - API integrations with TMDB and Streaming Availability
     - Initialized schemas, DB collections, and populate with sample data for movies, reviews, watchlists
