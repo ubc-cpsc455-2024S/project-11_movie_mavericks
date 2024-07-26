@@ -32,7 +32,7 @@ const Reviews = () => {
 			sx={{
 				justifyContent: "top",
 				alignItems: "top",
-				minHeight: "80vh",
+				Height: "80vh",
 				minWidth: "65vw",
 				backgroundColor: "#1b1b1b",
 				padding: 2,

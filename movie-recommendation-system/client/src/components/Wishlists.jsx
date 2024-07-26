@@ -102,7 +102,7 @@ export default function Watchlists() {
 					sx={{
 						justifyContent: "top",
 						alignItems: "top",
-						minHeight: "80vh",
+						Height: "80vh",
 						minWidth: "65vw",
 						padding: 2,
 						marginBottom: 2,
