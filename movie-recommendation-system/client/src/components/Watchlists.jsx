@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { Button, Card, CardContent, Typography, Dialog, Tooltip } from "@mui/material";
+import { Button, Card, CardContent, Typography, Dialog, Tooltip, IconButton } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { removeMovieFromWatchlist } from "../features/userSlice";
 import {
 	TwitterShareButton,
@@ -137,21 +138,9 @@ export default function Watchlists() {
 								}}
 							>
 								<Tooltip title="Remove">
-									<Button
-										variant="contained"
-										color="error"
-										size="small"
-										style={{
-											width: 20,
-											height: 20,
-											borderRadius: 20,
-											padding: 0,
-											minWidth: 0,
-										}}
-										onClick={() => handleRemoveMovie(watchlist._id, movie.id)}
-									>
-										X
-									</Button>
+									<IconButton color="error" onClick={() => handleRemoveMovie(watchlist._id, movie.id)}>
+										<DeleteIcon />
+									</IconButton>
 								</Tooltip>
 								<div style={{ flex: 1 }}>
 									<Typography

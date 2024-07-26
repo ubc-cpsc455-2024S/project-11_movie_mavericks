@@ -8,7 +8,15 @@ import {
 	ListItemText,
 	ListItemButton,
 	Toolbar,
+	BottomNavigation,
+	BottomNavigationAction,
+	Paper,
 } from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Account from "./Account";
@@ -18,7 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../features/userSlice";
 import axios from "axios";
 
-const drawerWidth = 240;
+const drawerWidth = 170;
 
 const UserInfo = () => {
 	const username = useSelector((state) => state.user.username);
@@ -27,9 +35,9 @@ const UserInfo = () => {
 	const navigate = useNavigate();
 
 	const navItems = [
-		{ label: "Account", path: "/account" },
-		{ label: "Watchlists", path: "/account/watchlists" },
-		{ label: "Reviews", path: "/account/reviews" },
+		{ label: "Account", path: "/account", icon: <AccountCircleIcon /> },
+		{ label: "Watchlists", path: "/account/watchlists", icon: <FavoriteIcon /> },
+		{ label: "Reviews", path: "/account/reviews", icon: <CommentIcon /> },
 	];
 
 	const deleteAccount = async () => {
@@ -56,10 +64,11 @@ const UserInfo = () => {
 				sx={{
 					width: drawerWidth,
 					flexShrink: 0,
+					display: { xs: "none", sm: "block" },
 					"& .MuiDrawer-paper": {
 						width: drawerWidth,
 						boxSizing: "border-box",
-						backgroundColor: "#292929",
+						backgroundColor: "black",
 						color: "white",
 					},
 				}}
@@ -104,6 +113,33 @@ const UserInfo = () => {
 				{location.pathname === "/account" && <Account />}
 				<Outlet />
 			</Box>
+			<Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+				<BottomNavigation
+					showLabels
+					sx={{ display: { xs: "block", sm: "none" }, marginTop: "5px" }}
+				>
+					{navItems.map((item) => (
+						<BottomNavigationAction
+							label={item.label}
+							component={Link}
+							to={item.path}
+							icon={item.icon}
+						/>
+					))}
+					<BottomNavigationAction
+						label="Logout"
+						component={Link}
+						to="/login"
+						onClick={() => dispatch(logout())}
+						icon={<LogoutIcon />}
+					/>
+					<BottomNavigationAction
+						label="Delete Account"
+						onClick={deleteAccount}
+						icon={<PersonRemoveIcon />}
+					/>
+				</BottomNavigation>
+			</Paper>
 		</Box>
 	);
 };
