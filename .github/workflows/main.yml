@@ -1,0 +1,63 @@
+name: MovieHub CI/CD
+
+on: 
+  pull_request:  
+    branches:
+      - '**'
+  push:           
+    branches: 
+      - main
+
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm run install-server
+    
+    - name: Start Backend
+      run: npm run start-server &
+    
+    - name: Wait for backend to be ready
+      run: |
+        echo "Waiting for backend to be ready..."
+        for i in {1..2}; do
+          if curl -s http://localhost:3000 > /dev/null; then
+            echo "Backend is ready"
+            break
+          fi
+          sleep 10
+        done
+
+    - name: Install Newman
+      run: npm install -g newman
+
+    - name: Run Collection
+      run: newman run collections/MovieHub.postman_collection.json
+  
+  deploy-backend:
+    name: Deploy to Render - Webservice
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - uses: JorgeLNJunior/render-deploy@v1.4.4
+          with:
+            service_id: ${{ secrets.WEB_SERVICE_ID }}
+            api_key: ${{ secrets.RENDER_API_KEY }}
+  
+  deploy-frontend:
+    name: Deploy to Render - Frontend
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v3
+        - uses: JorgeLNJunior/render-deploy@v1.4.4
+          with:
+            service_id: ${{ secrets.FRONTEND_SERVICE_ID }}
+            api_key: ${{ secrets.RENDER_API_KEY }}
