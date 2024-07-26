@@ -1,5 +1,6 @@
 name: MovieHub CI/CD
-
+env: 
+    MONGO_URI: ${{ secrets.MONGO_URI }}
 on: 
   pull_request:  
     branches:
