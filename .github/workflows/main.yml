@@ -39,7 +39,7 @@ jobs:
       run: npm install -g newman
 
     - name: Run Collection
-      run: newman run collections/MovieHub.postman_collection.json
+      run: newman run collections/MovieHub.postman_collection.json --timeout-request 60000
   
   deploy-backend:
     name: Deploy to Render - Webservice
