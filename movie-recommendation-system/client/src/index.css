@@ -178,3 +178,13 @@ button:focus-visible {
 .row-poster-container:hover .row-poster {
   transform: scale(1.08);
 }
+
+.hover-title {
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.hover-title:hover {
+  color: rgb(155, 155, 155);
+}

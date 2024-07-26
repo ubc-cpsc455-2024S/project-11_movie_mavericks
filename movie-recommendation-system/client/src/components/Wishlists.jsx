@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { Button, Card, CardContent, Typography } from "@mui/material";
+import { Button, Card, CardContent, Typography, Dialog } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { removeMovieFromWatchlist } from "../features/userSlice";
 import ShareIcon from "@mui/icons-material/Share";
+import MovieDetailsPopup from "./MovieDetailsPopup"; // Import the MovieDetailsPopup component
 
 export default function Watchlists() {
 	const [watchlists, setWatchlists] = useState([]);
+	const [selectedMovie, setSelectedMovie] = useState(null); // State for the selected movie
 	const userID = useSelector((state) => state.user.user?._id);
 	const dispatch = useDispatch();
 
@@ -97,6 +99,14 @@ export default function Watchlists() {
 		}
 	};
 
+	const handleLearnMoreClick = (movie) => {
+		setSelectedMovie(movie.id);
+	};
+
+	const handleClose = () => {
+		setSelectedMovie(null);
+	};
+
 	return (
 		<div>
 			{watchlists.map((watchlist) => (
@@ -108,7 +118,6 @@ export default function Watchlists() {
 						minHeight: "80vh",
 						minWidth: "65vw",
 						padding: 2,
-
 						marginBottom: 2,
 						backgroundColor: "#292929",
 						borderRadius: 10,
@@ -140,11 +149,11 @@ export default function Watchlists() {
 							>
 								<Typography
 									variant="body1"
+									className="hover-title"
 									style={{
 										marginRight: 50,
 										marginLeft: 5,
 										fontWeight: "bold",
-										color: "white",
 										fontSize: 20,
 										textAlign: "left",
 										textDecoration: "none",
@@ -154,9 +163,11 @@ export default function Watchlists() {
 										textDecorationSkip: "none",
 										textDecorationSkipInk: "none",
 									}}
+									onClick={() => handleLearnMoreClick(movie)} // Assuming you have a function for handling clicks on the title
 								>
 									{movie.title}
 								</Typography>
+
 								<Button
 									onClick={() => handleShare("twitter", movie)}
 									sx={{ mr: 1, fontWeight: "bold", fontSize: 15 }}
@@ -209,6 +220,22 @@ export default function Watchlists() {
 					</Button>
 				</Card>
 			))}
+			<Dialog
+				open={!!selectedMovie}
+				onClose={handleClose}
+				maxWidth="md"
+				fullWidth
+				PaperProps={{
+					sx: { backgroundColor: "#e0dede" },
+				}}
+			>
+				{selectedMovie && (
+					<MovieDetailsPopup
+						tmdb_movie_id={selectedMovie}
+						onClose={handleClose}
+					/>
+				)}
+			</Dialog>
 		</div>
 	);
 }
