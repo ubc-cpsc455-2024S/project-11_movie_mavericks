@@ -103,12 +103,16 @@
     - Developed the social media movie-sharing functionality and watchlist feature that allowed users to add movies to existing watchlists in the database which included user info page functionality to display all watchlist movies and the ability to delete individual movies from watchlists.
     - Cleaned up the code by removing explanatory comments and logging statements, hid sensitive information like API keys and DB connection strings from client code, and wrote the README for the project.  
 - <strong>Dominic Lo:</strong>
-    - API integrations with TMDB and Streaming Availability
+    - External API integrations with TMDB and Streaming Availability
     - Initialized schemas, DB collections, and populate with sample data for movies, reviews, watchlists
     - Implemented comment system
     - Setup redux store for recommendations
     - UI for recommendations, movie popup, and form inputs
 - <strong>Patrick Liang:</strong>
+    - Created movie details popup component
+    - API integrations for form inputs
+    - UI for form, recommendations, login and account components
+    - Designed collection schemas for database
 - <strong>Subhrodeep Ghose:</strong>
     - Setup MongoDB database, and created some schemas used in the project. 
     - Integrated the MongoDB database with the backend. 
