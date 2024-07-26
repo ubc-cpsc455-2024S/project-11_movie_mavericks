@@ -2,7 +2,7 @@
 
 ## Discover your next favorite movie with our personalized recommendation website! Create and manage watchlists with ease, share your reviews to express your satisfaction or displeasure. Whether you are a casual viewer or a devoted cinephile, there's something in it for you.  
 
-Workflow Status Badge: https://github.com/ubc-cpsc455-2024S/project-11_movie_mavericks/actions/workflows/main.yml/badge.svg  
+![MovieHub CI/CD workflow](https://github.com/ubc-cpsc455-2024S/project-11_movie_mavericks/actions/workflows/main.yml/badge.svg)
 
 <hr></hr>
 
