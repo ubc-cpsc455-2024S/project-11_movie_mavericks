@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { Button, Card, CardContent, Typography, Dialog } from "@mui/material";
+import { Button, Card, CardContent, Typography, Dialog, Tooltip } from "@mui/material";
 import { removeMovieFromWatchlist } from "../features/userSlice";
 import {
 	TwitterShareButton,
 	FacebookShareButton,
-	TwitterIcon,
 	FacebookIcon,
 	LinkedinShareButton,
 	LinkedinIcon,
+	XIcon,
+	RedditShareButton,
+	RedditIcon,
 } from "react-share";
 import MovieDetailsPopup from "./MovieDetailsPopup";
 
@@ -122,7 +124,7 @@ export default function Watchlists() {
 								color: "white",
 							}}
 						>
-							Watchlist: {watchlist.name}
+							{watchlist.name}
 						</Typography>
 						{watchlist.movies.map((movie) => (
 							<div
@@ -134,6 +136,23 @@ export default function Watchlists() {
 									marginBottom: 1,
 								}}
 							>
+								<Tooltip title="Remove">
+									<Button
+										variant="contained"
+										color="error"
+										size="small"
+										style={{
+											width: 20,
+											height: 20,
+											borderRadius: 20,
+											padding: 0,
+											minWidth: 0,
+										}}
+										onClick={() => handleRemoveMovie(watchlist._id, movie.id)}
+									>
+										X
+									</Button>
+								</Tooltip>
 								<div style={{ flex: 1 }}>
 									<Typography
 										variant="body1"
@@ -162,7 +181,7 @@ export default function Watchlists() {
 										title={`Check out this movie: ${movie.title}`}
 										style={{ marginRight: 10 }}
 									>
-										<TwitterIcon size={32} round />
+										<XIcon size={32} round />
 									</TwitterShareButton>
 									<FacebookShareButton
 										url={`https://www.themoviedb.org/movie/${movie.id}`}
@@ -179,21 +198,12 @@ export default function Watchlists() {
 										{" "}
 										<LinkedinIcon size={32} round />
 									</LinkedinShareButton>
-									<Button
-										variant="contained"
-										color="error"
-										size="small"
-										style={{
-											width: 40,
-											height: 40,
-											borderRadius: 20,
-											padding: 0,
-											minWidth: 0,
-										}}
-										onClick={() => handleRemoveMovie(watchlist._id, movie.id)}
+									<RedditShareButton
+										url={`https://www.themoviedb.org/movie/${movie.id}`}
+										title={`Check out this movie: ${movie.title}`}
 									>
-										X
-									</Button>
+										<RedditIcon size={32} round />
+									</RedditShareButton>
 								</div>
 							</div>
 						))}
@@ -207,7 +217,7 @@ export default function Watchlists() {
 							padding: 1,
 							fontSize: 15,
 							fontWeight: "bold",
-							borderRadius: 20,
+							borderRadius: 3,
 						}}
 					>
 						Delete Watchlist

@@ -28,7 +28,7 @@ const UserInfo = () => {
 
 	const navItems = [
 		{ label: "Account", path: "/account" },
-		{ label: "Watchlists", path: "/account/wishlists" },
+		{ label: "Watchlists", path: "/account/watchlists" },
 		{ label: "Reviews", path: "/account/reviews" },
 	];
 
@@ -51,7 +51,7 @@ const UserInfo = () => {
 	};
 
 	return (
-		<Box sx={{ display: "flex" }}>
+		<Box sx={{ display: "flex", paddingTop: "20px" }}>
 			<Drawer
 				sx={{
 					width: drawerWidth,
