@@ -95,7 +95,13 @@
     - UI for recommendations, movie popup, and form inputs
 - <strong>Patrick Liang:</strong>
 - <strong>Subhrodeep Ghose:</strong>
-
+    - Setup MongoDB database, and created some schemas used in the project. 
+    - Integrated the MongoDB database with the backend. 
+    - Helped out with backend issues.
+    - Helped create adding watchlists functionality.
+    - Deployed project on render.
+    - Created end-to-end api tests on postman. 
+    - Created Github Actions to automatically run postman test suite and deploy on render on successful test suite run. 
 <hr></hr>
 
 ## Images (to be updated to final UI)
