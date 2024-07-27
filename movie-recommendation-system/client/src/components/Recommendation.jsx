@@ -154,14 +154,14 @@ export default function Recommendation() {
 		entries.length === 0
 			? []
 			: entries[0][0] === "0"
-			? [
+				? [
 					entries[0],
 					...entries.slice(1).sort((m1, m2) => m2[1].length - m1[1].length),
-			  ]
-			: entries.sort((m1, m2) => m2[1].length - m1[1].length);
+				]
+				: entries.sort((m1, m2) => m2[1].length - m1[1].length);
 	const categoryComponents =
 		sortedCategories.length === 0 ? (
-			<h2 style={{ color: "white" }}>No result, please try again!</h2>
+			<h2 style={{ color: "white" }}>No recommendations, please try again!</h2>
 		) : (
 			sortedCategories.map(([genreID, movies]) => (
 				<Category
@@ -175,8 +175,7 @@ export default function Recommendation() {
 		);
 
 	return (
-		<>
-			<h1 style={{ color: "white" }}>Recommendations</h1>
+		<div style={{ paddingTop: "50px" }}>
 			{categoryComponents}
 			<Dialog
 				open={!!selectedMovie}
@@ -222,7 +221,7 @@ export default function Recommendation() {
 					</Button>
 				</DialogActions>
 			</Dialog>
-		</>
+		</div>
 	);
 }
 
@@ -230,7 +229,7 @@ function Category(props) {
 	const { genreID, movies, handleLearnMoreClick, handleAddToWatchlist } = props;
 	return (
 		<>
-			<h2 style={{ color: "white" }}>
+			<h2 style={{ color: "white", textAlign: "left" }}>
 				{Number(genreID) === 0
 					? "Featured"
 					: genres.find(({ id }) => id === Number(genreID))?.name ?? "Other"}

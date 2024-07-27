@@ -26,9 +26,6 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
-a:hover {
-  color: aqua;
-}
 
 h1 {
   font-size: 3.2em;
@@ -46,9 +43,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: white;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -124,7 +123,7 @@ button:focus-visible {
 }
 
 .row {
-  color: white;
+  width: 80vw;
 }
 
 .row-posters {
@@ -178,4 +177,14 @@ button:focus-visible {
 
 .row-poster-container:hover .row-poster {
   transform: scale(1.08);
+}
+
+.hover-title {
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.hover-title:hover {
+  color: rgb(155, 155, 155);
 }

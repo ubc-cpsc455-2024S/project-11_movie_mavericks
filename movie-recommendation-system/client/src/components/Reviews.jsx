@@ -28,12 +28,23 @@ const Reviews = () => {
 	}, [reviewIDs]);
 
 	return (
-		<div>
+		<Box
+			sx={{
+				justifyContent: "top",
+				alignItems: "top",
+				Height: "80vh",
+				minWidth: "65vw",
+				backgroundColor: "#1b1b1b",
+				padding: 2,
+			}}
+		>
 			<Paper
 				elevation={3}
 				sx={{
+					width: "100%",
+					maxWidth: "1200px",
 					padding: "50px 30px",
-					marginBottom: 2,
+					margin: "20px",
 					backgroundColor: "#292929",
 					borderRadius: 10,
 				}}
@@ -70,7 +81,7 @@ const Reviews = () => {
 					))}
 				</List>
 			</Paper>
-		</div>
+		</Box>
 	);
 };
 

@@ -1,7 +1,22 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Box, Typography, Container, Paper, Button } from "@mui/material";
-import { styled } from "@mui/system";
+import {
+	Box,
+	Drawer,
+	List,
+	ListItem,
+	ListItemText,
+	ListItemButton,
+	Toolbar,
+	BottomNavigation,
+	BottomNavigationAction,
+	Paper,
+} from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import CommentIcon from '@mui/icons-material/Comment';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import Account from "./Account";
@@ -11,16 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../features/userSlice";
 import axios from "axios";
 
-const StyledContainer = styled(Container)(({ theme }) => ({
-	paddingTop: theme.spacing(4),
-}));
-
-const Sidebar = styled(Box)(({ theme }) => ({
-	width: "200px",
-	paddingRight: theme.spacing(2),
-	borderRight: `1px solid ${theme.palette.divider}`,
-	backgroundColor: "#1b1b1b",
-}));
+const drawerWidth = 170;
 
 const UserInfo = () => {
 	const username = useSelector((state) => state.user.username);
@@ -29,9 +35,9 @@ const UserInfo = () => {
 	const navigate = useNavigate();
 
 	const navItems = [
-		{ label: "My Account", path: "/account" },
-		{ label: "My Watchlists", path: "/account/wishlists" },
-		{ label: "My reviews", path: "/account/reviews" },
+		{ label: "Account", path: "/account", icon: <AccountCircleIcon /> },
+		{ label: "Watchlists", path: "/account/watchlists", icon: <FavoriteIcon /> },
+		{ label: "Reviews", path: "/account/reviews", icon: <CommentIcon /> },
 	];
 
 	const deleteAccount = async () => {
@@ -53,65 +59,88 @@ const UserInfo = () => {
 	};
 
 	return (
-		<StyledContainer maxWidth="lg">
-			<Paper
-				elevation={12}
-				sx={{ display: "flex", padding: 3, backgroundColor: "#1b1b1b" }}
+		<Box sx={{ display: "flex", paddingTop: "20px" }}>
+			<Drawer
+				sx={{
+					width: drawerWidth,
+					flexShrink: 0,
+					display: { xs: "none", sm: "block" },
+					"& .MuiDrawer-paper": {
+						width: drawerWidth,
+						boxSizing: "border-box",
+						backgroundColor: "black",
+						color: "white",
+					},
+				}}
+				variant="permanent"
+				anchor="left"
+				backgroundColor="blue"
 			>
-				<Sidebar>
+				<Toolbar />
+				<List>
 					{navItems.map((item) => (
-						<Button
-							fullWidth
-							variant="contained"
-							sx={{ marginBottom: 2 }}
-							key={item.label}
+						<ListItem key={item.label} disablePadding>
+							<ListItemButton
+								component={Link}
+								to={item.path}
+								sx={{ ":hover": { backgroundColor: "#383838" } }}
+							>
+								<ListItemText primary={item.label} />
+							</ListItemButton>
+						</ListItem>
+					))}
+					<ListItem key="logout" disablePadding>
+						<ListItemButton
+							component={Link}
+							to="/login"
+							onClick={() => dispatch(logout())}
+							sx={{ ":hover": { backgroundColor: "#383838" } }}
+						>
+							<ListItemText primary="Log Out" />
+						</ListItemButton>
+					</ListItem>
+					<ListItem key="delete" disablePadding>
+						<ListItemButton
+							onClick={deleteAccount}
+							sx={{ ":hover": { backgroundColor: "#7a0012" } }}
+						>
+							<ListItemText primary="Delete Account" />
+						</ListItemButton>
+					</ListItem>
+				</List>
+			</Drawer>
+			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+				{location.pathname === "/account" && <Account />}
+				<Outlet />
+			</Box>
+			<Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+				<BottomNavigation
+					showLabels
+					sx={{ display: { xs: "block", sm: "none" }, marginTop: "5px" }}
+				>
+					{navItems.map((item) => (
+						<BottomNavigationAction
+							label={item.label}
 							component={Link}
 							to={item.path}
-						>
-							{item.label}
-						</Button>
+							icon={item.icon}
+						/>
 					))}
-					<Button
-						fullWidth
-						variant="contained"
-						sx={{ marginBottom: 2 }}
+					<BottomNavigationAction
+						label="Logout"
 						component={Link}
 						to="/login"
 						onClick={() => dispatch(logout())}
-					>
-						Log Out
-					</Button>
-					<Button
-						fullWidth
-						variant="outlined"
-						sx={{
-							backgroundColor: "#7a0012",
-							color: "white",
-							":hover": { backgroundColor: "black" },
-						}}
+						icon={<LogoutIcon />}
+					/>
+					<BottomNavigationAction
+						label="Delete Account"
 						onClick={deleteAccount}
-					>
-						Delete Account
-					</Button>
-				</Sidebar>
-				<Box sx={{ flexGrow: 1, paddingLeft: 3, backgroundColor: "#1b1b1b" }}>
-					<Typography
-						sx={{
-							textAlign: "center",
-							fontSize: "2em",
-							fontWeight: "bold",
-							color: "white",
-						}}
-						variant="h5"
-						gutterBottom
-					>
-						Hello there {username}!
-					</Typography>
-					{location.pathname === "/account" && <Account />}
-					<Outlet />
-				</Box>
+						icon={<PersonRemoveIcon />}
+					/>
+				</BottomNavigation>
 			</Paper>
-		</StyledContainer>
+		</Box>
 	);
 };
 

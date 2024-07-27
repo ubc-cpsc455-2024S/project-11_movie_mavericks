@@ -20,6 +20,7 @@ import { useSelector } from "react-redux";
 
 const StyledNavbar = styled(AppBar)(({ theme }) => ({
   backgroundColor: "#292929",
+  zIndex: theme.zIndex.drawer + 1,
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
@@ -63,33 +64,12 @@ function Navbar(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <StyledLink to="/">
-        <Typography variant="h2" sx={{ my: 2, color: "yellow" }}>
-          <Box component="span" sx={{ fontWeight: "bold", color: "white" }}>
-            Movie
-          </Box>
-          <Box
-            component="span"
-            sx={{
-              fontWeight: "bold",
-              color: "black",
-              backgroundColor: "#37B7C3",
-              borderRadius: "4px",
-              px: 0.5,
-              ml: 0.5,
-            }}
-          >
-            hub
-          </Box>
-        </Typography>
-      </StyledLink>
-      <Divider />
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", marginTop: "50px" }}>
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
             <ListItemButton
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "right" }}
               component={StyledLink}
               to={item.path}
             >
@@ -100,7 +80,7 @@ function Navbar(props) {
         {!loggedIn && (
           <ListItem disablePadding>
             <ListItemButton
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "right" }}
               component={StyledLink}
               to="/login"
             >
@@ -111,7 +91,7 @@ function Navbar(props) {
         {loggedIn && (
           <ListItem disablePadding>
             <ListItemButton
-              sx={{ textAlign: "center" }}
+              sx={{ textAlign: "right" }}
               component={StyledLink}
               to="/account"
             >
@@ -131,26 +111,13 @@ function Navbar(props) {
       <CssBaseline />
       <StyledNavbar component="nav">
         <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
-            >
-              <MenuIcon />
-            </IconButton>
+          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
             <StyledLink to="/">
               <Typography
                 variant="h5"
                 component="div"
                 sx={{
                   flexGrow: 1,
-                  display: {
-                    xs: "none",
-                    sm: "block",
-                  },
                   fontSize: "2rem",
                 }}
               >
@@ -193,12 +160,24 @@ function Navbar(props) {
               </StyledButton>
             )}
           </Box>
+          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </StyledNavbar>
       <nav>
         <Drawer
           container={container}
           variant="temporary"
+          anchor="right"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
@@ -208,17 +187,14 @@ function Navbar(props) {
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              backgroundColor: "black",
+              color: "white"
             },
           }}
         >
           {drawer}
         </Drawer>
       </nav>
-      <Box component="main" sx={{ p: 3 }}>
-        <Toolbar />
-        <Typography></Typography>
-      </Box>
     </Box>
   );
 }
