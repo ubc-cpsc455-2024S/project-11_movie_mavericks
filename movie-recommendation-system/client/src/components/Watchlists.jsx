@@ -26,7 +26,7 @@ export default function Watchlists() {
 		const fetchWatchlists = async () => {
 			try {
 				const response = await axios.get(
-					`http://localhost:3000/watchlists/${userID}`
+					`https://project-11-movie-mavericks.onrender.com/watchlists/${userID}`
 				);
 				const watchlists = await Promise.all(
 					response.data.map(async (watchlist) => {
@@ -59,7 +59,7 @@ export default function Watchlists() {
 	const handleRemoveMovie = async (watchlistID, movieID) => {
 		try {
 			await axios.delete(
-				`http://localhost:3000/watchlists/${watchlistID}/movies/${movieID}`
+				`https://project-11-movie-mavericks.onrender.com/watchlists/${watchlistID}/movies/${movieID}`
 			);
 			dispatch(removeMovieFromWatchlist({ watchlistID, movieID }));
 			setWatchlists(
@@ -80,7 +80,7 @@ export default function Watchlists() {
 
 	const handleDelete = async (watchlistID) => {
 		try {
-			await axios.delete(`http://localhost:3000/watchlists/${watchlistID}`);
+			await axios.delete(`https://project-11-movie-mavericks.onrender.com/watchlists/${watchlistID}`);
 			setWatchlists(
 				watchlists.filter((watchlist) => watchlist._id !== watchlistID)
 			);

@@ -32,4 +32,21 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.delete("/:reviewID", async (req, res) => {
+  const reviewID = req.params.reviewID;
+
+  try {
+    const reviewToDelete = await Review.deleteOne({ _id: reviewID });
+
+    if (reviewToDelete.deletedCount === 1) {
+      res.status(204).send("Review deleted successfully");
+    } else {
+      res.status(404).json({ msg: "review not found" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

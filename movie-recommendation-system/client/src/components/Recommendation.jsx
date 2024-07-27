@@ -37,7 +37,7 @@ export default function Recommendation() {
 	useEffect(() => {
 		if (loggedIn) {
 			axios
-				.get(`http://localhost:3000/watchlists/${userID}`)
+				.get(`https://project-11-movie-mavericks.onrender.com/watchlists/${userID}`)
 				.then((response) => {
 					setWatchlists(response.data);
 				})
@@ -67,7 +67,7 @@ export default function Recommendation() {
 
 	const handleCreateNewWatchlist = async () => {
 		try {
-			await axios.post("http://localhost:3000/watchlists", {
+			await axios.post("https://project-11-movie-mavericks.onrender.com/watchlists", {
 				user_id: userID,
 				name: newWatchlistName,
 			});
@@ -103,7 +103,7 @@ export default function Recommendation() {
 				dispatch(addWatchlist(movieDetails));
 				dispatch(addMovieToWatchlist(movieDetails));
 				await axios.post(
-					`http://localhost:3000/watchlists/${selectedWatchlist}/movies`,
+					`https://project-11-movie-mavericks.onrender.com/watchlists/${selectedWatchlist}/movies`,
 					{
 						movieID: response.data.id,
 					}

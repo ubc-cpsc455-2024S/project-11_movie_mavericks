@@ -108,17 +108,17 @@ const MovieDetailsPopup = ({ tmdb_movie_id }) => {
 			let movieResponse;
 			try {
 				movieResponse = await axios.get(
-					`http://localhost:3000/movies/${tmdb_movie_id}`
+					`https://project-11-movie-mavericks.onrender.com/movies/${tmdb_movie_id}`
 				);
 				const responses = movieResponse.data.reviews.map((reviewID) =>
-					axios.get(`http://localhost:3000/reviews/${reviewID}`)
+					axios.get(`https://project-11-movie-mavericks.onrender.com/reviews/${reviewID}`)
 				);
 				Promise.all(responses)
 					.then((values) => values.map((value) => value.data))
 					.then((data) => setReviews(data));
 			} catch (error) {
 				try {
-					movieResponse = await axios.post("http://localhost:3000/movies", {
+					movieResponse = await axios.post("https://project-11-movie-mavericks.onrender.com/movies", {
 						tmdb_movie_id: tmdb_movie_id,
 						title: movieDetails.original_title,
 					});
@@ -165,7 +165,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id }) => {
 
 		try {
 			const movieResponse = await axios.get(
-				`http://localhost:3000/movies/${tmdb_movie_id}`
+				`https://project-11-movie-mavericks.onrender.com/movies/${tmdb_movie_id}`
 			);
 			const movieID = movieResponse.data._id;
 
@@ -178,19 +178,19 @@ const MovieDetailsPopup = ({ tmdb_movie_id }) => {
 			};
 
 			const reviewResponse = await axios.post(
-				"http://localhost:3000/reviews",
+				"https://project-11-movie-mavericks.onrender.com/reviews",
 				body
 			);
 			const review = reviewResponse.data;
 
-			await axios.patch("http://localhost:3000/movies/review", {
+			await axios.patch("https://project-11-movie-mavericks.onrender.com/movies/review", {
 				movieID: movieID,
 				reviewID: review._id,
 			});
 			const reviewWithUsername = { ...review, username: username };
 			setReviews((prev) => [reviewWithUsername].concat(prev));
 
-			await axios.patch("http://localhost:3000/users/review", {
+			await axios.patch("https://project-11-movie-mavericks.onrender.com/users/review", {
 				userID: userID,
 				reviewID: review._id,
 			});

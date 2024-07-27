@@ -46,4 +46,22 @@ router.patch("/review", async (req, res) => {
   }
 });
 
+
+router.delete("/:tmdbID", async (req, res) => {
+  const tmdbID = req.params.tmdbID;
+
+  try {
+    const movieToDelete = await Movie.deleteOne({ tmdb_movie_id: tmdbID });
+
+    if (movieToDelete.deletedCount === 1) {
+      res.status(204).send("Movie deleted successfully");
+    } else {
+      res.status(404).json({ msg: "movie not found" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 module.exports = router;

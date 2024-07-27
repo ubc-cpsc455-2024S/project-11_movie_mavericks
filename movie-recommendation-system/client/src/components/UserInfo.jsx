@@ -47,7 +47,7 @@ const UserInfo = () => {
 			)
 		) {
 			try {
-				const url = `http://localhost:3000/users/${username}`;
+				const url = `https://project-11-movie-mavericks.onrender.com/users/${username}`;
 				await axios.delete(url);
 				dispatch(logout());
 				navigate("/");
