@@ -19,218 +19,188 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const StyledNavbar = styled(AppBar)(({ theme }) => ({
-	backgroundColor: "#292929",
+  backgroundColor: "#292929",
+  zIndex: theme.zIndex.drawer + 1,
 }));
 
 const StyledLink = styled(Link)(({ theme }) => ({
-	color: "white",
-	textDecoration: "none",
-	fontSize: "1.1rem",
+  color: "white",
+  textDecoration: "none",
+  fontSize: "1.1rem",
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-	color: "white",
-	fontSize: "1.1rem",
-	marginLeft: theme.spacing(2),
-	height: "100%",
+  color: "white",
+  fontSize: "1.1rem",
+  marginLeft: theme.spacing(2),
+  height: "100%",
 
-	"&:hover": {
-		backgroundColor: "#383838",
-		color: "white",
-		textDecoration: "none",
-	},
-	"&:active": {
-		backgroundColor: "#505050",
-		textDecoration: "none",
-	},
+  "&:hover": {
+    backgroundColor: "#383838",
+    color: "white",
+    textDecoration: "none",
+  },
+  "&:active": {
+    backgroundColor: "#505050",
+    textDecoration: "none",
+  },
 }));
 
 const drawerWidth = 240;
 const navItems = [
-	{ label: "Home", path: "/" },
-	{ label: "Recommendation", path: "/recommendation" },
-	{ label: "About", path: "/about" },
-	{ label: "I'm Feeling Lucky", path: "/feeling-lucky" },
-	// { label: "Login", path: "/login" },
-	// { label: "Account", path: "/account" },
+  { label: "Home", path: "/" },
+  { label: "Recommendation", path: "/recommendation" },
+  { label: "About", path: "/about" },
+  { label: "I'm Feeling Lucky", path: "/feeling-lucky" },
 ];
 
 function Navbar(props) {
-	const { window } = props;
-	const [mobileOpen, setMobileOpen] = React.useState(false);
-	const loggedIn = useSelector((state) => state.user.loggedIn);
+  const { window } = props;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const loggedIn = useSelector((state) => state.user.loggedIn);
 
-	const handleDrawerToggle = () => {
-		setMobileOpen((prevState) => !prevState);
-	};
+  const handleDrawerToggle = () => {
+    setMobileOpen((prevState) => !prevState);
+  };
 
-	const drawer = (
-		<Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-			<StyledLink to="/">
-				<Typography variant="h2" sx={{ my: 2, color: "yellow" }}>
-					<Box component="span" sx={{ fontWeight: "bold", color: "white" }}>
-						Movie
-					</Box>
-					<Box
-						component="span"
-						sx={{
-							fontWeight: "bold",
-							color: "black",
-							backgroundColor: "#37B7C3",
-							borderRadius: "4px",
-							px: 0.5,
-							ml: 0.5,
-						}}
-					>
-						hub
-					</Box>
-				</Typography>
-			</StyledLink>
-			<Divider />
-			<List>
-				{navItems.map((item) => (
-					<ListItem key={item.label} disablePadding>
-						<ListItemButton
-							sx={{ textAlign: "center" }}
-							component={StyledLink}
-							to={item.path}
-						>
-							<ListItemText primary={item.label} />
-						</ListItemButton>
-					</ListItem>
-				))}
-				{/* Login */}
-				{!loggedIn && (
-					<ListItem disablePadding>
-						<ListItemButton
-							sx={{ textAlign: "center" }}
-							component={StyledLink}
-							to="/login"
-						>
-							<ListItemText primary="Login" />
-						</ListItemButton>
-					</ListItem>
-				)}
-				{/* Account */}
-				{loggedIn && (
-					<ListItem disablePadding>
-						<ListItemButton
-							sx={{ textAlign: "center" }}
-							component={StyledLink}
-							to="/account"
-						>
-							<ListItemText primary="Account" />
-						</ListItemButton>
-					</ListItem>
-				)}
-			</List>
-		</Box>
-	);
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", marginTop: "50px" }}>
+      <List>
+        {navItems.map((item) => (
+          <ListItem key={item.label} disablePadding>
+            <ListItemButton
+              sx={{ textAlign: "right" }}
+              component={StyledLink}
+              to={item.path}
+            >
+              <ListItemText primary={item.label} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+        {!loggedIn && (
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{ textAlign: "right" }}
+              component={StyledLink}
+              to="/login"
+            >
+              <ListItemText primary="Login" />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {loggedIn && (
+          <ListItem disablePadding>
+            <ListItemButton
+              sx={{ textAlign: "right" }}
+              component={StyledLink}
+              to="/account"
+            >
+              <ListItemText primary="Account" />
+            </ListItemButton>
+          </ListItem>
+        )}
+      </List>
+    </Box>
+  );
 
-	const container =
-		window !== undefined ? () => window().document.body : undefined;
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
-	return (
-		<Box sx={{ display: "flex" }}>
-			<CssBaseline />
-			<StyledNavbar component="nav">
-				<Toolbar sx={{ justifyContent: "space-between" }}>
-					<Box sx={{ display: "flex", alignItems: "center" }}>
-						<IconButton
-							color="inherit"
-							aria-label="open drawer"
-							edge="start"
-							onClick={handleDrawerToggle}
-							sx={{ mr: 2, display: { sm: "none" } }}
-						>
-							<MenuIcon />
-						</IconButton>
-						<StyledLink to="/">
-							<Typography
-								variant="h5"
-								component="div"
-								sx={{
-									flexGrow: 1,
-									display: {
-										xs: "none",
-										sm: "block",
-									},
-									fontSize: "2rem",
-								}}
-							>
-								<Box
-									component="span"
-									sx={{ fontWeight: "bold", color: "white" }}
-								>
-									Movie
-								</Box>
-								<Box
-									component="span"
-									sx={{
-										fontWeight: "bold",
-										color: "black",
-										backgroundColor: "#37B7C3",
-										borderRadius: "4px",
-										px: 0.5,
-										ml: 0.5,
-									}}
-								>
-									hub
-								</Box>
-							</Typography>
-						</StyledLink>
-					</Box>
-					<Box sx={{ display: { xs: "none", sm: "block" } }}>
-						{navItems.map((item) => (
-							<StyledButton key={item.label} component={Link} to={item.path}>
-								{item.label}
-							</StyledButton>
-						))}
-						{/* Login */}
-						{!loggedIn && (
-							<StyledButton component={Link} to="/login">
-								Login
-							</StyledButton>
-						)}
-						{/* Account */}
-						{loggedIn && (
-							<StyledButton component={Link} to="/account">
-								Account
-							</StyledButton>
-						)}
-					</Box>
-				</Toolbar>
-			</StyledNavbar>
-			<nav>
-				<Drawer
-					container={container}
-					variant="temporary"
-					open={mobileOpen}
-					onClose={handleDrawerToggle}
-					ModalProps={{
-						keepMounted: true,
-					}}
-					sx={{
-						display: { xs: "block", sm: "none" },
-						"& .MuiDrawer-paper": {
-							boxSizing: "border-box",
-							width: drawerWidth,
-						},
-					}}
-				>
-					{drawer}
-				</Drawer>
-			</nav>
-			<Box component="main" sx={{ p: 3 }}>
-				<Toolbar />
-				<Typography></Typography>
-			</Box>
-		</Box>
-	);
+  return (
+    <Box sx={{ display: "flex" }}>
+      <CssBaseline />
+      <StyledNavbar component="nav">
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
+            <StyledLink to="/">
+              <Typography
+                variant="h5"
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  fontSize: "2rem",
+                }}
+              >
+                <Box
+                  component="span"
+                  sx={{ fontWeight: "bold", color: "white" }}
+                >
+                  Movie
+                </Box>
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "black",
+                    backgroundColor: "#37B7C3",
+                    borderRadius: "4px",
+                    px: 0.5,
+                    ml: 0.5,
+                  }}
+                >
+                  hub
+                </Box>
+              </Typography>
+            </StyledLink>
+          </Box>
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            {navItems.map((item) => (
+              <StyledButton key={item.label} component={Link} to={item.path}>
+                {item.label}
+              </StyledButton>
+            ))}
+            {!loggedIn && (
+              <StyledButton component={Link} to="/login">
+                Login
+              </StyledButton>
+            )}
+            {loggedIn && (
+              <StyledButton component={Link} to="/account">
+                Account
+              </StyledButton>
+            )}
+          </Box>
+          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: "none" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </StyledNavbar>
+      <nav>
+        <Drawer
+          container={container}
+          variant="temporary"
+          anchor="right"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              backgroundColor: "black",
+              color: "white"
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
+      </nav>
+    </Box>
+  );
 }
 
 Navbar.propTypes = {
-	window: PropTypes.func,
+  window: PropTypes.func,
 };
 
 export default Navbar;

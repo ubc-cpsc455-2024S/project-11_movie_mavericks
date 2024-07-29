@@ -1,0 +1,752 @@
+{
+	"info": {
+		"_postman_id": "57b30054-135b-4b29-aa1b-b7a5da280db7",
+		"name": "MovieHub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37187896"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response;",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Response is string\", () => {",
+							"    try {",
+							"        JSON.pasrse(response);",
+							"        pm.expect(true).to.equal(false);",
+							"    } catch(ex){",
+							"        pm.expect(true).to.equal(true);",
+							"    }",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testuser123\",\n    \"password\": \"testing1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify JSON elements\", () => {",
+							"",
+							"    pm.expect(jsonData).to.have.property('_id');",
+							"    pm.expect(jsonData).to.have.property('username');",
+							"    pm.expect(jsonData).to.have.property('watchlists');",
+							"    pm.expect(jsonData).to.have.property('reviews');",
+							"    pm.expect(jsonData).to.have.property('__v');",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"user_id\", jsonData._id);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testuser123\",\n    \"password\": \"testing1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/users/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let resBody = pm.response.text();",
+							"",
+							"pm.test(\"Status is 404\", () => {",
+							"    pm.response.to.have.status(404); ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/movies/-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Response is valid JSON\", () => {",
+							"  pm.expect(jsonData).to.be.not.null;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify JSON elements\", () => {",
+							"",
+							"    pm.expect(jsonData).to.have.property('tmdb_movie_id');",
+							"    pm.expect(jsonData).to.have.property('title');",
+							"    pm.expect(jsonData).to.have.property('reviews');",
+							"    pm.expect(jsonData).to.have.property('_id');",
+							"    pm.expect(jsonData).to.have.property('__v');",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"movie_id\", jsonData._id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tmdb_movie_id\": -1,\n    \"title\": \"Invalid\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/movies/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"",
+							"",
+							"pm.test(\"Verify JSON elements\", () => {",
+							"",
+							"    pm.expect(jsonData).to.have.property('user_id');",
+							"    pm.expect(jsonData).to.have.property('movie_id');",
+							"    pm.expect(jsonData).to.have.property('title');",
+							"    pm.expect(jsonData).to.have.property('rating');",
+							"    pm.expect(jsonData).to.have.property('comment');",
+							"    pm.expect(jsonData).to.have.property('_id');",
+							"});",
+							"",
+							"pm.collectionVariables.set(\"review_id\", jsonData._id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": \"{{user_id}}\",\n    \"movie_id\": \"{{movie_id}}\",\n    \"title\": \"{{movie_title}}\",\n    \"rating\": 3,\n    \"comment\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/reviews/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reviews",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Response is valid JSON\", () => {",
+							"  pm.expect(jsonData).to.be.not.null;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/reviews/{{review_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reviews",
+						"{{review_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Watchlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Response is valid JSON\", () => {",
+							"  pm.expect(jsonData).to.be.not.null;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify JSON elements\", () => {",
+							"",
+							"    pm.expect(jsonData).to.have.property('user_id');",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"    pm.expect(jsonData).to.have.property('movies');",
+							"    pm.expect(jsonData).to.have.property('_id');",
+							"});",
+							"",
+							"pm.test(\"Watchlist is empty\", () =>{",
+							"    pm.expect(jsonData.movies.length).to.equal(0);",
+							"})",
+							"",
+							"pm.collectionVariables.set(\"watchlist_id\", jsonData._id);",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_id\": \"{{user_id}}\",\n    \"name\": \"test123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/watchlists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"watchlists"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add to Watchlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"Response is valid JSON\", () => {",
+							"  pm.expect(jsonData).to.be.not.null;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Verify JSON elements\", () => {",
+							"",
+							"    pm.expect(jsonData).to.have.property('user_id');",
+							"    pm.expect(jsonData).to.have.property('name');",
+							"    pm.expect(jsonData).to.have.property('movies');",
+							"    pm.expect(jsonData).to.have.property('_id');",
+							"});",
+							"",
+							"pm.test(\"Watchlist has 1 movie\", () =>{",
+							"    pm.expect(jsonData.movies.length).to.equal(1);",
+							"})",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"movieID\": \"481084\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/watchlists/{{watchlist_id}}/movies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"watchlists",
+						"{{watchlist_id}}",
+						"movies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Watchlist Name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"123test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/watchlists/{{watchlist_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"watchlists",
+						"{{watchlist_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Watchlists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"",
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							"",
+							"pm.test(\"User has 1 watchlist\", () => {",
+							"    pm.expect(jsonData.length).to.equal(1);",
+							"});",
+							"",
+							"let watchlist1 = jsonData[0];",
+							"",
+							"pm.test(\"Watchlist has updated name\", () => {",
+							"    pm.expect(watchlist1.name).to.equal(\"123test\");",
+							"})",
+							"",
+							"pm.test(\"Watchlist has the right movies\", () => {",
+							"    pm.expect(watchlist1.movies.length).to.equal(1);",
+							"    pm.expect(watchlist1.movies[0]).to.equal(481084);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/watchlists/{{user_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"watchlists",
+						"{{user_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 204\", () => {",
+							"    pm.response.to.have.status(204); ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/reviews/{{review_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"reviews",
+						"{{review_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 204\", () => {",
+							"    pm.response.to.have.status(204); ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/movies/-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"-1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Watchlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/watchlists/{{watchlist_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"watchlists",
+						"{{watchlist_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", () => {",
+							"    pm.response.to.have.status(200); ",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/users/{{user_name}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"users",
+						"{{user_name}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "movie_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "movie_title",
+			"value": "Invalid",
+			"type": "string"
+		},
+		{
+			"key": "review_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "watchlist_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_name",
+			"value": "testuser123",
+			"type": "string"
+		}
+	]
+}

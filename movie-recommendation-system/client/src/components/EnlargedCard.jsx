@@ -2,7 +2,6 @@ import { Button } from "@mui/material";
 import React from "react";
 
 const EnlargedCard = ({ movie, onClose }) => {
-  console.log("Movie data in EnlargedCard:", movie);
   return (
     <Card sx={{ color: "white" }}>
       <CardContent>

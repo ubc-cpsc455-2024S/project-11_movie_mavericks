@@ -4,14 +4,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "../features/userSlice";
 import { useNavigate } from "react-router-dom";
-import { Box, FormControl, InputLabel, TextField, Button } from "@mui/material";
+import { FormControl, TextField, Button } from "@mui/material";
 
 const Login = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const {
-		register,
 		handleSubmit,
 		formState: { errors, isValid },
 		reset,
@@ -21,22 +20,18 @@ const Login = () => {
 	const onSubmit = async (data) => {
 		try {
 			const response = await axios.post(
-				"http://localhost:3000/users/login",
+				"https://project-11-movie-mavericks.onrender.com/users/login",
 				data
 			);
 
-			// Registration successful
 			if (typeof response.data === "string") {
 				alert(response.data);
 				return;
 			}
 
-			// Login successful
 			dispatch(login(response.data));
 			navigate("/account");
 		} catch (error) {
-			// Invalid credentials
-			console.log(error.response.data.msg);
 			alert(error.response.data.msg);
 		}
 	};
@@ -49,7 +44,6 @@ const Login = () => {
 		<div
 			style={{
 				backgroundColor: "#1b1b1b",
-				minHeight: "100vh",
 				padding: "20px",
 			}}
 		>
