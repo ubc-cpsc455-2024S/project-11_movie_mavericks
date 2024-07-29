@@ -107,7 +107,6 @@ export default function Watchlists() {
 						alignItems: "top",
 						Height: "80vh",
 						minWidth: "65vw",
-						padding: 2,
 						marginBottom: 2,
 						backgroundColor: "#292929",
 						borderRadius: 10,
@@ -144,13 +143,11 @@ export default function Watchlists() {
 								</Tooltip>
 								<div style={{ flex: 1 }}>
 									<Typography
-										variant="body1"
 										className="hover-title"
 										style={{
 											marginRight: 50,
 											marginLeft: 5,
 											fontWeight: "bold",
-											fontSize: 20,
 											textAlign: "left",
 											textDecoration: "none",
 											textDecorationColor: "white",

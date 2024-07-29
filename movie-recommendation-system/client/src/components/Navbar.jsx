@@ -160,7 +160,7 @@ function Navbar(props) {
               </StyledButton>
             )}
           </Box>
-          <Box sx={{ display: { xs: "block", sm: "none" } }}>
+          <Box sx={{ position: "fixed", right: 0, display: { xs: "block", sm: "none" } }}>
             <IconButton
               color="inherit"
               aria-label="open drawer"

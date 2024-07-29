@@ -7,6 +7,7 @@ const YoutubeEmbed = ({ videoID, title }) => (
       height="480"
       src={`https://www.youtube.com/embed/${videoID}`}
       title={title}
+      allowFullScreen
     />
   </div>
 );

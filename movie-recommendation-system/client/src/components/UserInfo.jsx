@@ -1,32 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import {
-	Box,
-	Drawer,
-	List,
-	ListItem,
-	ListItemText,
-	ListItemButton,
-	Toolbar,
-	BottomNavigation,
-	BottomNavigationAction,
-	Paper,
-} from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { Box, Drawer, List, ListItem, ListItemText, ListItemButton, Toolbar, BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import LogoutIcon from '@mui/icons-material/Logout';
-import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Link } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import Account from "./Account";
-import { useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { logout } from "../features/userSlice";
 import axios from "axios";
 
-const drawerWidth = 170;
+const drawerWidth = 140;
 
 const UserInfo = () => {
 	const username = useSelector((state) => state.user.username);
@@ -76,7 +60,7 @@ const UserInfo = () => {
 				anchor="left"
 				backgroundColor="blue"
 			>
-				<Toolbar />
+				<Toolbar style={{ height: "80px" }} />
 				<List>
 					{navItems.map((item) => (
 						<ListItem key={item.label} disablePadding>
@@ -97,14 +81,6 @@ const UserInfo = () => {
 							sx={{ ":hover": { backgroundColor: "#383838" } }}
 						>
 							<ListItemText primary="Log Out" />
-						</ListItemButton>
-					</ListItem>
-					<ListItem key="delete" disablePadding>
-						<ListItemButton
-							onClick={deleteAccount}
-							sx={{ ":hover": { backgroundColor: "#7a0012" } }}
-						>
-							<ListItemText primary="Delete Account" />
 						</ListItemButton>
 					</ListItem>
 				</List>
@@ -132,11 +108,6 @@ const UserInfo = () => {
 						to="/login"
 						onClick={() => dispatch(logout())}
 						icon={<LogoutIcon />}
-					/>
-					<BottomNavigationAction
-						label="Delete Account"
-						onClick={deleteAccount}
-						icon={<PersonRemoveIcon />}
 					/>
 				</BottomNavigation>
 			</Paper>

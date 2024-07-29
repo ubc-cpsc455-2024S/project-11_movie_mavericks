@@ -175,7 +175,7 @@ export default function Recommendation() {
 		);
 
 	return (
-		<div style={{ paddingTop: "50px" }}>
+		<div style={{ paddingTop: "80px" }}>
 			{categoryComponents}
 			<Dialog
 				open={!!selectedMovie}
