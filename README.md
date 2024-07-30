@@ -8,6 +8,7 @@
 
 ## Table of Contents:  
 [Project URL](#Deployment)  
+[Running the Project](#Testing)  
 [Team Members](#Team%20Members)  
 [Project Requirements](#Requirements)  
 [Technologies](#Tech-Stack)  
@@ -24,6 +25,15 @@
 ## Deployment:  
 - https://project-11-movie-mavericks-1.onrender.com/
 
+<hr></hr>  
+  
+## Testing:
+- Navigate to the login screen (Login button at the top right corner of the Navbar) and enter the following testing credentials:  
+  <strong>Username</strong>-> dom, <strong>Password</strong>-> admin2024
+- All the features of the application can now be accessed as a regular user.  
+
+<hr></hr>  
+  
 ## Team Members:  
 - Adwait Kulkarni
 - Dominic Lo
