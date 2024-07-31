@@ -44,7 +44,7 @@ const Login = () => {
 		<div
 			style={{
 				backgroundColor: "#1b1b1b",
-				padding: "20px",
+				margin: "20px",
 			}}
 		>
 			<div>

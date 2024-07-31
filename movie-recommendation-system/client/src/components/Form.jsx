@@ -147,7 +147,7 @@ export default function Form() {
     <div
       style={{
         backgroundColor: "#1b1b1b",
-        padding: "20px",
+        margin: "20px",
       }}
     >
       <div>
@@ -156,11 +156,6 @@ export default function Form() {
       <form
         id="form"
         onSubmit={handleSubmit(onSubmit)}
-        style={{
-          backgroundColor: "#1b1b1b",
-          padding: "20px",
-          borderRadius: "8px",
-        }}
       >
         <FormControl fullWidth variant="standard" required margin="normal">
           <InputLabel id="form-language" style={{ color: "white" }}>
