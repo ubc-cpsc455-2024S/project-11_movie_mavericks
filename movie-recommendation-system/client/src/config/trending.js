@@ -419,6 +419,22 @@ export const trending = {
         "video": false,
         "vote_average": 6.83,
         "vote_count": 165
+      },
+      {
+        "backdrop_path": "/yY76zq9XSuJ4nWyPDuwkdV7Wt0c.jpg",
+        "title": "Tenet"
+      },
+      {
+        "backdrop_path": "/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+        "title": "Inception"
+      },
+      {
+        "backdrop_path": "/tmU7GeKVybMWFButWEGl2M4GeiP.jpg",
+        "title": "The Godfather"
+      },
+      {
+        "backdrop_path": "/dqK9Hag1054tghRQSqLSfrkvQnA.jpg",
+        "title": "The Dark Knight"
       }
     ],
     "total_pages": 1000,
