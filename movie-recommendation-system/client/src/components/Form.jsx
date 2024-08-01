@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { languages } from "../config/languages";
 import { regions } from "../config/regions";
 import { genres } from "../config/genre";
+import { trending } from "../config/trending";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setRecommendation } from "../features/recommendationsSlice";
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { setClassnames, setStartnow } from "../features/firstloadSlice";
+import { Box, Collapse, FormControl, ImageList, ImageListItem, InputLabel, MenuItem, Select, useMediaQuery } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import axios from "axios";
+import { useTheme } from '@mui/material/styles';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,8 +34,18 @@ export default function Form() {
   } = useForm({ mode: "onChange" });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const classnames = useSelector((state) => state.firstload.classnames);
+  const start = useSelector((state) => state.firstload.startnow);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formGenres, setFormGenres] = useState([]);
+
+  const theme = useTheme();
+  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  useEffect(() => {
+    setTimeout(() => dispatch(setClassnames({ background: "", form: "form-final-opacity" })), 2200);
+  }, []);
 
   const handleGenreChange = (event) => {
     const {
@@ -143,186 +156,250 @@ export default function Form() {
     setFormGenres([]);
   };
 
+  const Images = () => {
+    const indices = [...Array(trending.results.length).keys()];
+    for (var i = indices.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = indices[i];
+      indices[i] = indices[j];
+      indices[j] = temp;
+    }
+
+    return (
+      <ImageList sx={{ position: "fixed", left: 0, top: 40, width: "100%" }} cols={isSm ? 2 : isMd ? 3 : 4} >
+        {trending.results.map((item, index) => (
+          <ImageListItem
+            key={item.backdrop_path}
+            className={classnames.background}
+            style={{ animationDelay: `${indices[index] * 50}ms` }}
+          >
+            <img
+              srcSet={`https://image.tmdb.org/t/p/w500${item.backdrop_path}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}?w=164&h=164&fit=crop&auto=format`}
+              alt={item.title}
+              loading="lazy"
+              style={{ filter: 'brightness(80%)' }}
+            />
+          </ImageListItem>
+        ))}1
+      </ImageList>
+    );
+  }
+
+
+
   return (
     <div
       style={{
-        backgroundColor: "#1b1b1b",
         margin: "20px",
       }}
     >
-      <div>
-        <h1 style={{ color: "white" }}>Discover movies!</h1>
-      </div>
-      <form
-        id="form"
-        onSubmit={handleSubmit(onSubmit)}
+      <Images />
+      <Box
+        className={classnames.form}
+        style={{
+          position: "relative",
+          backgroundColor: "#1b1b1b",
+          border: "1px grey solid",
+          padding: "10px 25px",
+          top: "20px"
+        }}
       >
-        <FormControl fullWidth variant="standard" required margin="normal">
-          <InputLabel id="form-language" style={{ color: "white" }}>
-            Language
-          </InputLabel>
-          <Controller
-            render={({ field }) => (
-              <Select
-                {...field}
-                labelId="form-language"
-                MenuProps={MenuProps}
-                style={{ color: "white", borderBottom: "1px solid white" }}
-              >
-                <MenuItem value="all">All</MenuItem>
-                {languages.map((lang) => (
-                  <MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]}>
-                    {lang["english_name"]}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-            control={control}
-            name="language"
-            defaultValue=""
-          />
-        </FormControl>
-
-        <FormControl fullWidth variant="standard" required margin="normal">
-          <InputLabel id="form-region" style={{ color: "white" }}>
-            Region
-          </InputLabel>
-          <Controller
-            render={({ field }) => (
-              <Select
-                {...field}
-                labelId="form-region"
-                MenuProps={MenuProps}
-                style={{ color: "white", borderBottom: "1px solid white" }}
-              >
-                <MenuItem value="all">All</MenuItem>
-                {regions.map((region) => (
-                  <MenuItem
-                    key={region["iso_3166_1"]}
-                    value={region["iso_3166_1"]}
-                  >
-                    {region["english_name"]}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-            control={control}
-            name="region"
-            defaultValue=""
-          />
-        </FormControl>
-
-        <FormControl fullWidth variant="standard" required margin="normal">
-          <InputLabel id="form-genre" style={{ color: "white" }}>
-            Genre
-          </InputLabel>
-          <Controller
-            render={({ field }) => (
-              <Select
-                {...field}
-                labelId="form-genre"
-                multiple
-                value={formGenres}
-                onChange={handleGenreChange}
-                renderValue={(selected) => (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip
-                        key={value}
-                        label={
-                          value === "all"
-                            ? "All"
-                            : genres.filter((genre) => genre.id === value)[0]
-                              .name
-                        }
-                        style={{ color: "white", backgroundColor: "#292929" }}
-                      />
-                    ))}
-                  </Box>
-                )}
-                MenuProps={MenuProps}
-                style={{ color: "white", borderBottom: "1px solid white" }}
-              >
-                <MenuItem
-                  value="all"
-                  disabled={formGenres.length > 0 && formGenres[0] !== "all"}
-                >
-                  All
-                </MenuItem>
-                {genres.map((genre) => (
-                  <MenuItem
-                    key={genre["id"]}
-                    value={genre["id"]}
-                    disabled={formGenres[0] === "all"}
-                  >
-                    {genre["name"]}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-            control={control}
-            name="genre"
-            defaultValue=""
-          />
-        </FormControl>
-
-        <FormControl fullWidth variant="standard" required margin="normal">
-          <InputLabel id="form-release" style={{ color: "white" }}>
-            Release
-          </InputLabel>
-          <Controller
-            render={({ field }) => (
-              <Select
-                {...field}
-                labelId="form-release"
-                style={{ color: "white", borderBottom: "1px solid white" }}
-              >
-                <MenuItem value="nopreference">No Preference</MenuItem>
-                <MenuItem value="last3years">Last 3 Years</MenuItem>
-                <MenuItem value="last5years">Last 5 Years</MenuItem>
-                <MenuItem value="last10years">Last 10 Years</MenuItem>
-              </Select>
-            )}
-            control={control}
-            name="dateRange"
-            defaultValue=""
-          />
-        </FormControl>
-
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            paddingTop: "20px",
-          }}
-        >
-          <Button
-            variant="contained"
-            onClick={clearFields}
-            style={{
-              backgroundColor: "#292929",
-              color: "white",
-              textTransform: "none",
-              border: "1px solid white",
-            }}
-          >
-            Clear Fields
-          </Button>
-          <Button
-            type="submit"
-            variant="contained"
-            disabled={!isValid || isSubmitting}
-            style={{
-              backgroundColor: isValid ? "#37B7C3" : "#292929",
-              color: isValid ? "black" : "white",
-              textTransform: "none",
-              marginLeft: "10px",
-            }}
-          >
-            {isSubmitting ? "Submitting..." : "Submit"}
-          </Button>
+        <div>
+          <h1 style={{ color: "white", marginBottom: 0, marginTop: 20 }}>Discover movies</h1>
         </div>
-      </form>
+        <Collapse in={!start} timeout={800}>
+          <>
+            <h3 style={{ color: "white" }}>Stream, save and more</h3>
+            <Button
+              variant="contained"
+              style={{
+                backgroundColor: "#37B7C3",
+                color: "black",
+                marginBottom: "20px",
+                fontWeight: "bold"
+              }}
+              onClick={() => dispatch(setStartnow(true))}
+            >
+              Start now
+            </Button>
+          </>
+        </Collapse>
+
+        <Collapse in={start} timeout={800}>
+          <form
+            id="form"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <FormControl fullWidth variant="standard" required margin="normal">
+              <InputLabel id="form-language" style={{ color: "white" }}>
+                Language
+              </InputLabel>
+              <Controller
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="form-language"
+                    MenuProps={MenuProps}
+                    style={{ color: "white", borderBottom: "1px solid white" }}
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    {languages.map((lang) => (
+                      <MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]}>
+                        {lang["english_name"]}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+                control={control}
+                name="language"
+                defaultValue=""
+              />
+            </FormControl>
+
+            <FormControl fullWidth variant="standard" required margin="normal">
+              <InputLabel id="form-region" style={{ color: "white" }}>
+                Region
+              </InputLabel>
+              <Controller
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="form-region"
+                    MenuProps={MenuProps}
+                    style={{ color: "white", borderBottom: "1px solid white" }}
+                  >
+                    <MenuItem value="all">All</MenuItem>
+                    {regions.map((region) => (
+                      <MenuItem
+                        key={region["iso_3166_1"]}
+                        value={region["iso_3166_1"]}
+                      >
+                        {region["english_name"]}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+                control={control}
+                name="region"
+                defaultValue=""
+              />
+            </FormControl>
+
+            <FormControl fullWidth variant="standard" required margin="normal">
+              <InputLabel id="form-genre" style={{ color: "white" }}>
+                Genre
+              </InputLabel>
+              <Controller
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="form-genre"
+                    multiple
+                    value={formGenres}
+                    onChange={handleGenreChange}
+                    renderValue={(selected) => (
+                      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                        {selected.map((value) => (
+                          <Chip
+                            key={value}
+                            label={
+                              value === "all"
+                                ? "All"
+                                : genres.filter((genre) => genre.id === value)[0]
+                                  .name
+                            }
+                            style={{ color: "white", backgroundColor: "#292929" }}
+                          />
+                        ))}
+                      </Box>
+                    )}
+                    MenuProps={MenuProps}
+                    style={{ color: "white", borderBottom: "1px solid white" }}
+                  >
+                    <MenuItem
+                      value="all"
+                      disabled={formGenres.length > 0 && formGenres[0] !== "all"}
+                    >
+                      All
+                    </MenuItem>
+                    {genres.map((genre) => (
+                      <MenuItem
+                        key={genre["id"]}
+                        value={genre["id"]}
+                        disabled={formGenres[0] === "all"}
+                      >
+                        {genre["name"]}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+                control={control}
+                name="genre"
+                defaultValue=""
+              />
+            </FormControl>
+
+            <FormControl fullWidth variant="standard" required margin="normal">
+              <InputLabel id="form-release" style={{ color: "white" }}>
+                Release
+              </InputLabel>
+              <Controller
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    labelId="form-release"
+                    style={{ color: "white", borderBottom: "1px solid white" }}
+                  >
+                    <MenuItem value="nopreference">No Preference</MenuItem>
+                    <MenuItem value="last3years">Last 3 Years</MenuItem>
+                    <MenuItem value="last5years">Last 5 Years</MenuItem>
+                    <MenuItem value="last10years">Last 10 Years</MenuItem>
+                  </Select>
+                )}
+                control={control}
+                name="dateRange"
+                defaultValue=""
+              />
+            </FormControl>
+
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: "20px",
+              }}
+            >
+              <Button
+                variant="contained"
+                onClick={clearFields}
+                style={{
+                  backgroundColor: "#292929",
+                  color: "white",
+                  textTransform: "none",
+                  border: "1px solid white",
+                }}
+              >
+                Clear Fields
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                disabled={!isValid || isSubmitting}
+                style={{
+                  backgroundColor: isValid ? "#37B7C3" : "#292929",
+                  color: isValid ? "black" : "white",
+                  textTransform: "none",
+                  marginLeft: "10px",
+                }}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </Button>
+            </div>
+          </form>
+        </Collapse>
+      </Box>
+
     </div>
   );
 }
