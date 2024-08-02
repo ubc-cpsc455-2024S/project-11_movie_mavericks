@@ -6,10 +6,11 @@ import { addReview, removeReview } from "../features/userSlice";
 import YoutubeEmbed from "./YoutubeEmbed";
 import Streaming from "./Streaming";
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 const URL = "https://project-11-movie-mavericks.onrender.com"
 
-const MovieDetailsPopup = ({ tmdb_movie_id }) => {
+const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
 	const dispatch = useDispatch();
 
 	const loggedIn = useSelector((state) => state.user.loggedIn);
@@ -279,14 +280,21 @@ const MovieDetailsPopup = ({ tmdb_movie_id }) => {
 		<>
 			<DialogTitle>
 				<Box display="flex" justifyContent="space-between" alignItems="center">
-					<Typography variant="h6" sx={{ fontWeight: "bold" }}>
+					<Typography variant="h6" sx={{ fontWeight: "bold", marginRight: "10px" }}>
 						{original_title}
 					</Typography>
-					{streamingResponse && (
-						<Button onClick={() => setStreamingDialog(true)} variant="outlined">
-							Stream now
-						</Button>
-					)}
+					<Box display="flex">
+						{streamingResponse && (
+							<Button onClick={() => setStreamingDialog(true)} variant="outlined">
+								Stream now
+							</Button>
+						)}
+						<IconButton
+							onClick={onClose}
+						>
+							<CloseIcon />
+						</IconButton>
+					</Box>
 				</Box>
 			</DialogTitle>
 			<DialogContent dividers>
