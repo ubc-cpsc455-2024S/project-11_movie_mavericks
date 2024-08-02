@@ -7,8 +7,13 @@ router.get("/:reviewID", async (req, res) => {
   const reviewID = req.params.reviewID;
   try {
     const review = await Review.findOne({ _id: reviewID });
-    const user = await User.findOne({ _id: review.user_id });
-    res.json({ ...review.toObject(), username: user.username });
+    if (review) {
+      const user = await User.findOne({ _id: review.user_id });
+      const username = user ? user.username : "deleted";
+      res.json({ ...review.toObject(), username: username });
+    } else {
+      res.status(404).send("Review not found");
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -31,6 +36,25 @@ router.post("/", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+router.patch("/:reviewID", async (req, res) => {
+  const reviewID = req.params.reviewID;
+  const { rating, comment } = req.body;
+
+  try {
+    const reviewToPatch = await Review.findOne({ _id: reviewID });
+    if (reviewToPatch) {
+      reviewToPatch.rating = rating;
+      reviewToPatch.comment = comment;
+      reviewToPatch.save().then((review) => res.json(review));
+    } else {
+      res.status(404).send("Review not found");
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+})
 
 router.delete("/:reviewID", async (req, res) => {
   const reviewID = req.params.reviewID;

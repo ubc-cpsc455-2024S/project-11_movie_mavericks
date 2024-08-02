@@ -10,7 +10,7 @@ import Account from "./Account";
 import { logout } from "../features/userSlice";
 import axios from "axios";
 
-const drawerWidth = 140;
+const drawerWidth = 160;
 
 const UserInfo = () => {
 	const username = useSelector((state) => state.user.username);

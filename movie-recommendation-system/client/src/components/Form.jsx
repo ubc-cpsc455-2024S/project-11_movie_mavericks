@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setRecommendation } from "../features/recommendationsSlice";
 import { setClassnames, setStartnow } from "../features/firstloadSlice";
-import { Box, Collapse, FormControl, ImageList, ImageListItem, InputLabel, MenuItem, Select, useMediaQuery } from "@mui/material";
+import { Box, Collapse, FormControl, ImageList, ImageListItem, InputLabel, MenuItem, Select, Typography, useMediaQuery } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import axios from "axios";
@@ -205,23 +205,30 @@ export default function Form() {
           top: "20px"
         }}
       >
-        <div>
-          <h1 style={{ color: "white", marginBottom: 0, marginTop: 20 }}>Discover movies</h1>
-        </div>
+        <Typography variant="h2" style={{ color: "white", marginBottom: 0, marginTop: 20 }}>
+          Discover movies
+        </Typography>
         <Collapse in={!start} timeout={800}>
           <>
-            <h3 style={{ color: "white" }}>Stream, save and more</h3>
+            <Typography variant="h5" style={{ color: "white", marginTop: 20, marginBottom: 30 }}>
+              Stream, save and more
+            </Typography>
             <Button
               variant="contained"
-              style={{
+              sx={{
                 backgroundColor: "#37B7C3",
                 color: "black",
                 marginBottom: "20px",
-                fontWeight: "bold"
+                fontWeight: "bold",
+                '&:hover': {
+                  backgroundColor: "#9bdbe1",
+                  color: 'black',
+                }
               }}
+              size="large"
               onClick={() => dispatch(setStartnow(true))}
             >
-              Start now
+              <Typography>Start now</Typography>
             </Button>
           </>
         </Collapse>
