@@ -58,7 +58,6 @@ const UserInfo = () => {
 				}}
 				variant="permanent"
 				anchor="left"
-				backgroundColor="blue"
 			>
 				<Toolbar style={{ height: "80px" }} />
 				<List>
@@ -96,6 +95,7 @@ const UserInfo = () => {
 				>
 					{navItems.map((item) => (
 						<BottomNavigationAction
+							key={item.path}
 							label={item.label}
 							component={Link}
 							to={item.path}

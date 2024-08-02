@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import axios from "axios";
 import { DialogTitle, DialogContent, Typography, CircularProgress, Box, List, ListItem, ListItemText, Rating, TextField, Button, Stack, IconButton, Icon, Menu, MenuItem, Dialog, DialogContentText, DialogActions, } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
@@ -373,8 +373,8 @@ const MovieDetailsPopup = ({ tmdb_movie_id }) => {
 
 				<List>
 					{reviews.map((review) => (
-						<>
-							<ListItem key={review._id} style={{ paddingLeft: 0, paddingRight: 0 }}>
+						<Fragment key={review._id}>
+							<ListItem style={{ paddingLeft: 0, paddingRight: 0 }}>
 								<ListItemText
 									primary={review.username}
 									secondary={
@@ -433,7 +433,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id }) => {
 									</Button>
 								</Box>
 							)}
-						</>
+						</Fragment>
 					))}
 				</List>
 			</DialogContent>
