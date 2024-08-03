@@ -18,6 +18,8 @@ import {
 import { useDispatch } from "react-redux";
 import { addWatchlist, addMovieToWatchlist } from "../features/userSlice";
 import { useNavigate } from "react-router-dom";
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 export default function Recommendation() {
 	const recommendations = useSelector((state) => state.recommendations);
@@ -29,9 +31,9 @@ export default function Recommendation() {
 	const [watchlistsCreatedCount, setWatchlistCreatedCount] = useState(0);
 	const loggedIn = useSelector((state) => state.user.loggedIn);
 	const userID = useSelector((state) => state.user.user?._id);
-
+	const theme = useTheme();
+	const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 	const dispatch = useDispatch();
-
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -178,13 +180,11 @@ export default function Recommendation() {
 		<div style={{ paddingTop: "80px" }}>
 			{categoryComponents}
 			<Dialog
+				fullScreen={fullScreen}
 				open={!!selectedMovie}
 				onClose={handleClose}
 				maxWidth="md"
 				fullWidth
-				PaperProps={{
-					sx: { backgroundColor: "#e0dede" },
-				}}
 			>
 				{selectedMovie && (
 					<MovieDetailsPopup

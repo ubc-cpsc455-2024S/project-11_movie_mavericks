@@ -6,6 +6,7 @@ import {
 	Paper,
 	Rating,
 	Typography,
+	CircularProgress,
 } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -14,6 +15,7 @@ import { useSelector } from "react-redux";
 const Reviews = () => {
 	const reviewIDs = useSelector((state) => state.user.reviews);
 	const [reviews, setReviews] = useState([]);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		const getReviews = async () => {
@@ -22,18 +24,28 @@ const Reviews = () => {
 			);
 			Promise.all(responses)
 				.then((values) => values.map((value) => value.data))
-				.then((data) => setReviews(data));
+				.then((data) => setReviews(data))
+				.then(() => setLoading(false));
 		};
 		getReviews();
 	}, [reviewIDs]);
+
+	if (loading) {
+		return (
+			<Box display="flex" justifyContent="center">
+				<CircularProgress />
+			</Box>
+		);
+	}
 
 	return (
 		<Box
 			sx={{
 				display: "flex",
 				justifyContent: "center",
-				Height: "80vh",
+				height: "80vh",
 				backgroundColor: "#1b1b1b",
+				maxWidth: "500px",
 			}}
 		>
 			<Paper
@@ -42,10 +54,11 @@ const Reviews = () => {
 					padding: "50px 30px",
 					backgroundColor: "#292929",
 					borderRadius: 10,
+					overflow: "auto"
 				}}
 			>
 				<Typography variant="h5" gutterBottom color="white">
-					My Reviews
+					{reviews.length === 0 ? "No review yet" : "My Reviews"}
 				</Typography>
 				<List>
 					{reviews.map((item, index) => (

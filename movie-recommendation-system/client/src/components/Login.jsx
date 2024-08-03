@@ -49,6 +49,7 @@ const Login = () => {
 		>
 			<div>
 				<h1 style={{ color: "white" }}>Login</h1>
+				<h4 style={{ color: "white" }}>or register a new account</h4>
 			</div>
 			<form
 				id="form"

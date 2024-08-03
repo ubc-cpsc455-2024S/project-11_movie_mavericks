@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { Button, Card, CardContent, Typography, Dialog, Tooltip, IconButton } from "@mui/material";
+import { Button, Card, CardContent, Typography, Dialog, Tooltip, IconButton, CircularProgress, Box } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { removeMovieFromWatchlist } from "../features/userSlice";
 import {
@@ -19,6 +19,7 @@ import MovieDetailsPopup from "./MovieDetailsPopup";
 export default function Watchlists() {
 	const [watchlists, setWatchlists] = useState([]);
 	const [selectedMovie, setSelectedMovie] = useState(null);
+	const [loading, setLoading] = useState(true);
 	const userID = useSelector((state) => state.user.user?._id);
 	const dispatch = useDispatch();
 
@@ -51,6 +52,8 @@ export default function Watchlists() {
 				setWatchlists(watchlists);
 			} catch (error) {
 				console.error(error);
+			} finally {
+				setLoading(false);
 			}
 		};
 		fetchWatchlists();
@@ -97,8 +100,19 @@ export default function Watchlists() {
 		setSelectedMovie(null);
 	};
 
+	if (loading) {
+		return (
+			<Box display="flex" justifyContent="center">
+				<CircularProgress />
+			</Box>
+		);
+	}
+
 	return (
 		<div>
+			{watchlists.length === 0 &&
+				<Typography variant="h3" style={{ color: "white" }}>No watchlist yet</Typography>
+			}
 			{watchlists.map((watchlist) => (
 				<Card
 					key={watchlist._id}
