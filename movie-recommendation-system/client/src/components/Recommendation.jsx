@@ -103,29 +103,27 @@ export default function Recommendation() {
 					}
 				);
 			} catch (error) {
-				console.error(error);
+				console.error(error.message);
 			} finally {
 				setSelectedWatchlist("");
 			}
 		} else if (selectedNewWatchlist.length > 0) {
 			try {
-				const newWatchlistresponse = await axios.post("hhttps://project-11-movie-mavericks.onrender.com/watchlists", {
+				const newWatchlistresponse = await axios.post("https://project-11-movie-mavericks.onrender.com/watchlists", {
 					user_id: userID,
 					name: selectedNewWatchlist,
 				});
-				console.log(newWatchlistresponse);
 				const { _id } = newWatchlistresponse.data;
-				console.log(newWatchlistresponse.data);
 				dispatch(addWatchlist(movieDetails));
 				dispatch(addMovieToWatchlist(movieDetails));
 				await axios.post(
 					`https://project-11-movie-mavericks.onrender.com/watchlists/${_id}/movies`,
 					{
-						movieID: response.data.id,
+						movieID: tmdbResponse.data.id,
 					}
 				);
 			} catch (error) {
-				console.error(error);
+				console.error(error.message);
 			} finally {
 				setNewWatchlistName("");
 			}
@@ -139,11 +137,11 @@ export default function Recommendation() {
 		return (
 			<Autocomplete
             value={selectedWatchlist}
-            onChange={(newValue) => {
+            onChange={(event, newValue) => {
                 setSelectedWatchlist(newValue);
             }}
             inputValue={selectedNewWatchlist}
-            onInputChange={(newInputValue) => {
+            onInputChange={(event, newInputValue) => {
                 setSelectedNewWatchlist(newInputValue);
             }}
             id="combo-box-demo"
