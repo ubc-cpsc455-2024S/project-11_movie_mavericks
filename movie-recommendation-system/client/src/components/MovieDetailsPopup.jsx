@@ -133,7 +133,7 @@ const MovieDetailsPopup = ({ tmdb_movie_id, onClose }) => {
 	}, [movieDetails]);
 
 	useEffect(() => {
-		if (rating > 0 && comment !== "") {
+		if (rating > 0 && comment.trim() !== "") {
 			setCommentButtonEnabled(true);
 		} else {
 			setCommentButtonEnabled(false);
