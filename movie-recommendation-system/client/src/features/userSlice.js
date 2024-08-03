@@ -29,6 +29,9 @@ const userSlice = createSlice({
     addReview: (state, action) => {
       state.reviews.unshift(action.payload);
     },
+    removeReview: (state, action) => {
+      state.reviews = state.reviews.filter((review) => review !== action.payload);
+    },
     addWatchlist: (state, action) => {
       state.watchlists.push(action.payload);
     },
@@ -72,6 +75,7 @@ export const {
   logout,
   editUser,
   addReview,
+  removeReview,
   addWatchlist,
   updateWatchlist,
   deleteWatchlist,

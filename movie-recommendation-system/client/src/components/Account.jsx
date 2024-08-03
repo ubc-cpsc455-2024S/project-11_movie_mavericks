@@ -7,12 +7,9 @@ import { editUser, logout } from "../features/userSlice";
 import axios from "axios";
 
 const Account = () => {
-	const { username: initialUsername, password: initialPassword } = useSelector(
-		(state) => ({
-			username: state.user.username,
-			password: state.user.password,
-		})
-	);
+	const initialUsername = useSelector((state) => state.user.username);
+	const initialPassword = useSelector((state) => state.user.password);
+
 	const [username, setUsername] = useState(initialUsername);
 	const [password, setPassword] = useState(initialPassword);
 

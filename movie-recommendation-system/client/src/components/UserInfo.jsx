@@ -10,7 +10,7 @@ import Account from "./Account";
 import { logout } from "../features/userSlice";
 import axios from "axios";
 
-const drawerWidth = 140;
+const drawerWidth = 160;
 
 const UserInfo = () => {
 	const username = useSelector((state) => state.user.username);
@@ -58,7 +58,6 @@ const UserInfo = () => {
 				}}
 				variant="permanent"
 				anchor="left"
-				backgroundColor="blue"
 			>
 				<Toolbar style={{ height: "80px" }} />
 				<List>
@@ -96,6 +95,7 @@ const UserInfo = () => {
 				>
 					{navItems.map((item) => (
 						<BottomNavigationAction
+							key={item.path}
 							label={item.label}
 							component={Link}
 							to={item.path}

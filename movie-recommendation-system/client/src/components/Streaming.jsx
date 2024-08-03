@@ -46,7 +46,7 @@ export default function Streaming({ open, onClose, response }) {
                     MenuProps={MenuProps}
                 >
                     {response && Object.keys(response.streamingOptions).sort().map(countryCode => (
-                        <MenuItem value={countryCode}>
+                        <MenuItem key={countryCode} value={countryCode}>
                             <Typography align="center" style={{ paddingLeft: "15px" }}>
                                 {countries[countryCode].name}
                             </Typography>
@@ -55,7 +55,7 @@ export default function Streaming({ open, onClose, response }) {
                 </Select>
                 <Grid container justifyContent="center">
                     {response && response.streamingOptions[country].filter(filterProvider).map(streaming => (
-                        <Grid item>
+                        <Grid item key={streaming.link}>
                             <IconButton
                                 href={streaming.link}
                                 target="_blank"

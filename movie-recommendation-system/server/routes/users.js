@@ -114,13 +114,30 @@ router.delete("/:username", async (req, res) => {
   }
 });
 
-/* Save comment to a user */
-router.patch("/review", async (req, res) => {
+/* Save or remove review for a user */
+router.patch("/:userID/reviews", async (req, res) => {
   try {
-    const { userID, reviewID } = req.body;
+    const userID = req.params.userID;
+    const { op, reviewID } = req.body;
+
     const user = await User.findOne({ _id: userID });
-    user.reviews.unshift(reviewID);
-    user.save().then(() => res.json(reviewID));
+    if (!user) {
+      res.status(404).send("User not found");
+    }
+
+    switch (op) {
+      case "add":
+        user.reviews.unshift(reviewID);
+        user.save().then(() => res.json(reviewID));
+        break;
+      case "delete":
+        user.reviews = user.reviews.filter((review) => review.toString() !== reviewID);
+        user.save().then((user) => res.json(user));
+        break;
+      default:
+        res.status(400).send("Invalid operation");
+    }
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

@@ -33,13 +33,30 @@ router.post("/", async (req, res) => {
   }
 });
 
-/* Save review to a movie */
-router.patch("/review", async (req, res) => {
+/* Save or remove review for a movie */
+router.patch("/:movieID/reviews", async (req, res) => {
   try {
-    const { movieID, reviewID } = req.body;
+    const movieID = req.params.movieID;
+    const { op, reviewID } = req.body;
+
     const movie = await Movie.findOne({ _id: movieID });
-    movie.reviews.unshift(reviewID);
-    movie.save().then(() => res.json(reviewID));
+    if (!movie) {
+      res.status(404).send("Movie not found");
+    }
+    
+    switch (op) {
+      case "add":
+        movie.reviews.unshift(reviewID);
+        movie.save().then(() => res.json(reviewID));
+        break;
+      case "delete":
+        movie.reviews = movie.reviews.filter((review) => review.toString() !== reviewID);
+        movie.save().then((movie) => res.json(movie));
+        break;
+      default:
+        res.status(400).send("Invalid operation");
+    }
+
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
