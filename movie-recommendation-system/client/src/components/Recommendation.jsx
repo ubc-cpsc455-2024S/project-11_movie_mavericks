@@ -106,13 +106,13 @@ export default function Recommendation() {
       } finally {
         setSelectedWatchlist("");
       }
-    } else if (selectedNewWatchlist.length > 0) {
+    } else if (selectedNewWatchlist.trim().length > 0) {
       try {
         const newWatchlistresponse = await axios.post(
           "https://project-11-movie-mavericks.onrender.com/watchlists",
           {
             user_id: userID,
-            name: selectedNewWatchlist,
+            name: selectedNewWatchlist.trim(),
           }
         );
         const { _id } = newWatchlistresponse.data;
