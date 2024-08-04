@@ -1,8 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import MovieDetailsPopup from "./MovieDetailsPopup";
+import confetti from "canvas-confetti";
 
 const FeelingLucky = () => {
 	const [randomMovie, setRandomMovie] = useState(null);
@@ -28,6 +28,7 @@ const FeelingLucky = () => {
 			setRandomMovie(data.results[randomIndex]);
 			setLoading(false);
 			setOpen(true);
+			triggerConfetti();
 		} catch (error) {
 			console.error("Error fetching movie:", error);
 			setLoading(false);
@@ -37,6 +38,40 @@ const FeelingLucky = () => {
 	const handleClose = () => {
 		setOpen(false);
 		setRandomMovie(null);
+	};
+
+	const triggerConfetti = () => {
+		const duration = 2 * 1000;
+		const end = Date.now() + duration;
+
+		const frame = () => {
+			const timeLeft = end - Date.now();
+
+			if (timeLeft <= 0) {
+				return;
+			}
+
+			confetti({
+				particleCount: 4,
+				angle: 60,
+				spread: 55,
+				origin: { x: 0 },
+				shapes: ["text"],
+				text: "🍀",
+			});
+			confetti({
+				particleCount: 4,
+				angle: 120,
+				spread: 55,
+				origin: { x: 1 },
+				shapes: ["text"],
+				text: "🍀",
+			});
+
+			requestAnimationFrame(frame);
+		};
+
+		requestAnimationFrame(frame);
 	};
 
 	return (
