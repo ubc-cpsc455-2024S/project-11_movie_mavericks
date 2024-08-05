@@ -15,12 +15,16 @@ import {
 	RedditIcon,
 } from "react-share";
 import MovieDetailsPopup from "./MovieDetailsPopup";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 export default function Watchlists() {
 	const [watchlists, setWatchlists] = useState([]);
 	const [selectedMovie, setSelectedMovie] = useState(null);
 	const [loading, setLoading] = useState(true);
 	const userID = useSelector((state) => state.user.user?._id);
+	const theme = useTheme();
+	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -225,13 +229,11 @@ export default function Watchlists() {
 				</Card>
 			))}
 			<Dialog
+				fullScreen={fullScreen}
 				open={!!selectedMovie}
 				onClose={handleClose}
 				maxWidth="md"
 				fullWidth
-				PaperProps={{
-					sx: { backgroundColor: "#e0dede" },
-				}}
 			>
 				{selectedMovie && (
 					<MovieDetailsPopup

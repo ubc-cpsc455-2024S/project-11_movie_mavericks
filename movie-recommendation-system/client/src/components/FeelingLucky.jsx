@@ -3,11 +3,15 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import MovieDetailsPopup from "./MovieDetailsPopup";
 import confetti from "canvas-confetti";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 const FeelingLucky = () => {
 	const [randomMovie, setRandomMovie] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [open, setOpen] = useState(false);
+	const theme = useTheme();
+	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 	const fetchRandomMovie = async () => {
 		setLoading(true);
@@ -86,7 +90,7 @@ const FeelingLucky = () => {
 			>
 				I'm Feeling Lucky!
 			</Button>
-			<Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+			<Dialog fullScreen={fullScreen} open={open} onClose={handleClose} maxWidth="md" fullWidth>
 				<DialogTitle style={{ textAlign: "center" }}>
 					🍀 Your Lucky Movie! 🍀
 				</DialogTitle>
