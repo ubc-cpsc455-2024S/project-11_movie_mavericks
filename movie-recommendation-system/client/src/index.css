@@ -156,8 +156,8 @@ button:focus-visible {
 	height: 35px;
 	border-radius: 8px;
 	background-color: rgba(107, 107, 107, 0.7);
-	bottom: 10px;
-	right: 25px;
+	bottom: 13px;
+	right: 28px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
