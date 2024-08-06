@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { Button, Card, CardContent, Typography, Dialog, Tooltip, IconButton, CircularProgress, Box } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import {
+	Button,
+	Card,
+	CardContent,
+	Typography,
+	Dialog,
+	Tooltip,
+	IconButton,
+	CircularProgress,
+	Box,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { removeMovieFromWatchlist } from "../features/userSlice";
 import {
 	TwitterShareButton,
@@ -87,7 +97,9 @@ export default function Watchlists() {
 
 	const handleDelete = async (watchlistID) => {
 		try {
-			await axios.delete(`https://project-11-movie-mavericks.onrender.com/watchlists/${watchlistID}`);
+			await axios.delete(
+				`https://project-11-movie-mavericks.onrender.com/watchlists/${watchlistID}`
+			);
 			setWatchlists(
 				watchlists.filter((watchlist) => watchlist._id !== watchlistID)
 			);
@@ -113,10 +125,12 @@ export default function Watchlists() {
 	}
 
 	return (
-		<div>
-			{watchlists.length === 0 &&
-				<Typography variant="h3" style={{ color: "white" }}>No watchlist yet</Typography>
-			}
+		<div style={{ marginTop: "40px" }}>
+			{watchlists.length === 0 && (
+				<Typography variant="h3" style={{ color: "white" }}>
+					No watchlist yet
+				</Typography>
+			)}
 			{watchlists.map((watchlist) => (
 				<Card
 					key={watchlist._id}
@@ -155,7 +169,10 @@ export default function Watchlists() {
 								}}
 							>
 								<Tooltip title="Remove">
-									<IconButton color="error" onClick={() => handleRemoveMovie(watchlist._id, movie.id)}>
+									<IconButton
+										color="error"
+										onClick={() => handleRemoveMovie(watchlist._id, movie.id)}
+									>
 										<DeleteIcon />
 									</IconButton>
 								</Tooltip>
