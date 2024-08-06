@@ -84,7 +84,7 @@ const UserInfo = () => {
 					</ListItem>
 				</List>
 			</Drawer>
-			<Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+			<Box component="main" sx={{ flexGrow: 1, p: 3, padding: "20px 10px" }}>
 				{location.pathname === "/account" && <Account />}
 				<Outlet />
 			</Box>
