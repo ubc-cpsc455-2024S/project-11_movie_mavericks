@@ -46,7 +46,7 @@ const Reviews = () => {
 				sx={{
 					display: "flex",
 					justifyContent: "center",
-					height: "80vh",
+					height: "80%",
 					backgroundColor: "#1b1b1b",
 					maxWidth: "500px",
 				}}
@@ -57,7 +57,6 @@ const Reviews = () => {
 						padding: "50px 30px",
 						backgroundColor: "#292929",
 						borderRadius: 10,
-						overflow: "auto",
 					}}
 				>
 					<Typography variant="h5" gutterBottom color="white">
