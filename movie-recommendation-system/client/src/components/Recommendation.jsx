@@ -248,7 +248,7 @@ function Poster(props) {
 				onClick={onLearnMoreClick}
 			/>
 			<button className="watchlist-button" onClick={onAddToWatchlist}>
-				Add to watchlist
+				+
 			</button>
 		</div>
 	);
