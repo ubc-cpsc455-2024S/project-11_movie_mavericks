@@ -55,17 +55,18 @@
 
 ### Stretch Requirements:
 - As a user, I want to be able to create multiple watchlists instead of having to deal with the same watchlist every time. [✔️]
-- As a user, I want to know on which streaming platforms the movies are availble. [✔️]
+- As a user, I want to know on which streaming platforms the movies are available. [✔️]
 - As a user, I want to watch the trailer of the selected movie conveniently. [✔️]
 
 <hr></hr>
 
 ## Tech-Stack:  
 ### Front-End:  
+- <strong>CSS:</strong> We used Cascading Style Sheets (CSS) and Material-UI styles to style our components and create consistent, beautiful designs that are industry-standard and user-centric. These styles were used in a combination of both external stylesheets for the root of the project and in-line styling to style individual small components. With these technologies, we achieved a highly maintainable and scalable styling architecture that provided us with appropriate animations and responsiveness options. Compared to other styling solutions like Bootstrap or Tailwind CSS, Material-UI and CSS integrate seamlessly and this approach allowed for a better alignment with our design requirements without sacrificing the ease of use.  
 - <strong>React.js:</strong> We used React.js to create our reusable components and user interface. The modular, component-based architecture allows for reusable code without the need for reinventing the wheel every time you want to create something new, making the development process efficient and the application as a whole, scalable. React's virtual DOM ensures that the entire page doesn't have to be re-rendered every time there is a small change in the state, creating faster loading times and seamless user experiences. Compared to other frameworks like Angular.js or Vue.js, React.js works really well with our choice of back-end technologies and also has large community support online, making debugging and bug fixes really easy and an ideal choice for the project.
 - <strong>Material-UI:</strong> For the user interface, we used Material-UI as the open-source React component library. This library provides ready-made components, designed for production, right out of the box and is credible as it uses Google's Material Design guidelines. Furthermore, Material-UI components are consistent, meaning we could ensure the same styles in different functions, instead of having to worry about inconsistent styling. A big advantage of Material-UI components is that they are customizable, so you don't have to use the styles provided by default and have a lot of freedom when it comes to styling.
 - <strong>Redux Toolkit:</strong> We used Redux for state management. This allowed us to create a single source of truth for all the states in our project and helped us avoid prop drilling and the complicated use of hooks. With a state tree, we used pure reducer functions to dispatch actions during events which not only helped us during debugging but also while tracking a state across multiple components. Compared to other alternatives like MobX or Zustand, Redux has support for asynchronous operations as well which proved really useful during our API requests.
-- <strong>Axios:</strong> We used Axios as the promise-based HTTP client to make requests to both external, third-party APIs as well as to our backend servers. The simplicity and ease of use and the minimal setup helped in rapid and efficient development while also providing useful error handling and authentication facilities for asynchronous requests. The main benefit of Axios is that it allows for cleaner code by handling request and response parameter transformations in the promise itself without having to wait for the promise to be resolved or rejected. Compared to native HTTP clients like Fetch, Axios provides a more feature-rich and developer-friendly interface to work with.
+- <strong>Axios:</strong> We used Axios as the promise-based HTTP client to make requests to both external, third-party APIs as well as to our backend servers. The simplicity, ease of use, and minimal setup helped in rapid and efficient development while providing useful error handling and authentication facilities for asynchronous requests. The main benefit of Axios is that it allows for cleaner code by handling request and response parameter transformations in the promise itself without having to wait for the promise to be resolved or rejected. Compared to native HTTP clients like Fetch, Axios provides a more feature-rich and developer-friendly interface to work with.
 
 ### Back-End:  
 - <strong>Node.js:</strong> Since our project needs to be updated in real-time and makes use of asynchronicity, we used Node.js as not only is it highly scalable, but also has packages that allow developers to implement various functionalities. Node.js also supports multiple client-server connections at once, so it can handle multiple connections with minimal overhead. Comparing Node.js to other back-end frameworks like Python or Java Spring, Node.js is written in JavaScript making it an ideal use case for the project. It has a large online community, enables working with RESTful APIs more easily, is secure, and supports extensive libraries and frameworks like Express.js.
@@ -75,7 +76,7 @@
 - <strong>MongoDB:</strong> We chose MongoDB as the NoSQL for this project due to its ability to create multiple flexible documents that allow easy storage and access of data, as well as support for fast and scalable access for different types of data. In our case, we had multiple schemas that we needed to store data for such as users, watchlists, movies, reviews, etc. and MongoDB allowed us to create separate clusters for each schema which was very useful. Compared to SQL databases like MySQL or PostgreSQL, MongoDB provides more flexibility for handling diverse data types and complicated relationships that relational databases find difficult to manage. We used Mongoose as our ODM as it easily integrates with Express.js and Node.js and does not require any boilerplate code except for the package installation.
 
 ### Deployment
-- <strong>Render:</strong> We have deployed our website on Render due to its seamless integration with GitHub and auto-deployment upon merge.
+- <strong>Render:</strong> We have deployed our website on Render and made it available publicly so that other people can also view and use the project due to its seamless integration with GitHub and auto-deployment upon merge. We decided to use Render over other platforms like Vercel, Heroku, and Netflify because the course provided support for Render debugging, some of the team members had faced CORS-related issues on other deployment platforms, and also because Render provides a free tier for hobby projects.   
 
 ### Best Practices:  
 - <strong>Consistency and Clarity:</strong> We followed consistent coding standards and naming conventions to ensure readability and maintainability. ESLint and Prettier were used to enforce these standards.
@@ -93,13 +94,13 @@
 - <strong>BCrypt:</strong> We implemented secure authentication of passwords using BCrypt. BCrypt is designed to be computationally intensive, making it resistant to brute-force attacks. Its salt functionality adds an extra layer of security by ensuring that identical passwords have different hashes. Also using this module ensures that users can rest assured that the developers of the website don't have any knowledge of sensitive user information like their passwords as they are end-to-end encrypted.  Compared to simpler hashing algorithms like MD5 or SHA-1, BCrypt offers enhanced security suitable for modern applications.
 
 ### Enhanced user experience:
-- <strong>Fully responsive:</strong> The website is fully responsive to screen size. User will enjoy using our service on various devices.
+- <strong>Fully responsive:</strong> The website is fully responsive to screen size. Users will enjoy using our service on various devices.
 - <strong>Social media:</strong> Integration with various social media allows our users to share their favorite movies easily with friends and the world.
 
 <hr></hr>  
 
 ## Next Steps:  
-- Currently, the project only recommends movies to users, and all the features are curated according to this. In the future, we aim to add support for TV Shows and Blogs as well so that the project can be transformed from a Movie Recommendation System to a Content Exploration System.
+- Currently, the project only recommends movies to users, and all the features are curated according to this. In the future, we aim to add support for TV shows and blogs so that the project can be transformed from a movie recommendation system to a content exploration system.
 - We also plan to integrate machine-learning techniques to provide personalized movie recommendations based on user preferences, viewing history, and ratings. This would enable us to provide more unique feedback to users like what sentiment of movies they like and provide them with interactive displays to visualize their preferences.
 - We plan to include a push notification system where users can submit their email addresses and every time a piece of content is published, the user can get notified of this based on their preferences via email.
 - A really really stretch requirement we have is to add a voice recognition system that would allow for touchless user experiences and people can just sit back, talk to the website about what they want, and let the app do the work for them.
@@ -117,20 +118,20 @@
     - Initialized schemas, DB collections, and populate with sample data for movies, reviews, watchlists
     - Implemented comment system
     - Setup redux store for recommendations
-    - UI for recommendations, movie popup, and form inputs
+    - UI for recommendations, movie popups, and form inputs
 - <strong>Patrick Liang:</strong>
     - Created movie details popup component
     - API integrations for form inputs
-    - UI for form, recommendations, login and account components
-    - Designed collection schemas for database
+    - UI for form, recommendations, login, and account components
+    - Designed collection schemas for the database
 - <strong>Subhrodeep Ghose:</strong>
-    - Setup MongoDB database, and created some schemas used in the project. 
+    - Set up the MongoDB database, and created some schemas used in the project. 
     - Integrated the MongoDB database with the backend. 
     - Helped out with backend issues.
-    - Helped create adding watchlists functionality.
+    - Helped create adding watchlist functionality.
     - Deployed project on render.
-    - Created end-to-end api tests on postman. 
-    - Created Github Actions to automatically run postman test suite and deploy on render on successful test suite run. 
+    - Created end-to-end API tests on Postman. 
+    - Created GitHub Actions to automatically run the Postman test suite and deploy on render on a successful test suite run. 
 <hr></hr>
 
 ## Images:  
