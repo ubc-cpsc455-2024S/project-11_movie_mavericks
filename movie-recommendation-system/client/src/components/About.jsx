@@ -5,9 +5,7 @@ const About = () => {
     <div style={{ paddingTop: "50px" }}>
       <main style={{ color: "white", margin: "2em 4em" }}>
         <section id="about-me">
-          <h1 style={{ color: "yellow" }}>
-            Welcome to MovieHub!
-          </h1>
+          <h1 style={{ color: "yellow" }}>Welcome to MovieHub!</h1>
           <h2
             style={{ color: "yellow", textAlign: "center", fontSize: "2.3em" }}
           >
@@ -25,7 +23,8 @@ const About = () => {
             cinephile, this system will help you find the perfect movie to
             watch. Whether you love action-packed thrillers, heartwarming
             dramas, or intriguing documentaries, our system is here to help you
-            find movies you'll love. So, sit back, relax, and let MovieHub do the work for you!
+            find movies you'll love. So, sit back, relax, and let MovieHub do
+            the work for you!
           </p>
         </section>
         <hr />

@@ -64,7 +64,10 @@ function Navbar(props) {
   };
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center", marginTop: "50px" }}>
+    <Box
+      onClick={handleDrawerToggle}
+      sx={{ textAlign: "center", marginTop: "50px" }}
+    >
       <List>
         {navItems.map((item) => (
           <ListItem key={item.label} disablePadding>
@@ -160,7 +163,13 @@ function Navbar(props) {
               </StyledButton>
             )}
           </Box>
-          <Box sx={{ position: "fixed", right: 0, display: { xs: "block", sm: "none" } }}>
+          <Box
+            sx={{
+              position: "fixed",
+              right: 0,
+              display: { xs: "block", sm: "none" },
+            }}
+          >
             <IconButton
               color="inherit"
               aria-label="open drawer"
@@ -188,7 +197,7 @@ function Navbar(props) {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               backgroundColor: "black",
-              color: "white"
+              color: "white",
             },
           }}
         >

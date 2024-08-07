@@ -8,11 +8,22 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setRecommendation } from "../features/recommendationsSlice";
 import { setClassnames, setStartnow } from "../features/firstloadSlice";
-import { Box, Collapse, FormControl, ImageList, ImageListItem, InputLabel, MenuItem, Select, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Collapse,
+  FormControl,
+  ImageList,
+  ImageListItem,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import axios from "axios";
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -40,11 +51,15 @@ export default function Form() {
   const [formGenres, setFormGenres] = useState([]);
 
   const theme = useTheme();
-  const isSm = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMd = useMediaQuery(theme.breakpoints.down('md'));
+  const isSm = useMediaQuery(theme.breakpoints.down("sm"));
+  const isMd = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
-    setTimeout(() => dispatch(setClassnames({ background: "", form: "form-final-opacity" })), 2200);
+    setTimeout(
+      () =>
+        dispatch(setClassnames({ background: "", form: "form-final-opacity" })),
+      2200
+    );
   }, []);
 
   const handleGenreChange = (event) => {
@@ -89,52 +104,68 @@ export default function Form() {
         : "";
 
     const urlNoGenre = baseUrl + language + region + releaseAfter;
-    const urls = formGenres[0] === "all"
-      ? [urlNoGenre]
-      : formGenres.map(genreID => urlNoGenre + "&with_genres=" + genreID);
+    const urls =
+      formGenres[0] === "all"
+        ? [urlNoGenre]
+        : formGenres.map((genreID) => urlNoGenre + "&with_genres=" + genreID);
     if (formGenres.length > 1) {
-      urls.push(urlNoGenre + "&with_genres=" + formGenres.join(","))
+      urls.push(urlNoGenre + "&with_genres=" + formGenres.join(","));
     }
 
     try {
-      const responses = await Promise.all(urls.map(url => axios.request({
-        method: "GET",
-        url: url,
-        headers: {
-          accept: "application/json",
-          Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
-        },
-      })))
+      const responses = await Promise.all(
+        urls.map((url) =>
+          axios.request({
+            method: "GET",
+            url: url,
+            headers: {
+              accept: "application/json",
+              Authorization: import.meta.env.VITE_TMDB_BEARER_KEY,
+            },
+          })
+        )
+      );
 
-      const movies = responses.map(response => response.data["results"]).flat();
-      const uniqueMovies = []
-      const movieIds = new Set()
-      movies.forEach(movie => {
+      const movies = responses
+        .map((response) => response.data["results"])
+        .flat();
+      const uniqueMovies = [];
+      const movieIds = new Set();
+      movies.forEach((movie) => {
         if (!movieIds.has(movie.id)) {
           movieIds.add(movie.id);
           uniqueMovies.push(movie);
         }
-      })
+      });
 
       let grouped;
       if (movies.length === 0) {
         grouped = {};
       } else if (formGenres[0] === "all") {
-        grouped = Object.groupBy(uniqueMovies, movie => movie.genre_ids[0]);
+        grouped = Object.groupBy(uniqueMovies, (movie) => movie.genre_ids[0]);
       } else {
-        grouped = {}
+        grouped = {};
         const movieIdsInAllGenres = new Set();
         if (formGenres.length > 1) {
-          const moviesInAllGenres = uniqueMovies.filter(movie => formGenres.every(genreID => movie.genre_ids.includes(genreID)));
+          const moviesInAllGenres = uniqueMovies.filter((movie) =>
+            formGenres.every((genreID) => movie.genre_ids.includes(genreID))
+          );
           if (moviesInAllGenres.length > 0) {
             grouped["0"] = moviesInAllGenres;
-            moviesInAllGenres.forEach(movie => movieIdsInAllGenres.add(movie.id));
+            moviesInAllGenres.forEach((movie) =>
+              movieIdsInAllGenres.add(movie.id)
+            );
           }
         }
-        formGenres.forEach(genreID => { grouped[genreID.toString()] = [] });
-        uniqueMovies.forEach(movie => {
+        formGenres.forEach((genreID) => {
+          grouped[genreID.toString()] = [];
+        });
+        uniqueMovies.forEach((movie) => {
           for (const genreID of formGenres) {
-            if (!movieIdsInAllGenres.has(movie.id) && movie.genre_ids.includes(genreID)) {
+            if (
+              !movieIdsInAllGenres.has(movie.id) &&
+              movie.genre_ids.includes(genreID)
+            ) {
               grouped[genreID.toString()].push(movie);
               break;
             }
@@ -145,7 +176,6 @@ export default function Form() {
       dispatch(setRecommendation(grouped));
       navigate("/recommendation");
       setIsSubmitting(false);
-
     } catch (err) {
       console.error(err);
     }
@@ -166,7 +196,10 @@ export default function Form() {
     }
 
     return (
-      <ImageList sx={{ position: "fixed", left: 0, top: 40, width: "100%" }} cols={isSm ? 2 : isMd ? 3 : 4} >
+      <ImageList
+        sx={{ position: "fixed", left: 0, top: 40, width: "100%" }}
+        cols={isSm ? 2 : isMd ? 3 : 4}
+      >
         {trending.results.map((item, index) => (
           <ImageListItem
             key={item.backdrop_path}
@@ -178,15 +211,14 @@ export default function Form() {
               src={`https://image.tmdb.org/t/p/w500${item.backdrop_path}?w=164&h=164&fit=crop&auto=format`}
               alt={item.title}
               loading="lazy"
-              style={{ filter: 'brightness(80%)' }}
+              style={{ filter: "brightness(80%)" }}
             />
           </ImageListItem>
-        ))}1
+        ))}
+        1
       </ImageList>
     );
-  }
-
-
+  };
 
   return (
     <div
@@ -202,15 +234,21 @@ export default function Form() {
           backgroundColor: "#1b1b1b",
           border: "1px grey solid",
           padding: "10px 25px",
-          top: "20px"
+          top: "20px",
         }}
       >
-        <Typography variant="h2" style={{ color: "white", marginBottom: 0, marginTop: 20 }}>
+        <Typography
+          variant="h2"
+          style={{ color: "white", marginBottom: 0, marginTop: 20 }}
+        >
           Discover movies
         </Typography>
         <Collapse in={!start} timeout={800}>
           <>
-            <Typography variant="h5" style={{ color: "white", marginTop: 20, marginBottom: 30 }}>
+            <Typography
+              variant="h5"
+              style={{ color: "white", marginTop: 20, marginBottom: 30 }}
+            >
               Stream, save and more
             </Typography>
             <Button
@@ -220,10 +258,10 @@ export default function Form() {
                 color: "black",
                 marginBottom: "20px",
                 fontWeight: "bold",
-                '&:hover': {
+                "&:hover": {
                   backgroundColor: "#9bdbe1",
-                  color: 'black',
-                }
+                  color: "black",
+                },
               }}
               size="large"
               onClick={() => dispatch(setStartnow(true))}
@@ -234,10 +272,7 @@ export default function Form() {
         </Collapse>
 
         <Collapse in={start} timeout={800}>
-          <form
-            id="form"
-            onSubmit={handleSubmit(onSubmit)}
-          >
+          <form id="form" onSubmit={handleSubmit(onSubmit)}>
             <FormControl fullWidth variant="standard" required margin="normal">
               <InputLabel id="form-language" style={{ color: "white" }}>
                 Language
@@ -252,7 +287,10 @@ export default function Form() {
                   >
                     <MenuItem value="all">All</MenuItem>
                     {languages.map((lang) => (
-                      <MenuItem key={lang["iso_639_1"]} value={lang["iso_639_1"]}>
+                      <MenuItem
+                        key={lang["iso_639_1"]}
+                        value={lang["iso_639_1"]}
+                      >
                         {lang["english_name"]}
                       </MenuItem>
                     ))}
@@ -313,10 +351,14 @@ export default function Form() {
                             label={
                               value === "all"
                                 ? "All"
-                                : genres.filter((genre) => genre.id === value)[0]
-                                  .name
+                                : genres.filter(
+                                    (genre) => genre.id === value
+                                  )[0].name
                             }
-                            style={{ color: "white", backgroundColor: "#292929" }}
+                            style={{
+                              color: "white",
+                              backgroundColor: "#292929",
+                            }}
                           />
                         ))}
                       </Box>
@@ -326,7 +368,9 @@ export default function Form() {
                   >
                     <MenuItem
                       value="all"
-                      disabled={formGenres.length > 0 && formGenres[0] !== "all"}
+                      disabled={
+                        formGenres.length > 0 && formGenres[0] !== "all"
+                      }
                     >
                       All
                     </MenuItem>
@@ -406,7 +450,6 @@ export default function Form() {
           </form>
         </Collapse>
       </Box>
-
     </div>
   );
 }
