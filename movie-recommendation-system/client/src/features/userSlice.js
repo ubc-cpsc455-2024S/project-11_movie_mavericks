@@ -30,7 +30,9 @@ const userSlice = createSlice({
       state.reviews.unshift(action.payload);
     },
     removeReview: (state, action) => {
-      state.reviews = state.reviews.filter((review) => review !== action.payload);
+      state.reviews = state.reviews.filter(
+        (review) => review !== action.payload
+      );
     },
     addWatchlist: (state, action) => {
       state.watchlists.push(action.payload);

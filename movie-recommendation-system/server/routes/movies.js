@@ -43,26 +43,26 @@ router.patch("/:movieID/reviews", async (req, res) => {
     if (!movie) {
       res.status(404).send("Movie not found");
     }
-    
+
     switch (op) {
       case "add":
         movie.reviews.unshift(reviewID);
         movie.save().then(() => res.json(reviewID));
         break;
       case "delete":
-        movie.reviews = movie.reviews.filter((review) => review.toString() !== reviewID);
+        movie.reviews = movie.reviews.filter(
+          (review) => review.toString() !== reviewID
+        );
         movie.save().then((movie) => res.json(movie));
         break;
       default:
         res.status(400).send("Invalid operation");
     }
-
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
   }
 });
-
 
 router.delete("/:tmdbID", async (req, res) => {
   const tmdbID = req.params.tmdbID;

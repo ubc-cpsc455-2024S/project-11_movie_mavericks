@@ -7,7 +7,7 @@ export const firstloadSlice = createSlice({
       background: "background-fade-in",
       form: "form-fade-in",
     },
-    startnow: false
+    startnow: false,
   },
   reducers: {
     setClassnames: (state, action) => {
@@ -15,7 +15,7 @@ export const firstloadSlice = createSlice({
     },
     setStartnow: (state, action) => {
       state.startnow = action.payload;
-    }
+    },
   },
 });
 

@@ -11,24 +11,24 @@ import Reviews from "./components/Reviews";
 import Watchlists from "./components/Watchlists";
 
 function App() {
-	return (
-		<Router>
-			<Routes>
-				<Route path="/" element={<Layout />}>
-					<Route index element={<Home />} />
-					<Route path="recommendation" element={<Recommendation />} />
-					<Route path="about" element={<About />} />
-					<Route path="feeling-lucky" element={<FeelingLucky />} />
-					<Route path="login" element={<Login />} />
-					<Route path="account" element={<UserInfo />}>
-						<Route path="watchlists" element={<Watchlists />} />
-						<Route path="reviews" element={<Reviews />} />
-						<Route path="logout" element={<div>Log Out</div>} />
-					</Route>
-				</Route>
-			</Routes>
-		</Router>
-	);
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="recommendation" element={<Recommendation />} />
+          <Route path="about" element={<About />} />
+          <Route path="feeling-lucky" element={<FeelingLucky />} />
+          <Route path="login" element={<Login />} />
+          <Route path="account" element={<UserInfo />}>
+            <Route path="watchlists" element={<Watchlists />} />
+            <Route path="reviews" element={<Reviews />} />
+            <Route path="logout" element={<div>Log Out</div>} />
+          </Route>
+        </Route>
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;

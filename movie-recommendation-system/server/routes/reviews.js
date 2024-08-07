@@ -54,7 +54,7 @@ router.patch("/:reviewID", async (req, res) => {
     console.error(err.message);
     res.status(500).send("Server error");
   }
-})
+});
 
 router.delete("/:reviewID", async (req, res) => {
   const reviewID = req.params.reviewID;

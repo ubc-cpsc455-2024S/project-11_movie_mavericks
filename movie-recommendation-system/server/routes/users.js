@@ -131,13 +131,14 @@ router.patch("/:userID/reviews", async (req, res) => {
         user.save().then(() => res.json(reviewID));
         break;
       case "delete":
-        user.reviews = user.reviews.filter((review) => review.toString() !== reviewID);
+        user.reviews = user.reviews.filter(
+          (review) => review.toString() !== reviewID
+        );
         user.save().then((user) => res.json(user));
         break;
       default:
         res.status(400).send("Invalid operation");
     }
-
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
