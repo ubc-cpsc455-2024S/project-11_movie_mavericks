@@ -28,7 +28,7 @@
 <hr></hr>  
   
 ## Testing:
-- Navigate to the login screen (Login button at the top right corner of the Navbar) and enter the following testing credentials:  
+- Navigate to the login screen (Login button at the top right corner of the Navbar) and enter the following testing credentials (it can take some time for the servers to wake up):  
   <strong>Username</strong>-> dom, <strong>Password</strong>-> admin2024
 - All the features of the application can now be accessed as a regular user.  
 
